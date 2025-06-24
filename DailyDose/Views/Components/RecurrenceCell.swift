@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PeriodicityCell: View {
+struct RecurrenceCell: View {
     let title: String
     let action: () -> Void
     @State private var habitGoal: Int = 1
@@ -49,5 +49,5 @@ struct PeriodicityCell: View {
 }
 
 #Preview {
-    PeriodicityCell(title: "Minutes", action: {})
+    RecurrenceCell(title: "Minutes", action: {})
 }

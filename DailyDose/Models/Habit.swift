@@ -13,6 +13,16 @@ struct Habit: Identifiable, Hashable {
     let progress: Int
     let objective: Int
     let periodicity: HabitPeriodicity
+    
+    static let sampleHabits: [Habit] = [
+        Habit(title: "No sugar", progress: 6, objective: 30, periodicity: .challenge(.months(1))),
+        Habit(title: "Read book", progress: 2, objective: 4, periodicity: .weekly(.hours(1))),
+        Habit(title: "News podcast", progress: 2, objective: 4, periodicity: .daily(.minutes(15))),
+        Habit(title: "75 Hard challenge", progress: 2, objective: 4, periodicity: .challenge(.days(75))),
+        Habit(title: "Learn EN words", progress: 5, objective: 50, periodicity: .weekly(.custom(5, "words")))
+    ]
+        
+    
 }
 
 enum HabitPeriodicity: Hashable {
@@ -41,16 +51,16 @@ enum Unit: Hashable {
     
     var description: String {
         switch self {
-        case .minutes(let value):
-            return value.pluralized("min")
-        case .hours(let value):
-            return value.pluralized("hour")
-        case .days(let value):
-            return value.pluralized("day")
-        case .months(let value):
-            return value.pluralized("month")
-        case .custom(let value, let unit):
-            return "\(value) \(unit)"
+        case .minutes(let recurrence):
+            return recurrence.pluralized("min")
+        case .hours(let recurrence):
+            return recurrence.pluralized("hour")
+        case .days(let recurrence):
+            return recurrence.pluralized("day")
+        case .months(let recurrence):
+            return recurrence.pluralized("month")
+        case .custom(let recurrence, let unit):
+            return "\(recurrence) \(unit)"
         }
     }
 }

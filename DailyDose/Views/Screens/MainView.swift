@@ -11,15 +11,7 @@ enum Route: Hashable {
     case habitForm
 }
 struct MainView: View {
-    @State private var habits: [Habit] = [
-        Habit(title: "No sugar", progress: 6, objective: 30, periodicity: .challenge(.months(1))),
-        Habit(title: "Read book", progress: 2, objective: 4, periodicity: .weekly(.hours(1))),
-        Habit(title: "News podcast", progress: 2, objective: 4, periodicity: .daily(.minutes(15))),
-        Habit(title: "75 Hard challenge", progress: 2, objective: 4, periodicity: .challenge(.days(75))),
-        Habit(title: "Learn EN words", progress: 5, objective: 50, periodicity: .weekly(.custom(5, "words")))
-        
-    ]
-    
+    @State private var habits: [Habit] = Habit.sampleHabits
     @State private var path = NavigationPath()
     
     
@@ -42,7 +34,7 @@ struct MainView: View {
                 
                 Text("Track Your \nHabits")
                     .font(.custom("Syne-SemiBold", size: 40))
-                    .foregroundStyle(.blackCopy)
+                    .foregroundColor(.blackCopy)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 20)
                     .padding(.top, -10)
@@ -64,10 +56,6 @@ struct MainView: View {
                     }
                     .padding(.horizontal, 30)
                     
-                    Rectangle()
-                        .fill(Color.black.opacity(0.1))
-                        .frame(width: 1, height: 40)
-                        .padding(.vertical)
                     Rectangle()
                         .fill(Color.black.opacity(0.1))
                         .frame(width: 1, height: 40)
