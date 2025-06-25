@@ -30,7 +30,7 @@ struct HabitFormView: View {
     
     //MARK: Title's View
     var titleView: some View {
-        TextField("Title...", text: $habitTitle)
+        TextField("Your habit...", text: $habitTitle)
             .background(Color.clear)
             .foregroundColor(.blackCopy)
             .font(.custom("Syne-SemiBold", size: 40))
@@ -82,21 +82,40 @@ struct HabitFormView: View {
                     Text("Track your \n progress in...")
                         .font(.custom("Syne-SemiBold", size: 20))
                     
-                    RecurrenceCheckbox(
-                        title: "Minutes",
-                        action: {
-                            unit = .minutes(habitGoal)
-                        }
+                    ScrollView(.vertical, showsIndicators: false) {
+                        RecurrenceCheckbox(
+                            title: "Minutes",
+                            action: {
+                                unit = .minutes(habitGoal)
+                            }
+                        )
+
+                        RecurrenceCheckbox(
+                            title: "Hours",
+                            action: {
+                                unit = .hours(habitGoal)
+                            }
+                        )
+                        
+                        RecurrenceCheckbox(
+                            title: "Days",
+                            action: {
+                                unit = .days(habitGoal)
+                            }
+                        )
+                        
+                        RecurrenceCheckbox(
+                            title: "Months",
+                            action: {
+                                unit = .months(habitGoal)
+                            }
+                        )
+                        Spacer()
+                        
+                    }
+                    .mask(
+                        LinearGradient(gradient: Gradient(colors: [Color.black, Color.black.opacity(0)]), startPoint: .top, endPoint: .bottom)
                     )
-                    
-                    RecurrenceCheckbox(
-                        title: "Hours",
-                        action: {
-                            unit = .hours(habitGoal)
-                        }
-                    )
-                    Spacer()
-                    
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 30)
@@ -104,12 +123,14 @@ struct HabitFormView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             
-            Rectangle()
-                .fill(.blackCopy)
-                .frame(maxWidth: .infinity)
-                .frame(height: 250)
-                .cornerRadius(50)
-                .opacity(0.1)
+            ZStack {
+                Rectangle()
+                    .fill(.blackCopy)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 250)
+                    .cornerRadius(50)
+                    .opacity(0.1)
+            }
         }
     }
 }
