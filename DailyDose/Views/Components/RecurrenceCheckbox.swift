@@ -7,35 +7,25 @@
 
 import SwiftUI
 
-struct RecurrenceCell: View {
+struct RecurrenceCheckbox: View {
     let title: String
     let action: () -> Void
-    @State private var habitGoal: Int = 1
-    @State private var unit: Unit = .days(0)
 
-
-    
     var body: some View {
-        Button(action: {
-            unit = .minutes(habitGoal)
-            
-        }, label: {
+        Button(action: action) {
             ZStack {
                 Rectangle()
                     .frame(maxWidth: .infinity)
                     .foregroundColor(Color.yellowButton)
                     .cornerRadius(50)
                     .frame(height: 40)
-                
-                
-                
+
                 HStack {
                     RoundedRectangle(cornerRadius: 5)
                         .stroke(.blackCopy, lineWidth: 1)
                         .frame(width: 20, height: 20)
                     
-                    
-                    Text("Minutes")
+                    Text(title)
                         .font(.system(size: 14))
                         .foregroundColor(Color.blackCopy)
                         .fontWeight(.bold)
@@ -45,9 +35,10 @@ struct RecurrenceCell: View {
                 }
                 .padding(.horizontal, 20)
             }
-        })    }
+        }
+    }
 }
 
 #Preview {
-    RecurrenceCell(title: "Minutes", action: {})
+    RecurrenceCheckbox(title: "Minutes", action: {})
 }

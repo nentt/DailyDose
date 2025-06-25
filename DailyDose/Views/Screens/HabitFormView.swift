@@ -82,69 +82,19 @@ struct HabitFormView: View {
                     Text("Track your \n progress in...")
                         .font(.custom("Syne-SemiBold", size: 20))
                     
-                    
-                    
-                    
-                    Button(action: {
-                        unit = .minutes(habitGoal)
-                        
-                    }, label: {
-                        ZStack {
-                            Rectangle()
-                                .frame(maxWidth: .infinity)
-                                .foregroundColor(Color.yellowButton)
-                                .cornerRadius(50)
-                                .frame(height: 40)
-                            
-                            
-                            
-                            HStack {
-                                RoundedRectangle(cornerRadius: 5)
-                                    .stroke(.blackCopy, lineWidth: 1)
-                                    .frame(width: 20, height: 20)
-                                
-                                
-                                Text("Minutes")
-                                    .font(.system(size: 14))
-                                    .foregroundColor(Color.blackCopy)
-                                    .fontWeight(.bold)
-                                    .cornerRadius(50)
-                                
-                                Spacer()
-                            }
-                            .padding(.horizontal, 20)
-                        }
-                    })
-                    
-                    ZStack {
-                        Rectangle()
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(Color.yellowButton)
-                            .cornerRadius(50)
-                            .frame(height: 40)
-                        Button(action: {
+                    RecurrenceCheckbox(
+                        title: "Minutes",
+                        action: {
                             unit = .minutes(habitGoal)
-                            
-                        }, label: {
-                            HStack {
-                                RoundedRectangle(cornerRadius: 5)
-                                    .stroke(.blackCopy, lineWidth: 1)
-                                    .frame(width: 20, height: 20)
-                                
-                                
-                                Text("Hours")
-                                    .font(.system(size: 14))
-                                    .foregroundColor(Color.blackCopy)
-                                    .fontWeight(.bold)
-                                    .cornerRadius(50)
-                                
-                                Spacer()
-                            }
-                            .padding(.horizontal, 20)
-                            
-                        })
-                    }
+                        }
+                    )
                     
+                    RecurrenceCheckbox(
+                        title: "Hours",
+                        action: {
+                            unit = .hours(habitGoal)
+                        }
+                    )
                     Spacer()
                     
                 }
