@@ -12,13 +12,14 @@ struct HabitFormView: View {
     @State private var habitGoal: Int = 1
     @State private var habitPeriodicity: HabitPeriodicity = .daily(.days(5))
     @State private var unit: Unit = .minutes(0)
+    @State private var isTitleConfirmed = false
     @Binding var habits: [Habit]
     
     var body: some View {
         ZStack {
             Color.mauveBackground.ignoresSafeArea()
             VStack {
-                titleView
+                habitName
                 periodicityView
                 reccurenceAndGoalView
                 Spacer()
@@ -28,14 +29,38 @@ struct HabitFormView: View {
     }
     
     
-    //MARK: Title's View
-    var titleView: some View {
-        TextField("Your habit...", text: $habitTitle)
-            .background(Color.clear)
-            .foregroundColor(.blackCopy)
-            .font(.custom("Syne-SemiBold", size: 40))
-            .padding(.bottom, 20)
+    //MARK: Habit name's View
+    var habitName: some View {
+            HStack {
+                TextField("Habit name?", text: $habitTitle)
+                    .padding(20)
+                    .background(Color.yellowButton)
+                    .cornerRadius(50)
+                    .foregroundColor(.blackCopy)
+                    .font(.custom("Syne-SemiBold", size: 20))
+                    .padding(.bottom, 20)
+                    .frame(maxWidth: .infinity)
+                
+                Spacer()
+
+                Button(action: {
+                    if isTitleConfirmed {
+                        habitTitle = ""
+                    }
+                    isTitleConfirmed.toggle()
+                }) {
+                    Image(systemName: isTitleConfirmed ? "xmark" : "checkmark")
+                        .foregroundColor(.yellowButton)
+                        .frame(width: 24, height: 24)
+                        .padding()
+                        .background(Color.blackCopy)
+                        .clipShape(Circle())
+                    
+                }
+                .padding(.bottom, 20)
+            }
     }
+    
     
     //MARK: Periodicity's View
     var periodicityView: some View {
@@ -89,7 +114,7 @@ struct HabitFormView: View {
                                 unit = .minutes(habitGoal)
                             }
                         )
-
+                        
                         RecurrenceCheckbox(
                             title: "Hours",
                             action: {
