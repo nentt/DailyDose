@@ -19,6 +19,7 @@ struct HabitFormView: View {
         ZStack {
             Color.mauveBackground.ignoresSafeArea()
             VStack {
+                titleView
                 habitName
                 periodicityView
                 reccurenceAndGoalView
@@ -28,11 +29,29 @@ struct HabitFormView: View {
         }
     }
     
-    
+    //MARK: Title's View
+    var titleView: some View {
+        VStack {
+            Text("Habits aren’t goals")
+                .font(.custom("Syne-SemiBold", size: 30))
+                .foregroundColor(.blackCopy)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.horizontal, 20)
+                .padding(.top, -10)
+            
+            Text("they’re proof you’re showing up.")
+                .font(.custom("Syne-SemiBold", size: 20))
+                .foregroundColor(.gray)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.horizontal, 20)
+                .padding(.bottom, 20)
+
+        }
+    }
     //MARK: Habit name's View
     var habitName: some View {
             HStack {
-                TextField("Habit name?", text: $habitTitle)
+                TextField("Give it a name...", text: $habitTitle)
                     .padding(20)
                     .background(Color.yellowButton)
                     .cornerRadius(50)
