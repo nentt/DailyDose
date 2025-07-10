@@ -13,6 +13,8 @@ struct HabitFormView: View {
     @State private var habitPeriodicity: HabitPeriodicity = .daily(.days(5))
     @State private var unit: Unit = .minutes(0)
     @State private var isTitleConfirmed = false
+    @State private var isShowingCustomRecurrenceSheet = false
+    @State private var customRecurrenceUnitsList: [String] = []
     @Binding var habits: [Habit]
     
     var body: some View {
@@ -26,6 +28,14 @@ struct HabitFormView: View {
                 Spacer()
             }
             .padding()
+            .sheet(isPresented: $isShowingCustomRecurrenceSheet,
+                   content: {
+                CustomRecurrenceSheet(
+                    customUnitList: $customRecurrenceUnitsList,
+                    selectedCustomUnit: $unit
+                )
+                .presentationDetents([.medium])
+            })
         }
     }
     
@@ -51,14 +61,19 @@ struct HabitFormView: View {
     //MARK: Habit name's View
     var habitName: some View {
             HStack {
-                TextField("Give it a name...", text: $habitTitle)
+                TextField("Habit name...", text: $habitTitle)
                     .padding(20)
-                    .background(Color.yellowButton)
+                    .background(isTitleConfirmed ? Color.clear : Color.yellowButton)
                     .cornerRadius(50)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 50)
+                            .stroke(isTitleConfirmed ? Color.yellowButton : Color.clear, lineWidth: 2)
+                    )
                     .foregroundColor(.blackCopy)
                     .font(.custom("Syne-SemiBold", size: 20))
                     .padding(.bottom, 20)
                     .frame(maxWidth: .infinity)
+                    
                 
                 Spacer()
 
@@ -154,11 +169,36 @@ struct HabitFormView: View {
                                 unit = .months(habitGoal)
                             }
                         )
+                        
+                        ForEach(customRecurrenceUnitsList, id: \.self) { customUnitTitle in
+                            RecurrenceCheckbox(
+                                title: customUnitTitle,
+                                action: {
+                                    unit = .custom(habitGoal, customUnitTitle)
+                                }
+                            )
+                        }
+                        
+                        RecurrenceCheckbox(
+                            title: "Other",
+                            action: {
+                                isShowingCustomRecurrenceSheet = true 
+                            }
+                        )
+                        .padding(.bottom, 30)
                         Spacer()
                         
                     }
                     .mask(
-                        LinearGradient(gradient: Gradient(colors: [Color.black, Color.black.opacity(0)]), startPoint: .top, endPoint: .bottom)
+                        LinearGradient(
+                            gradient: Gradient(stops: [
+                                .init(color: .black, location: 0.0),
+                                .init(color: .black, location: 0.7),
+                                .init(color: .black.opacity(0), location: 1.0)
+                            ]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
                     )
                 }
                 .padding(.horizontal, 20)
