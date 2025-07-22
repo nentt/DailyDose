@@ -28,14 +28,13 @@ struct HabitFormView: View {
                 Spacer()
             }
             .padding()
-            .sheet(isPresented: $isShowingCustomRecurrenceSheet,
-                   content: {
+            .overlay(alignment: .bottom) {
                 CustomRecurrenceSheet(
                     customUnitList: $customRecurrenceUnitsList,
                     selectedCustomUnit: $unit
                 )
-                .presentationDetents([.medium])
-            })
+                .offset(y: isShowingCustomRecurrenceSheet ? 0 : UIScreen.main.bounds.height)
+            }
         }
     }
     

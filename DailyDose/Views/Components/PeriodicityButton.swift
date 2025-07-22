@@ -16,10 +16,10 @@ struct PeriodicityButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(current == type ? .custom("Syne-SemiBold", size: 18) : .custom("Syne-SemiBold", size: 14))
+                .font(current == type ? .custom("Syne-SemiBold", size: 17) : .custom("Syne-SemiBold", size: 14))
                 .fontWeight(.bold)
                 .foregroundColor(.yellowButton)
-                .frame(width: 120, height: 60)
+                .frame(width: 115, height: 60)
                 .background(current == type ? Color.clear : Color.blackCopy)
                 .cornerRadius(50)
                 .overlay(

@@ -17,9 +17,7 @@ struct CustomRecurrenceSheet: View {
     var body: some View {
         ZStack {
             VStack {
-                Spacer()
                 ScrollView {
-                    Spacer()
                     HStack {
                         TextField("Track your progress in...", text: $customUnitText)
                             .padding(20)
