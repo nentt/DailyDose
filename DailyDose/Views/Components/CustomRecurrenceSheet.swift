@@ -15,37 +15,52 @@ struct CustomRecurrenceSheet: View {
     @Binding var selectedCustomUnit: Unit
     
     var body: some View {
-        VStack {
-            Spacer()
-            HStack {
-                TextField("Track your progress in...", text: $customUnitText)
-                    .padding(20)
-                    .background(Color.yellowButton)
-                    .cornerRadius(50)
-                    .foregroundColor(.blackCopy)
-                    .font(.custom("Syne-SemiBold", size: 20))
-                    .frame(maxWidth: .infinity)
-                    .autocorrectionDisabled()
-                    .focused($showKeyboard)
-                
-                
+        ZStack {
+            VStack {
                 Spacer()
-                
-                Button(action: {
-                    addCustomUnit()
-                    dismiss()
-                }) {
-                    Image(systemName: "checkmark")
-                        .foregroundColor(.yellowButton)
-                        .frame(width: 24, height: 24)
-                        .padding()
-                        .background(Color.blackCopy)
-                        .clipShape(Circle())
-                    
+                ScrollView {
+                    Spacer()
+                    HStack {
+                        TextField("Track your progress in...", text: $customUnitText)
+                            .padding(20)
+                            .background(Color.yellowButton)
+                            .cornerRadius(50)
+                            .foregroundColor(.blackCopy)
+                            .font(.custom("Syne-SemiBold", size: 20))
+                            .frame(maxWidth: .infinity)
+                            .autocorrectionDisabled()
+                            .focused($showKeyboard)
+                        
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            addCustomUnit()
+                            dismiss()
+                        }) {
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.yellowButton)
+                                .frame(width: 24, height: 24)
+                                .padding()
+                                .background(Color.blackCopy)
+                                .clipShape(Circle())
+                            
+                        }
+                    }
+                    .padding()
+                    .frame(height: 100)
+                    .background(Color.mauveBackground)
+                    .clipShape(
+                        .rect(
+                            topLeadingRadius: 30,
+                            bottomLeadingRadius: 0,
+                            bottomTrailingRadius: 0,
+                            topTrailingRadius: 30
+                        )
+                    )
                 }
             }
         }
-        .padding()
         .onAppear(perform: {
             showKeyboard = true
         })
