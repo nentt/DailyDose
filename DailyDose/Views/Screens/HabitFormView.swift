@@ -17,6 +17,13 @@ struct HabitFormView: View {
     @Binding var habits: [Habit]
     @State private var showCustomRecurrenceSheet = false
     
+    @State private var customUnitText = ""
+    @FocusState private var isTextFieldFocused: Bool
+    @State private var customUnitList: [String] = []
+    @State private var selectedCustomUnit: Unit = .minutes(0)
+    
+    
+    
     var body: some View {
         ZStack {
             Color.mauveBackground.ignoresSafeArea()
@@ -29,14 +36,20 @@ struct HabitFormView: View {
             }
             .padding()
             .overlay(alignment: .bottom) {
-                CustomRecurrenceSheet(
-                    customUnitList: $customRecurrenceUnitsList,
-                    selectedCustomUnit: $unit,
-                    show: $showCustomRecurrenceSheet
-                )
-                .offset(y: showCustomRecurrenceSheet ? 0 : UIScreen.main.bounds.height)
-                
+                if showCustomRecurrenceSheet {
+                    customRecurrenceSheet
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .animation(.easeOut(duration: 0.3), value: showCustomRecurrenceSheet)                }
             }
+            //            .overlay(alignment: .bottom) {
+            //                CustomRecurrenceSheet(
+            //                    customUnitList: $customRecurrenceUnitsList,
+            //                    selectedCustomUnit: $unit,
+            //                    show: $showCustomRecurrenceSheet
+            //                )
+            //                .offset(y: showCustomRecurrenceSheet ? 0 : UIScreen.main.bounds.height)
+            //
+            //            }
         }
     }
     
@@ -56,44 +69,44 @@ struct HabitFormView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
-
+            
         }
     }
     //MARK: Habit name's View
     var habitName: some View {
-            HStack {
-                TextField("Habit name...", text: $habitTitle)
-                    .padding(20)
-                    .background(isTitleConfirmed ? Color.clear : Color.yellowButton)
-                    .cornerRadius(50)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 50)
-                            .stroke(isTitleConfirmed ? Color.yellowButton : Color.clear, lineWidth: 2)
-                    )
-                    .foregroundColor(.blackCopy)
-                    .font(.custom("Syne-SemiBold", size: 20))
-                    .padding(.bottom, 20)
-                    .frame(maxWidth: .infinity)
-                    
-                
-                Spacer()
-
-                Button(action: {
-                    if isTitleConfirmed {
-                        habitTitle = ""
-                    }
-                    isTitleConfirmed.toggle()
-                }) {
-                    Image(systemName: isTitleConfirmed ? "xmark" : "checkmark")
-                        .foregroundColor(.yellowButton)
-                        .frame(width: 24, height: 24)
-                        .padding()
-                        .background(Color.blackCopy)
-                        .clipShape(Circle())
-                    
-                }
+        HStack {
+            TextField("Habit name...", text: $habitTitle)
+                .padding(20)
+                .background(isTitleConfirmed ? Color.clear : Color.yellowButton)
+                .cornerRadius(50)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 50)
+                        .stroke(isTitleConfirmed ? Color.yellowButton : Color.clear, lineWidth: 2)
+                )
+                .foregroundColor(.blackCopy)
+                .font(.custom("Syne-SemiBold", size: 20))
                 .padding(.bottom, 20)
+                .frame(maxWidth: .infinity)
+            
+            
+            Spacer()
+            
+            Button(action: {
+                if isTitleConfirmed {
+                    habitTitle = ""
+                }
+                isTitleConfirmed.toggle()
+            }) {
+                Image(systemName: isTitleConfirmed ? "xmark" : "checkmark")
+                    .foregroundColor(.yellowButton)
+                    .frame(width: 24, height: 24)
+                    .padding()
+                    .background(Color.blackCopy)
+                    .clipShape(Circle())
+                
             }
+            .padding(.bottom, 20)
+        }
     }
     
     
@@ -184,6 +197,8 @@ struct HabitFormView: View {
                             title: "Other",
                             action: {
                                 showCustomRecurrenceSheet = true
+                                isTextFieldFocused = true
+                                
                             }
                         )
                         .padding(.bottom, 30)
@@ -218,7 +233,84 @@ struct HabitFormView: View {
             }
         }
     }
+    
+    //MARK: Custom Recurrence Sheet
+    var customRecurrenceSheet: some View {
+        ZStack {
+            VStack {
+                HStack {
+                    TextField("Track your progress in...", text: $customUnitText)
+                        .padding(20)
+                        .background(Color.yellowButton)
+                        .cornerRadius(50)
+                        .foregroundColor(.blackCopy)
+                        .font(.custom("Syne-SemiBold", size: 20))
+                        .frame(maxWidth: .infinity)
+                        .autocorrectionDisabled()
+                        .focused($isTextFieldFocused)
+                    
+                    
+                    Spacer()
+                    
+                    if customUnitText.isEmpty {
+                            // Bouton X
+                            Button(action: {
+                                dimissCustomRecurrenceSheet()
+                            }) {
+                                Image(systemName: "xmark")
+                                    .foregroundColor(.yellowButton)
+                                    .frame(width: 24, height: 24)
+                                    .padding()
+                                    .background(Color.blackCopy)
+                                    .clipShape(Circle())
+                            }
+                        } else {
+                            // Bouton Checkmark
+                            Button(action: {
+                                addCustomUnit()
+                            }) {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.yellowButton)
+                                    .frame(width: 24, height: 24)
+                                    .padding()
+                                    .background(Color.blackCopy)
+                                    .clipShape(Circle())
+                            }
+                        }
+                }
+                .padding()
+                .frame(height: 100)
+                .background(Color.mauveBackground)
+                .clipShape(
+                    .rect(
+                        topLeadingRadius: 30,
+                        bottomLeadingRadius: 0,
+                        bottomTrailingRadius: 0,
+                        topTrailingRadius: 30
+                    )
+                )
+            }
+            
+        }
+        .padding(.bottom, 65)
+        
+    }
+    
+    private func dimissCustomRecurrenceSheet() {
+        showCustomRecurrenceSheet = false
+        isTextFieldFocused = false
+        
+    }
+    private func addCustomUnit() {
+        let trimmedUnit = customUnitText.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmedUnit.isEmpty && !customRecurrenceUnitsList.contains(trimmedUnit) {
+            customRecurrenceUnitsList.append(trimmedUnit)
+            unit = .custom(0, trimmedUnit)
+        }
+    }
+    
 }
+
 
 
 #Preview {
