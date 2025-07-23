@@ -13,9 +13,9 @@ struct HabitFormView: View {
     @State private var habitPeriodicity: HabitPeriodicity = .daily(.days(5))
     @State private var unit: Unit = .minutes(0)
     @State private var isTitleConfirmed = false
-    @State private var isShowingCustomRecurrenceSheet = false
     @State private var customRecurrenceUnitsList: [String] = []
     @Binding var habits: [Habit]
+    @State private var showCustomRecurrenceSheet = false
     
     var body: some View {
         ZStack {
@@ -31,9 +31,11 @@ struct HabitFormView: View {
             .overlay(alignment: .bottom) {
                 CustomRecurrenceSheet(
                     customUnitList: $customRecurrenceUnitsList,
-                    selectedCustomUnit: $unit
+                    selectedCustomUnit: $unit,
+                    show: $showCustomRecurrenceSheet
                 )
-                .offset(y: isShowingCustomRecurrenceSheet ? 0 : UIScreen.main.bounds.height)
+                .offset(y: showCustomRecurrenceSheet ? 0 : UIScreen.main.bounds.height)
+                
             }
         }
     }
@@ -181,7 +183,7 @@ struct HabitFormView: View {
                         RecurrenceCheckbox(
                             title: "Other",
                             action: {
-                                isShowingCustomRecurrenceSheet = true 
+                                showCustomRecurrenceSheet = true
                             }
                         )
                         .padding(.bottom, 30)

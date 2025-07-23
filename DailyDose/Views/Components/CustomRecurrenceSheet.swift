@@ -9,15 +9,18 @@ import SwiftUI
 
 struct CustomRecurrenceSheet: View {
     @State private var customUnitText = ""
-    @FocusState private var showKeyboard: Bool
+    @FocusState private var isTextFieldFocused: Bool
     @Environment(\.dismiss) var dismiss
     @Binding var customUnitList: [String]
     @Binding var selectedCustomUnit: Unit
+    @Binding var show: Bool
     
     var body: some View {
         ZStack {
             VStack {
+                Spacer()
                 ScrollView {
+                    Spacer()
                     HStack {
                         TextField("Track your progress in...", text: $customUnitText)
                             .padding(20)
@@ -27,7 +30,7 @@ struct CustomRecurrenceSheet: View {
                             .font(.custom("Syne-SemiBold", size: 20))
                             .frame(maxWidth: .infinity)
                             .autocorrectionDisabled()
-                            .focused($showKeyboard)
+                            .focused($isTextFieldFocused)
                         
                         
                         Spacer()
@@ -58,10 +61,8 @@ struct CustomRecurrenceSheet: View {
                     )
                 }
             }
+
         }
-        .onAppear(perform: {
-            showKeyboard = true
-        })
     }
     
     private func addCustomUnit() {
@@ -74,5 +75,5 @@ struct CustomRecurrenceSheet: View {
 }
 
 #Preview {
-    CustomRecurrenceSheet(customUnitList: .constant(["words"]), selectedCustomUnit: .constant(Unit.custom(5, "words")))
+    CustomRecurrenceSheet(customUnitList: .constant(["words"]), selectedCustomUnit: .constant(Unit.custom(5, "words")), show: .constant(true))
 }
