@@ -27,30 +27,36 @@ struct HabitFormView: View {
     var body: some View {
         ZStack {
             Color.mauveBackground.ignoresSafeArea()
-            VStack {
-                titleView
-                habitName
-                periodicityView
-                reccurenceAndGoalView
-                Spacer()
+            ScrollView {
+                VStack {
+                    titleView
+                    habitName
+                    periodicityView
+                    reccurenceAndGoalView
+                    Spacer()
+                    
+                }
             }
             .padding()
-            .overlay(alignment: .bottom) {
+
+            if showCustomRecurrenceSheet {
+                Color.black.opacity(0.7)
+                    .ignoresSafeArea()
+                    .transition(.opacity)
+                    .zIndex(1)
+            }
+
+            VStack {
+                Spacer()
                 if showCustomRecurrenceSheet {
                     customRecurrenceSheet
                         .transition(.move(edge: .bottom).combined(with: .opacity))
-                    .animation(.easeOut(duration: 0.3), value: showCustomRecurrenceSheet)                }
+                }
             }
-            //            .overlay(alignment: .bottom) {
-            //                CustomRecurrenceSheet(
-            //                    customUnitList: $customRecurrenceUnitsList,
-            //                    selectedCustomUnit: $unit,
-            //                    show: $showCustomRecurrenceSheet
-            //                )
-            //                .offset(y: showCustomRecurrenceSheet ? 0 : UIScreen.main.bounds.height)
-            //
-            //            }
+            .zIndex(2)
+            
         }
+        
     }
     
     //MARK: Title's View
@@ -196,9 +202,10 @@ struct HabitFormView: View {
                         RecurrenceCheckbox(
                             title: "Other",
                             action: {
-                                showCustomRecurrenceSheet = true
                                 isTextFieldFocused = true
-                                
+                                            withAnimation(.linear(duration: 0.5)) {
+                                                showCustomRecurrenceSheet = true
+                                            }
                             }
                         )
                         .padding(.bottom, 30)
@@ -250,10 +257,10 @@ struct HabitFormView: View {
                         .focused($isTextFieldFocused)
                     
                     
+                    
                     Spacer()
                     
                     if customUnitText.isEmpty {
-                            // Bouton X
                             Button(action: {
                                 dimissCustomRecurrenceSheet()
                             }) {
@@ -292,7 +299,6 @@ struct HabitFormView: View {
             }
             
         }
-        .padding(.bottom, 65)
         
     }
     
@@ -306,6 +312,9 @@ struct HabitFormView: View {
         if !trimmedUnit.isEmpty && !customRecurrenceUnitsList.contains(trimmedUnit) {
             customRecurrenceUnitsList.append(trimmedUnit)
             unit = .custom(0, trimmedUnit)
+            showCustomRecurrenceSheet = false
+            isTextFieldFocused = false
+            customUnitText = ""
         }
     }
     
