@@ -13,14 +13,17 @@ struct HabitFormView: View {
     @State private var habitPeriodicity: HabitPeriodicity = .daily(.days(5))
     @State private var unit: Unit = .minutes(0)
     @State private var isTitleConfirmed = false
+    
     @State private var customRecurrenceUnitsList: [String] = []
     @Binding var habits: [Habit]
     @State private var showCustomRecurrenceSheet = false
-    
     @State private var customUnitText = ""
     @FocusState private var isTextFieldFocused: Bool
-    @State private var customUnitList: [String] = []
-    @State private var selectedCustomUnit: Unit = .minutes(0)
+    @State private var isRecurrenceCheckboxSelected: Bool = false
+    @State private var selectedRecurrenceUnit: String = ""
+    
+//    @State private var customUnitList: [String] = []
+//    @State private var selectedCustomUnit: Unit = .minutes(0)
     
     
     
@@ -67,7 +70,7 @@ struct HabitFormView: View {
                 .foregroundColor(.blackCopy)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.horizontal, 20)
-                .padding(.top, -10)
+                .padding(.top, -5)
             
             Text("they’re proof you’re showing up.")
                 .font(.custom("Syne-SemiBold", size: 20))
@@ -166,28 +169,36 @@ struct HabitFormView: View {
                             title: "Minutes",
                             action: {
                                 unit = .minutes(habitGoal)
-                            }
+                                selectedRecurrenceUnit = "Minutes"
+                            },
+                            isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == "Minutes")
                         )
                         
                         RecurrenceCheckbox(
                             title: "Hours",
                             action: {
                                 unit = .hours(habitGoal)
-                            }
+                                selectedRecurrenceUnit = "Hours"
+                            },
+                            isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == "Hours")
                         )
                         
                         RecurrenceCheckbox(
                             title: "Days",
                             action: {
                                 unit = .days(habitGoal)
-                            }
+                                selectedRecurrenceUnit = "Days"
+                            },
+                            isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == "Days")
                         )
                         
                         RecurrenceCheckbox(
                             title: "Months",
                             action: {
                                 unit = .months(habitGoal)
-                            }
+                                selectedRecurrenceUnit = "Months"
+                            },
+                            isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == "Months")
                         )
                         
                         ForEach(customRecurrenceUnitsList, id: \.self) { customUnitTitle in
@@ -195,7 +206,9 @@ struct HabitFormView: View {
                                 title: customUnitTitle,
                                 action: {
                                     unit = .custom(habitGoal, customUnitTitle)
-                                }
+                                    selectedRecurrenceUnit = customUnitTitle
+                                },
+                                isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == customUnitTitle)
                             )
                         }
                         
@@ -206,9 +219,12 @@ struct HabitFormView: View {
                                             withAnimation(.linear(duration: 0.5)) {
                                                 showCustomRecurrenceSheet = true
                                             }
-                            }
+                                selectedRecurrenceUnit = "Other"
+                            },
+                            isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == "Other")
                         )
                         .padding(.bottom, 30)
+                        
                         Spacer()
                         
                     }
@@ -246,18 +262,31 @@ struct HabitFormView: View {
         ZStack {
             VStack {
                 HStack {
-                    TextField("Track your progress in...", text: $customUnitText)
-                        .padding(20)
-                        .background(Color.yellowButton)
-                        .cornerRadius(50)
-                        .foregroundColor(.blackCopy)
-                        .font(.custom("Syne-SemiBold", size: 20))
-                        .frame(maxWidth: .infinity)
-                        .autocorrectionDisabled()
-                        .focused($isTextFieldFocused)
-                    
-                    
-                    
+                    ZStack {
+                        TextField("Track your progress in...", text: $customUnitText)
+                            .padding(20)
+                            .background(Color.yellowButton)
+                            .cornerRadius(50)
+                            .foregroundColor(.blackCopy)
+                            .font(.custom("Syne-SemiBold", size: 20))
+                            .frame(maxWidth: .infinity)
+                            .autocorrectionDisabled()
+                            .focused($isTextFieldFocused)
+                            .onChange(of: customUnitText, {
+                                customUnitText = String(customUnitText.prefix(6))
+                            })
+                        if !customUnitText.isEmpty {
+                                Button(action: {
+                                    customUnitText = ""
+                                }) {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(.gray)
+                                }
+                                .padding(.leading, 240)
+                            }
+                        
+                    }
+
                     Spacer()
                     
                     if customUnitText.isEmpty {
@@ -272,7 +301,6 @@ struct HabitFormView: View {
                                     .clipShape(Circle())
                             }
                         } else {
-                            // Bouton Checkmark
                             Button(action: {
                                 addCustomUnit()
                             }) {
@@ -297,7 +325,6 @@ struct HabitFormView: View {
                     )
                 )
             }
-            
         }
         
     }
@@ -315,6 +342,8 @@ struct HabitFormView: View {
             showCustomRecurrenceSheet = false
             isTextFieldFocused = false
             customUnitText = ""
+            selectedRecurrenceUnit = trimmedUnit
+            isRecurrenceCheckboxSelected = true
         }
     }
     
