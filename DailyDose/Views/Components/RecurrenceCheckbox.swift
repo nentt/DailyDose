@@ -70,5 +70,5 @@ struct RecurrenceCheckbox: View {
 }
 
 #Preview {
-    RecurrenceCheckbox(title: "Minutes", action: {}, isRecurrenceCheckboxSelected: .constant(true))
+    RecurrenceCheckbox(title: "Minutes", action: {}, isRecurrenceCheckboxSelected: .constant(false))
 }

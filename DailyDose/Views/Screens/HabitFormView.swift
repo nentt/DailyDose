@@ -19,7 +19,7 @@ struct HabitFormView: View {
     @State private var showCustomRecurrenceSheet = false
     @State private var customUnitText = ""
     @FocusState private var isTextFieldFocused: Bool
-    @State private var isRecurrenceCheckboxSelected: Bool = false
+    
     @State private var selectedRecurrenceUnit: String = ""
     
 //    @State private var customUnitList: [String] = []
@@ -343,7 +343,6 @@ struct HabitFormView: View {
             isTextFieldFocused = false
             customUnitText = ""
             selectedRecurrenceUnit = trimmedUnit
-            isRecurrenceCheckboxSelected = true
         }
     }
     
