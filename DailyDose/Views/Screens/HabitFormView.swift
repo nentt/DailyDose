@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HabitFormView: View {
+    @Binding var habits: [Habit]
+
     @State private var habitTitle: String = ""
     @State private var habitGoal: Int = 1
     @State private var habitPeriodicity: HabitPeriodicity = .daily(.days(5))
@@ -15,7 +17,6 @@ struct HabitFormView: View {
     @State private var isTitleConfirmed = false
     
     @State private var customRecurrenceUnitsList: [String] = []
-    @Binding var habits: [Habit]
     @State private var showCustomRecurrenceSheet = false
     @State private var customUnitText = ""
     @FocusState private var isTextFieldFocused: Bool
