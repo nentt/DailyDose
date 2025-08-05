@@ -9,22 +9,25 @@ import SwiftUI
 
 struct HabitFormView: View {
     @Binding var habits: [Habit]
-
+    
     @State private var habitTitle: String = ""
-    @State private var habitGoal: Int = 1
-    @State private var habitPeriodicity: HabitPeriodicity = .daily(.days(5))
+    @State private var habitGoal: Int = 5
+    @State private var habitPeriodicity: HabitPeriodicity = .daily(.minutes(1))
     @State private var unit: Unit = .minutes(0)
     @State private var isTitleConfirmed = false
+    @State private var showTitleAlerte = false
     
     @State private var customRecurrenceUnitsList: [String] = []
     @State private var showCustomRecurrenceSheet = false
     @State private var customUnitText = ""
     @FocusState private var isTextFieldFocused: Bool
     
-    @State private var selectedRecurrenceUnit: String = ""
+    @State private var selectedRecurrenceUnit: String = "Minutes"
     
-//    @State private var customUnitList: [String] = []
-//    @State private var selectedCustomUnit: Unit = .minutes(0)
+    @Environment(\.dismiss) var dismiss
+    
+    //    @State private var customUnitList: [String] = []
+    //    @State private var selectedCustomUnit: Unit = .minutes(0)
     
     
     
@@ -37,19 +40,32 @@ struct HabitFormView: View {
                     habitName
                     periodicityView
                     reccurenceAndGoalView
+                    recapView
                     Spacer()
                     
                 }
             }
             .padding()
-
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        dismiss()
+                    }, label: {
+                        Text("Cancel")
+                            .font(.system(size: 25))
+                            .foregroundColor(.yellowButton)
+                    })
+                }
+            }
+            .navigationBarBackButtonHidden(true)
+            
             if showCustomRecurrenceSheet {
                 Color.black.opacity(0.7)
                     .ignoresSafeArea()
                     .transition(.opacity)
                     .zIndex(1)
             }
-
+            
             VStack {
                 Spacer()
                 if showCustomRecurrenceSheet {
@@ -66,18 +82,18 @@ struct HabitFormView: View {
     //MARK: Title's View
     var titleView: some View {
         VStack {
-            Text("Habits aren’t goals")
+            Text("Start a new habit")
                 .font(.custom("Syne-SemiBold", size: 30))
                 .foregroundColor(.blackCopy)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.horizontal, 20)
                 .padding(.top, -5)
             
-            Text("they’re proof you’re showing up.")
+            Text("Even tiny ones build real change.")
                 .font(.custom("Syne-SemiBold", size: 20))
                 .foregroundColor(.gray)
                 .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 10)
                 .padding(.bottom, 20)
             
         }
@@ -87,16 +103,17 @@ struct HabitFormView: View {
         HStack {
             TextField("Habit name...", text: $habitTitle)
                 .padding(20)
-                .background(isTitleConfirmed ? Color.clear : Color.yellowButton)
+                .background(isTitleConfirmed && !habitTitle.isEmpty ? Color.clear : Color.yellowButton)
                 .cornerRadius(50)
                 .overlay(
                     RoundedRectangle(cornerRadius: 50)
-                        .stroke(isTitleConfirmed ? Color.yellowButton : Color.clear, lineWidth: 2)
+                        .stroke(isTitleConfirmed && !habitTitle.isEmpty ? Color.yellowButton : Color.clear, lineWidth: 2)
                 )
                 .foregroundColor(.blackCopy)
                 .font(.custom("Syne-SemiBold", size: 20))
                 .padding(.bottom, 20)
                 .frame(maxWidth: .infinity)
+                .padding(.horizontal, 1)
             
             
             Spacer()
@@ -104,10 +121,12 @@ struct HabitFormView: View {
             Button(action: {
                 if isTitleConfirmed {
                     habitTitle = ""
+                } else if habitTitle.isEmpty {
+                    showTitleAlerte = true
                 }
                 isTitleConfirmed.toggle()
             }) {
-                Image(systemName: isTitleConfirmed ? "xmark" : "checkmark")
+                Image(systemName: isTitleConfirmed && !habitTitle.isEmpty ? "xmark" : "checkmark")
                     .foregroundColor(.yellowButton)
                     .frame(width: 24, height: 24)
                     .padding()
@@ -116,6 +135,13 @@ struct HabitFormView: View {
                 
             }
             .padding(.bottom, 20)
+            .alert("Give your habit a name", isPresented: $showTitleAlerte) {
+                Button("Ok", role: .cancel) {}
+                
+                
+            } message: {
+                Text("It’s the first step to make it real!")
+            }
         }
     }
     
@@ -147,6 +173,7 @@ struct HabitFormView: View {
                     habitPeriodicity = .challenge(unit)
                 })
         }
+        .padding(.horizontal, 1)
         .padding(.bottom, 20)
     }
     
@@ -217,9 +244,7 @@ struct HabitFormView: View {
                             title: "Other",
                             action: {
                                 isTextFieldFocused = true
-                                            withAnimation(.linear(duration: 0.5)) {
-                                                showCustomRecurrenceSheet = true
-                                            }
+                                showCustomRecurrenceSheet = true
                                 selectedRecurrenceUnit = "Other"
                             },
                             isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == "Other")
@@ -247,15 +272,53 @@ struct HabitFormView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             
-            ZStack {
-                Rectangle()
-                    .fill(.blackCopy)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 250)
-                    .cornerRadius(50)
-                    .opacity(0.1)
-            }
+            GoalSetterCard(habitGoal: $habitGoal)
         }
+    }
+    
+    //MARK: Recap View
+    var recapView: some View {
+        VStack {(
+            Text("I choose to \n")
+                .foregroundColor(.blackCopy)
+                .font(.custom("Syne-SemiBold", size: 20))
+
+            +
+            Text("\(habitTitle.isEmpty ? "meditate" : habitTitle)")
+                .foregroundColor(.yellowButton)
+                .fontWeight(.bold)
+                .font(.custom("Syne-SemiBold", size: 30))
+            +
+            Text(", ")
+                .foregroundColor(.blackCopy)
+            
+            +
+            Text("\(habitGoal) \(selectedRecurrenceUnit.isEmpty ? "Minutes" : selectedRecurrenceUnit)")
+                .foregroundColor(.yellowButton)
+                .fontWeight(.bold)
+                .font(.custom("Syne-SemiBold", size: 30))
+            
+            +
+            Text(" on a ")
+                .foregroundColor(.blackCopy)
+                .font(.custom("Syne-SemiBold", size: 20))
+            
+            +
+            Text("\(habitPeriodicity.kind.label)")
+                .foregroundColor(.yellowButton)
+                .fontWeight(.bold)
+                .font(.custom("Syne-SemiBold", size: 30))
+            
+            +
+            Text(" basis, so I can grow into who I’m meant to be.")
+                .foregroundColor(.blackCopy)
+                .font(.custom("Syne-SemiBold", size: 20))
+            
+
+            )
+        .multilineTextAlignment(.center)
+        }
+        .padding(.top, 20)
     }
     
     //MARK: Custom Recurrence Sheet
@@ -277,54 +340,47 @@ struct HabitFormView: View {
                                 customUnitText = String(customUnitText.prefix(6))
                             })
                         if !customUnitText.isEmpty {
-                                Button(action: {
-                                    customUnitText = ""
-                                }) {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .foregroundColor(.gray)
-                                }
-                                .padding(.leading, 240)
+                            Button(action: {
+                                customUnitText = ""
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.gray)
                             }
+                            .padding(.leading, 240)
+                        }
                         
                     }
-
+                    
                     Spacer()
                     
                     if customUnitText.isEmpty {
-                            Button(action: {
-                                dimissCustomRecurrenceSheet()
-                            }) {
-                                Image(systemName: "xmark")
-                                    .foregroundColor(.yellowButton)
-                                    .frame(width: 24, height: 24)
-                                    .padding()
-                                    .background(Color.blackCopy)
-                                    .clipShape(Circle())
-                            }
-                        } else {
-                            Button(action: {
-                                addCustomUnit()
-                            }) {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(.yellowButton)
-                                    .frame(width: 24, height: 24)
-                                    .padding()
-                                    .background(Color.blackCopy)
-                                    .clipShape(Circle())
-                            }
+                        Button(action: {
+                            dimissCustomRecurrenceSheet()
+                        }) {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.yellowButton)
+                                .frame(width: 24, height: 24)
+                                .padding()
+                                .background(Color.blackCopy)
+                                .clipShape(Circle())
                         }
+                    } else {
+                        Button(action: {
+                            addCustomUnit()
+                        }) {
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.yellowButton)
+                                .frame(width: 24, height: 24)
+                                .padding()
+                                .background(Color.blackCopy)
+                                .clipShape(Circle())
+                        }
+                    }
                 }
                 .padding()
                 .frame(height: 100)
                 .background(Color.mauveBackground)
-                .clipShape(
-                    .rect(
-                        topLeadingRadius: 30,
-                        bottomLeadingRadius: 0,
-                        bottomTrailingRadius: 0,
-                        topTrailingRadius: 30
-                    )
-                )
+                .clipShape(TopRoundedRectangle())
             }
         }
         
@@ -350,6 +406,24 @@ struct HabitFormView: View {
 }
 
 
+struct TopRoundedRectangle: Shape {
+    var radius: CGFloat = 30
+    
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        
+        path.move(to: CGPoint(x: 0, y: radius))
+        path.addQuadCurve(to: CGPoint(x: radius, y: 0), control: CGPoint(x: 0, y: 0))
+        path.addLine(to: CGPoint(x: rect.width - radius, y: 0))
+        path.addQuadCurve(to: CGPoint(x: rect.width, y: radius), control: CGPoint(x: rect.width, y: 0))
+        path.addLine(to: CGPoint(x: rect.width, y: rect.height)) // droite
+        path.addLine(to: CGPoint(x: 0, y: rect.height)) // bas
+        path.closeSubpath()
+        
+        return path
+    }
+}
+
 
 #Preview {
     HabitFormView(habits: .constant([Habit(title: "Learn EN words", progress: 0, objective: 5, periodicity: .daily(.custom(5, "words")))]))
@@ -359,34 +433,4 @@ struct HabitFormView: View {
 
 
 
-//HStack {
-//                    Button(action: {
-//                        habitGoal -= 1
-//                    }, label: {
-//                        Image(systemName: "minus")
-//                            .font(.system(size: 25))
-//                            .foregroundColor(.blackCopy)
-//                            .frame(width: 60, height: 60)
-//                            .background(Circle().fill(Color.yellowButton))
-//                            .padding(.horizontal, 20)
-//                    })
-//
-//                    Text("\(habitGoal)")
-//                        .frame(width: 150, height: 150)
-//                        .background(Color.clear)
-//                        .foregroundColor(Color.yellowButton)
-//                        .font(.custom("Syne-ExtraBold", size: 45))
-//                        .padding(.bottom, 20)
-//
-//                    Button(action: {
-//                        habitGoal += 1
-//                    }, label: {
-//                        Image(systemName: "plus")
-//                            .font(.system(size: 25))
-//                            .foregroundColor(.blackCopy)
-//                            .frame(width: 60, height: 60)
-//                            .background(Circle().fill(Color.yellowButton))
-//                            .padding(.horizontal, 20)
-//                    })
-//
-//                }
+

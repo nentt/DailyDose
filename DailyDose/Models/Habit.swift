@@ -85,4 +85,15 @@ extension HabitPeriodicity {
     }
 }
 
+extension HabitPeriodicity.Kind {
+    var label: String {
+        switch self {
+        case .daily: return "daily"
+        case .weekly: return "weekly"
+        case .challenge: return "challenge"
+
+        }
+    }
+}
+
 
