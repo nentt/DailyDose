@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6E4B2B9B2E41CBE600BEF10C /* GoalSetterCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4B2B9A2E41CBE500BEF10C /* GoalSetterCard.swift */; };
+		6E4B2B9D2E43CB9B00BEF10C /* PersonTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4B2B9C2E43CB9A00BEF10C /* PersonTypeView.swift */; };
 		6E4B65122E03E14500BAC833 /* RecurrenceCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4B65112E03E14400BAC833 /* RecurrenceCheckbox.swift */; };
 		6E580D252DEB8D8000FFF5CC /* DailyDoseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E580D242DEB8D8000FFF5CC /* DailyDoseApp.swift */; };
 		6E580D272DEB8D8000FFF5CC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E580D262DEB8D8000FFF5CC /* MainView.swift */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		6E4B2B9A2E41CBE500BEF10C /* GoalSetterCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalSetterCard.swift; sourceTree = "<group>"; };
+		6E4B2B9C2E43CB9A00BEF10C /* PersonTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTypeView.swift; sourceTree = "<group>"; };
 		6E4B65112E03E14400BAC833 /* RecurrenceCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceCheckbox.swift; sourceTree = "<group>"; };
 		6E580D212DEB8D8000FFF5CC /* DailyDose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyDose.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E580D242DEB8D8000FFF5CC /* DailyDoseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDoseApp.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				6E4B65112E03E14400BAC833 /* RecurrenceCheckbox.swift */,
 				6ED2D0462E1E3DF600921DEC /* CustomRecurrenceSheet.swift */,
 				6E4B2B9A2E41CBE500BEF10C /* GoalSetterCard.swift */,
+				6E4B2B9C2E43CB9A00BEF10C /* PersonTypeView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6ED2D0472E1E3DF600921DEC /* CustomRecurrenceSheet.swift in Sources */,
+				6E4B2B9D2E43CB9B00BEF10C /* PersonTypeView.swift in Sources */,
 				6E580D4D2DED7A4E00FFF5CC /* HabitCell.swift in Sources */,
 				6E4B65122E03E14500BAC833 /* RecurrenceCheckbox.swift in Sources */,
 				6E580D272DEB8D8000FFF5CC /* MainView.swift in Sources */,
