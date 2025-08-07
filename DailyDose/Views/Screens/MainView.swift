@@ -14,6 +14,11 @@ struct MainView: View {
     @State private var habits: [Habit] = Habit.sampleHabits
     @State private var path = NavigationPath()
     
+//    @Binding var habitTitle: String 
+//    @Binding var habitGoal: Int
+//    @Binding var selectedRecurrenceUnit: String
+//    @Binding var habitPeriodicity: HabitPeriodicity
+    
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -123,6 +128,52 @@ struct MainView: View {
                 .padding(.horizontal, 20)
                 
                 Spacer()
+                
+//                //MARK: Recap View
+//                        VStack {(
+//                            Text("I choose to ")
+//                                .foregroundColor(.blackCopy.opacity(0.8))
+//                                .font(.custom("Syne-SemiBold", size: 19))
+//                
+//                
+//                            +
+//                            Text("\(($habitTitle.isEmpty ? "meditate" : $habitTitle).lowercased())")
+//                                .foregroundColor(.yellowButton)
+//                                .fontWeight(.bold)
+//                                .font(.custom("Syne-SemiBold", size: 30))
+//                            +
+//                            Text(", for ")
+//                                .foregroundColor(.blackCopy.opacity(0.8))
+//                                .font(.custom("Syne-SemiBold", size: 19))
+//                
+//                
+//                            +
+//                            Text("\($habitGoal) \(($selectedRecurrenceUnit.isEmpty ? "Minutes" : $selectedRecurrenceUnit).lowercased())")
+//                                .foregroundColor(.yellowButton)
+//                                .fontWeight(.bold)
+//                                .font(.custom("Syne-SemiBold", size: 30))
+//                
+////                            +
+////                            Text($habitPeriodicity.kind == .challenge ? " as part of a " : " ")
+////                                .foregroundColor(.blackCopy.opacity(0.8))
+////                                .font(.custom("Syne-SemiBold", size: 19))
+////                
+////                
+////                            +
+////                            Text("\($habitPeriodicity.kind.label)")
+////                                .foregroundColor(.yellowButton)
+////                                .fontWeight(.bold)
+////                                .font(.custom("Syne-SemiBold", size: 30))
+//                
+//                            +
+//                            Text(", so I can grow into who I’m meant to be.")
+//                                .foregroundColor(.blackCopy.opacity(0.8))
+//                                .font(.custom("Syne-SemiBold", size: 19))
+//                            )
+//                        .multilineTextAlignment(.center)
+//                        }
+//                        .padding(.top, 20)
+                    
             }
             .background {
                 Color("MauveBackground")
@@ -140,5 +191,5 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView()
+    MainView(/*habitTitle: .constant("Medidate"), habitGoal: .constant(5), selectedRecurrenceUnit: .constant("Minutes"), habitPeriodicity: .constant(.daily(.minutes(5)))*/)
 }
