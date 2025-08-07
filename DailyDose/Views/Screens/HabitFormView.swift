@@ -310,63 +310,64 @@ struct HabitFormView: View {
                     .font(.custom("Syne-SemiBold", size: 25))
                     .foregroundColor(.yellowButton)
                     .underline(true, color: .blackCopy.opacity(0.2))
-                    
+                
             )
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.top, 20)
             .multilineTextAlignment(.center)
             .onTapGesture {
                 showCustomVisionSheet = true
+                isvisionTextFocused = true
             }
         }
     }
     
     //MARK: Recap View
-//    var recapView: some View {
-//        VStack {(
-//            Text("I choose to ")
-//                .foregroundColor(.blackCopy.opacity(0.8))
-//                .font(.custom("Syne-SemiBold", size: 19))
-//
-//
-//            +
-//            Text("\((habitTitle.isEmpty ? "meditate" : habitTitle).lowercased())")
-//                .foregroundColor(.yellowButton)
-//                .fontWeight(.bold)
-//                .font(.custom("Syne-SemiBold", size: 30))
-//            +
-//            Text(", for ")
-//                .foregroundColor(.blackCopy.opacity(0.8))
-//                .font(.custom("Syne-SemiBold", size: 19))
-//
-//            
-//            +
-//            Text("\(habitGoal) \((selectedRecurrenceUnit.isEmpty ? "Minutes" : selectedRecurrenceUnit).lowercased())")
-//                .foregroundColor(.yellowButton)
-//                .fontWeight(.bold)
-//                .font(.custom("Syne-SemiBold", size: 30))
-//            
-//            +
-//            Text(habitPeriodicity.kind == .challenge ? " as part of a " : " ")
-//                .foregroundColor(.blackCopy.opacity(0.8))
-//                .font(.custom("Syne-SemiBold", size: 19))
-//
-//            
-//            +
-//            Text("\(habitPeriodicity.kind.label)")
-//                .foregroundColor(.yellowButton)
-//                .fontWeight(.bold)
-//                .font(.custom("Syne-SemiBold", size: 30))
-//            
-//            +
-//            Text(", so I can grow into who I’m meant to be.")
-//                .foregroundColor(.blackCopy.opacity(0.8))
-//                .font(.custom("Syne-SemiBold", size: 19))
-//            )
-//        .multilineTextAlignment(.center)
-//        }
-//        .padding(.top, 20)
-//    }
+    //    var recapView: some View {
+    //        VStack {(
+    //            Text("I choose to ")
+    //                .foregroundColor(.blackCopy.opacity(0.8))
+    //                .font(.custom("Syne-SemiBold", size: 19))
+    //
+    //
+    //            +
+    //            Text("\((habitTitle.isEmpty ? "meditate" : habitTitle).lowercased())")
+    //                .foregroundColor(.yellowButton)
+    //                .fontWeight(.bold)
+    //                .font(.custom("Syne-SemiBold", size: 30))
+    //            +
+    //            Text(", for ")
+    //                .foregroundColor(.blackCopy.opacity(0.8))
+    //                .font(.custom("Syne-SemiBold", size: 19))
+    //
+    //
+    //            +
+    //            Text("\(habitGoal) \((selectedRecurrenceUnit.isEmpty ? "Minutes" : selectedRecurrenceUnit).lowercased())")
+    //                .foregroundColor(.yellowButton)
+    //                .fontWeight(.bold)
+    //                .font(.custom("Syne-SemiBold", size: 30))
+    //
+    //            +
+    //            Text(habitPeriodicity.kind == .challenge ? " as part of a " : " ")
+    //                .foregroundColor(.blackCopy.opacity(0.8))
+    //                .font(.custom("Syne-SemiBold", size: 19))
+    //
+    //
+    //            +
+    //            Text("\(habitPeriodicity.kind.label)")
+    //                .foregroundColor(.yellowButton)
+    //                .fontWeight(.bold)
+    //                .font(.custom("Syne-SemiBold", size: 30))
+    //
+    //            +
+    //            Text(", so I can grow into who I’m meant to be.")
+    //                .foregroundColor(.blackCopy.opacity(0.8))
+    //                .font(.custom("Syne-SemiBold", size: 19))
+    //            )
+    //        .multilineTextAlignment(.center)
+    //        }
+    //        .padding(.top, 20)
+    //    }
     
     //MARK: Custom Recurrence Sheet
     var customRecurrenceSheet: some View {
@@ -435,67 +436,68 @@ struct HabitFormView: View {
     //MARK: 'Type of person' sheet
     var personTypeSheet: some View {
         ZStack {
-                VStack {
-                    HStack {
-                        ZStack {
-                            TextField("i.e., a mindful ...", text: $customVisionText)
-                                .padding(20)
-                                .background(Color.yellowButton)
-                                .cornerRadius(50)
-                                .foregroundColor(.blackCopy)
-                                .font(.custom("Syne-SemiBold", size: 20))
-                                .frame(maxWidth: .infinity)
-                                .autocorrectionDisabled()
-                                .focused($isvisionTextFocused)
-//                                .onChange(of: customUnitText, {
-//                                    customUnitText = String(customUnitText.prefix(6))
-//                                })
-                            if !customVisionText.isEmpty {
-                                Button(action: {
-                                    customVisionText = ""
-                                }) {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .foregroundColor(.gray)
-                                }
-                                .padding(.leading, 240)
+            VStack {
+                HStack {
+                    ZStack {
+                        TextField("i.e., a mindful ...", text: $customVisionText)
+                            .padding(20)
+                            .background(Color.yellowButton)
+                            .cornerRadius(50)
+                            .foregroundColor(.blackCopy)
+                            .font(.custom("Syne-SemiBold", size: 20))
+                            .frame(maxWidth: .infinity)
+                            .autocorrectionDisabled()
+                            .focused($isvisionTextFocused)
+                            .textInputAutocapitalization(.never)
+                        //                                .onChange(of: customUnitText, {
+                        //                                    customUnitText = String(customUnitText.prefix(6))
+                        //                                })
+                        if !customVisionText.isEmpty {
+                            Button(action: {
+                                customVisionText = ""
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.gray)
                             }
-                            
+                            .padding(.leading, 240)
                         }
                         
-                        Spacer()
-                        
-                        if customVisionText.isEmpty {
-                            Button(action: {
-//                                dismissCustomRecurrenceSheet()
-                            }) {
-                                Image(systemName: "xmark")
-                                    .foregroundColor(.yellowButton)
-                                    .frame(width: 24, height: 24)
-                                    .padding()
-                                    .background(Color.blackCopy)
-                                    .clipShape(Circle())
-                            }
-                        } else {
-                            Button(action: {
-//                                addCustomUnit()
-                            }) {
-                                Image(systemName: "checkmark")
-                                    .foregroundColor(.yellowButton)
-                                    .frame(width: 24, height: 24)
-                                    .padding()
-                                    .background(Color.blackCopy)
-                                    .clipShape(Circle())
-                            }
+                    }
+                    
+                    Spacer()
+                    
+                    if customVisionText.isEmpty {
+                        Button(action: {
+                            dismissPersonTypeSheet()
+                        }) {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.yellowButton)
+                                .frame(width: 24, height: 24)
+                                .padding()
+                                .background(Color.blackCopy)
+                                .clipShape(Circle())
+                        }
+                    } else {
+                        Button(action: {
+                            addPersonTypeVision()
+                        }) {
+                            Image(systemName: "checkmark")
+                                .foregroundColor(.yellowButton)
+                                .frame(width: 24, height: 24)
+                                .padding()
+                                .background(Color.blackCopy)
+                                .clipShape(Circle())
                         }
                     }
-                    .padding()
-                    .frame(height: 100)
-                    .background(Color.mauveBackground)
-                    .clipShape(TopRoundedRectangle())
                 }
+                .padding()
+                .frame(height: 100)
+                .background(Color.mauveBackground)
+                .clipShape(TopRoundedRectangle())
             }
         }
-        
+    }
+    
     
     
     
@@ -516,6 +518,19 @@ struct HabitFormView: View {
             customUnitText = ""
             selectedRecurrenceUnit = trimmedUnit
         }
+    }
+    
+    private func dismissPersonTypeSheet() {
+        showCustomVisionSheet = false
+        isvisionTextFocused = false
+        
+    }
+    private func addPersonTypeVision() {
+        let trimmedVisionText = customVisionText.trimmingCharacters(in: .whitespacesAndNewlines)
+        showCustomVisionSheet = false
+        isvisionTextFocused = false
+        visionText = trimmedVisionText
+        customUnitText = ""
     }
     
 }
