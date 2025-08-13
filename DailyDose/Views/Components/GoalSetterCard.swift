@@ -17,11 +17,11 @@ struct GoalSetterCard: View {
                 .frame(maxWidth: .infinity)
                 .frame(height: 250)
                 .cornerRadius(50)
-                .opacity(0.1)
+                .opacity(0.05)
             
             VStack(alignment: .leading) {
                 Text("Define your goal:")
-                    .font(.custom("Syne-SemiBold", size: 20))
+                    .font(.custom("Syne-Medium", size: 19))
                     .padding(.horizontal, 20)
                     .padding(.top, 35)
 

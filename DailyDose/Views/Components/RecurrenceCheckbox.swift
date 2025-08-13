@@ -21,6 +21,7 @@ struct RecurrenceCheckbox: View {
                         .foregroundColor(Color.blackCopy)
                         .cornerRadius(50)
                         .frame(height: 40)
+                        .opacity(0.05)
                 } else {
                     Rectangle()
                         .frame(maxWidth: .infinity)
@@ -30,23 +31,6 @@ struct RecurrenceCheckbox: View {
                 }
                 
                 HStack {
-                    if isRecurrenceCheckboxSelected {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(Color.yellowButton)
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(Color.blackCopy)
-                            
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.blackCopy)
-                        }
-                        
-                    } else {
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(.blackCopy, lineWidth: 1)
-                            .frame(width: 20, height: 20)
-                    }
-                    
                     if isRecurrenceCheckboxSelected {
                         Text(title)
                             .font(.system(size: 14))

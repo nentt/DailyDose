@@ -28,6 +28,7 @@ struct HabitFormView: View {
     @State private var showCustomVisionSheet = false
     @State private var customVisionText: String = ""
     @FocusState private var isvisionTextFocused: Bool
+    @State private var showReminderView: Bool = true
     
     @Environment(\.dismiss) var dismiss
     
@@ -45,8 +46,16 @@ struct HabitFormView: View {
                     habitName
                     periodicityView
                     reccurenceAndGoalView
-                    visionView
+                    Rectangle()
+                        .fill(Color.black.opacity(0.5))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 0.2)
+                        .padding(.vertical)
+                    reminderView
                     Spacer()
+ 
+
+                    createHabitButton
                     
                 }
             }
@@ -87,14 +96,14 @@ struct HabitFormView: View {
             }
             .zIndex(2)
             
-            VStack {
-                Spacer()
-                if showCustomVisionSheet {
-                    personTypeSheet
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                }
-            }
-            .zIndex(2)
+//            VStack {
+//                Spacer()
+//                if showCustomVisionSheet {
+//                    personTypeSheet
+//                        .transition(.move(edge: .bottom).combined(with: .opacity))
+//                }
+//            }
+//            .zIndex(2)
             
             
         }
@@ -105,14 +114,14 @@ struct HabitFormView: View {
     var titleView: some View {
         VStack {
             Text("Start a new habit")
-                .font(.custom("Syne-SemiBold", size: 30))
+                .font(.custom("Syne-SemiBold", size: 19))
                 .foregroundColor(.blackCopy)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.horizontal, 20)
                 .padding(.top, -5)
             
             Text("Even tiny ones build real change.")
-                .font(.custom("Syne-SemiBold", size: 20))
+                .font(.custom("Syne-SemiBold", size: 14))
                 .foregroundColor(.gray)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.horizontal, 10)
@@ -132,7 +141,7 @@ struct HabitFormView: View {
                         .stroke(isTitleConfirmed && !habitTitle.isEmpty ? Color.yellowButton : Color.clear, lineWidth: 2)
                 )
                 .foregroundColor(.blackCopy)
-                .font(.custom("Syne-SemiBold", size: 20))
+                .font(.custom("Syne-SemiBold", size:19))
                 .padding(.bottom, 20)
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 1)
@@ -208,11 +217,11 @@ struct HabitFormView: View {
                     .frame(maxWidth: .infinity)
                     .frame(height: 250)
                     .cornerRadius(50)
-                    .opacity(0.1)
+                    .opacity(0.04)
                 
                 VStack(alignment: .leading) {
                     Text("Track your \n progress in...")
-                        .font(.custom("Syne-SemiBold", size: 20))
+                        .font(.custom("Syne-Medium", size: 19))
                     
                     ScrollView(.vertical, showsIndicators: false) {
                         RecurrenceCheckbox(
@@ -298,76 +307,31 @@ struct HabitFormView: View {
         }
     }
     
-    //MARK: Vision View
-    var visionView: some View {
-        VStack{
-            (
-                Text("I want to become ")
-                    .font(.custom("Syne-SemiBold", size: 25))
-                    .foregroundColor(.gray)
-                +
-                Text(visionText)
-                    .font(.custom("Syne-SemiBold", size: 25))
-                    .foregroundColor(.yellowButton)
-                    .underline(true, color: .blackCopy.opacity(0.2))
-                
-            )
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.top, 20)
-            .multilineTextAlignment(.center)
-            .onTapGesture {
-                showCustomVisionSheet = true
-                isvisionTextFocused = true
-            }
-        }
-    }
+//    //MARK: Vision View
+//    var visionView: some View {
+//        VStack{
+//            (
+//                Text("I want to become ")
+//                    .font(.custom("Syne-SemiBold", size: 25))
+//                    .foregroundColor(.gray)
+//                +
+//                Text(visionText)
+//                    .font(.custom("Syne-SemiBold", size: 25))
+//                    .foregroundColor(.yellowButton)
+//                    .underline(true, color: .blackCopy.opacity(0.2))
+//                
+//            )
+//            .frame(maxWidth: .infinity, alignment: .center)
+//            .padding(.top, 20)
+//            .multilineTextAlignment(.center)
+//            .onTapGesture {
+//                showCustomVisionSheet = true
+//                isvisionTextFocused = true
+//            }
+//        }
+//    }
     
-    //MARK: Recap View
-    //    var recapView: some View {
-    //        VStack {(
-    //            Text("I choose to ")
-    //                .foregroundColor(.blackCopy.opacity(0.8))
-    //                .font(.custom("Syne-SemiBold", size: 19))
-    //
-    //
-    //            +
-    //            Text("\((habitTitle.isEmpty ? "meditate" : habitTitle).lowercased())")
-    //                .foregroundColor(.yellowButton)
-    //                .fontWeight(.bold)
-    //                .font(.custom("Syne-SemiBold", size: 30))
-    //            +
-    //            Text(", for ")
-    //                .foregroundColor(.blackCopy.opacity(0.8))
-    //                .font(.custom("Syne-SemiBold", size: 19))
-    //
-    //
-    //            +
-    //            Text("\(habitGoal) \((selectedRecurrenceUnit.isEmpty ? "Minutes" : selectedRecurrenceUnit).lowercased())")
-    //                .foregroundColor(.yellowButton)
-    //                .fontWeight(.bold)
-    //                .font(.custom("Syne-SemiBold", size: 30))
-    //
-    //            +
-    //            Text(habitPeriodicity.kind == .challenge ? " as part of a " : " ")
-    //                .foregroundColor(.blackCopy.opacity(0.8))
-    //                .font(.custom("Syne-SemiBold", size: 19))
-    //
-    //
-    //            +
-    //            Text("\(habitPeriodicity.kind.label)")
-    //                .foregroundColor(.yellowButton)
-    //                .fontWeight(.bold)
-    //                .font(.custom("Syne-SemiBold", size: 30))
-    //
-    //            +
-    //            Text(", so I can grow into who I’m meant to be.")
-    //                .foregroundColor(.blackCopy.opacity(0.8))
-    //                .font(.custom("Syne-SemiBold", size: 19))
-    //            )
-    //        .multilineTextAlignment(.center)
-    //        }
-    //        .padding(.top, 20)
-    //    }
+    
     
     //MARK: Custom Recurrence Sheet
     var customRecurrenceSheet: some View {
@@ -380,7 +344,7 @@ struct HabitFormView: View {
                             .background(Color.yellowButton)
                             .cornerRadius(50)
                             .foregroundColor(.blackCopy)
-                            .font(.custom("Syne-SemiBold", size: 20))
+                            .font(.custom("Syne-SemiBold", size: 19))
                             .frame(maxWidth: .infinity)
                             .autocorrectionDisabled()
                             .focused($isTextFieldFocused)
@@ -433,71 +397,123 @@ struct HabitFormView: View {
         }
     }
     
-    //MARK: 'Type of person' sheet
-    var personTypeSheet: some View {
-        ZStack {
-            VStack {
-                HStack {
-                    ZStack {
-                        TextField("i.e., a mindful ...", text: $customVisionText)
-                            .padding(20)
-                            .background(Color.yellowButton)
-                            .cornerRadius(50)
-                            .foregroundColor(.blackCopy)
-                            .font(.custom("Syne-SemiBold", size: 20))
-                            .frame(maxWidth: .infinity)
-                            .autocorrectionDisabled()
-                            .focused($isvisionTextFocused)
-                            .textInputAutocapitalization(.never)
-                        //                                .onChange(of: customUnitText, {
-                        //                                    customUnitText = String(customUnitText.prefix(6))
-                        //                                })
-                        if !customVisionText.isEmpty {
-                            Button(action: {
-                                customVisionText = ""
-                            }) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .foregroundColor(.gray)
-                            }
-                            .padding(.leading, 240)
-                        }
+    
+    //MARK: Repeat View
+    var reminderView: some View {
+        VStack {
+            HStack {
+                Text("Set reminder")
+                    .font(.custom("Syne-SemiBold", size: 19))
+                
+                Spacer()
+                
+                Toggle("", isOn: $showReminderView)
+            }
+            .padding(2)
+            HStack {
+                if showReminderView {
+                    HStack {
+                        Text("Repeat")
+                            .font(.custom("Syne-SemiBold", size: 19))
+                        
+                        Spacer()
+                        
+                        Text("Choose a moment")
+                            .font(.custom("Syne-Regular", size: 19))
+                        
                         
                     }
-                    
-                    Spacer()
-                    
-                    if customVisionText.isEmpty {
-                        Button(action: {
-                            dismissPersonTypeSheet()
-                        }) {
-                            Image(systemName: "xmark")
-                                .foregroundColor(.yellowButton)
-                                .frame(width: 24, height: 24)
-                                .padding()
-                                .background(Color.blackCopy)
-                                .clipShape(Circle())
-                        }
-                    } else {
-                        Button(action: {
-                            addPersonTypeVision()
-                        }) {
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.yellowButton)
-                                .frame(width: 24, height: 24)
-                                .padding()
-                                .background(Color.blackCopy)
-                                .clipShape(Circle())
-                        }
-                    }
                 }
-                .padding()
-                .frame(height: 100)
-                .background(Color.mauveBackground)
-                .clipShape(TopRoundedRectangle())
             }
         }
     }
     
+    //MARK: Create Habit Button
+    var createHabitButton: some View {
+        VStack {
+            Button(action: {
+                
+            }, label: {
+                Text("Create habit")
+                    .font(.custom("Syne-SemiBold", size: 19))
+                    .fontWeight(.bold)
+                    .foregroundColor(.yellowButton)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 60)
+                    .background(Color.blackCopy)
+                    .cornerRadius(50)
+            })
+
+        }
+    }
+
+    
+    
+//    //MARK: 'Type of person' sheet
+//    var personTypeSheet: some View {
+//        ZStack {
+//            VStack {
+//                HStack {
+//                    ZStack {
+//                        TextField("i.e., a mindful ...", text: $customVisionText)
+//                            .padding(20)
+//                            .background(Color.yellowButton)
+//                            .cornerRadius(50)
+//                            .foregroundColor(.blackCopy)
+//                            .font(.custom("Syne-SemiBold", size: 20))
+//                            .frame(maxWidth: .infinity)
+//                            .autocorrectionDisabled()
+//                            .focused($isvisionTextFocused)
+//                            .textInputAutocapitalization(.never)
+//                        //                                .onChange(of: customUnitText, {
+//                        //                                    customUnitText = String(customUnitText.prefix(6))
+//                        //                                })
+//                        if !customVisionText.isEmpty {
+//                            Button(action: {
+//                                customVisionText = ""
+//                            }) {
+//                                Image(systemName: "xmark.circle.fill")
+//                                    .foregroundColor(.gray)
+//                            }
+//                            .padding(.leading, 240)
+//                        }
+//                        
+//                    }
+//                    
+//                    Spacer()
+//                    
+//                    if customVisionText.isEmpty {
+//                        Button(action: {
+//                            dismissPersonTypeSheet()
+//                        }) {
+//                            Image(systemName: "xmark")
+//                                .foregroundColor(.yellowButton)
+//                                .frame(width: 24, height: 24)
+//                                .padding()
+//                                .background(Color.blackCopy)
+//                                .clipShape(Circle())
+//                        }
+//                    } else {
+//                        Button(action: {
+//                            addPersonTypeVision()
+//                        }) {
+//                            Image(systemName: "checkmark")
+//                                .foregroundColor(.yellowButton)
+//                                .frame(width: 24, height: 24)
+//                                .padding()
+//                                .background(Color.blackCopy)
+//                                .clipShape(Circle())
+//                        }
+//                    }
+//                }
+//                .padding()
+//                .frame(height: 100)
+//                .background(Color.mauveBackground)
+//                .clipShape(TopRoundedRectangle())
+//            }
+//        }
+//    }
+//    
     
     
     
@@ -560,6 +576,53 @@ struct TopRoundedRectangle: Shape {
 }
 
 
+
+//MARK: Recap View
+//    var recapView: some View {
+//        VStack {(
+//            Text("I choose to ")
+//                .foregroundColor(.blackCopy.opacity(0.8))
+//                .font(.custom("Syne-SemiBold", size: 19))
+//
+//
+//            +
+//            Text("\((habitTitle.isEmpty ? "meditate" : habitTitle).lowercased())")
+//                .foregroundColor(.yellowButton)
+//                .fontWeight(.bold)
+//                .font(.custom("Syne-SemiBold", size: 30))
+//            +
+//            Text(", for ")
+//                .foregroundColor(.blackCopy.opacity(0.8))
+//                .font(.custom("Syne-SemiBold", size: 19))
+//
+//
+//            +
+//            Text("\(habitGoal) \((selectedRecurrenceUnit.isEmpty ? "Minutes" : selectedRecurrenceUnit).lowercased())")
+//                .foregroundColor(.yellowButton)
+//                .fontWeight(.bold)
+//                .font(.custom("Syne-SemiBold", size: 30))
+//
+//            +
+//            Text(habitPeriodicity.kind == .challenge ? " as part of a " : " ")
+//                .foregroundColor(.blackCopy.opacity(0.8))
+//                .font(.custom("Syne-SemiBold", size: 19))
+//
+//
+//            +
+//            Text("\(habitPeriodicity.kind.label)")
+//                .foregroundColor(.yellowButton)
+//                .fontWeight(.bold)
+//                .font(.custom("Syne-SemiBold", size: 30))
+//
+//            +
+//            Text(", so I can grow into who I’m meant to be.")
+//                .foregroundColor(.blackCopy.opacity(0.8))
+//                .font(.custom("Syne-SemiBold", size: 19))
+//            )
+//        .multilineTextAlignment(.center)
+//        }
+//        .padding(.top, 20)
+//    }
 
 
 

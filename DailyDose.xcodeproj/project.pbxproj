@@ -29,6 +29,7 @@
 		6E580D542DEF765C00FFF5CC /* HabitFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E580D532DEF765C00FFF5CC /* HabitFormView.swift */; };
 		6EC489172E0B06C3004C99A4 /* PeriodicityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC489162E0B06C3004C99A4 /* PeriodicityButton.swift */; };
 		6ED2D0472E1E3DF600921DEC /* CustomRecurrenceSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED2D0462E1E3DF600921DEC /* CustomRecurrenceSheet.swift */; };
+		6EDEA1032E4B03E90045D06C /* HabitFormFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDEA1022E4B03E90045D06C /* HabitFormFlowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		6E580D532DEF765C00FFF5CC /* HabitFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitFormView.swift; sourceTree = "<group>"; };
 		6EC489162E0B06C3004C99A4 /* PeriodicityButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodicityButton.swift; sourceTree = "<group>"; };
 		6ED2D0462E1E3DF600921DEC /* CustomRecurrenceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRecurrenceSheet.swift; sourceTree = "<group>"; };
+		6EDEA1022E4B03E90045D06C /* HabitFormFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitFormFlowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 			children = (
 				6E580D262DEB8D8000FFF5CC /* MainView.swift */,
 				6E580D532DEF765C00FFF5CC /* HabitFormView.swift */,
+				6EDEA1022E4B03E90045D06C /* HabitFormFlowView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				6E580D542DEF765C00FFF5CC /* HabitFormView.swift in Sources */,
 				6EC489172E0B06C3004C99A4 /* PeriodicityButton.swift in Sources */,
 				6E4B2B9B2E41CBE600BEF10C /* GoalSetterCard.swift in Sources */,
+				6EDEA1032E4B03E90045D06C /* HabitFormFlowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
