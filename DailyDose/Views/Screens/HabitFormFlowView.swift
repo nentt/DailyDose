@@ -70,7 +70,7 @@ struct HabitFormFlowView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 ZStack(alignment: .trailing) {
-                    if currentPage == 0 {
+                   
                         Text("define your habit")
                             .font(.custom("Syne-SemiBold", size: 17))
                             .foregroundColor(.blackCopy.opacity(0.4))
@@ -84,15 +84,16 @@ struct HabitFormFlowView: View {
                             .foregroundColor(.blackCopy.opacity(0.4))
                             .textCase(.uppercase)
                             .padding(.top, 30)
-                            .opacity(showCustomHabitTextSheet ? 0 : 1)
+                            .opacity(showCustomHabitTextSheet ? 0 : (currentPage == 1 ? 0 : 1))
                             .animation(.easeInOut(duration: 0.3), value: showCustomHabitTextSheet)
-                    } else if currentPage == 1 {
+                    
+                    if currentPage == 1 {
                         Text("set goals")
                             .font(.custom("Syne-SemiBold", size: 17))
                             .foregroundColor(.blackCopy.opacity(0.4))
                             .textCase(.uppercase)
                             .padding(.top, 30)
-                            .opacity(currentPage == 1 ? 1 : 0)
+                            .transition(.opacity)
                             .animation(.easeInOut(duration: 0.3), value: currentPage)
                     }
                 }
