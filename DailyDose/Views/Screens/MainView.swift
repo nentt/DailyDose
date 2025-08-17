@@ -26,7 +26,7 @@ struct MainView: View {
                         Image(systemName: "plus")
                             .font(.system(size: 25))
                             .foregroundColor(.yellowButton)
-                            .frame(width: 60, height: 60)
+                            .frame(width: 50, height: 50)
                             .background(Circle().fill(Color.blackCopy))
                             .padding(.horizontal, 20)
                     }
