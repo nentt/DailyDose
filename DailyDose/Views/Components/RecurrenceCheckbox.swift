@@ -14,40 +14,23 @@ struct RecurrenceCheckbox: View {
     
     var body: some View {
         Button(action: action) {
-            ZStack {
-                if isRecurrenceCheckboxSelected {
-                    Rectangle()
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(Color.blackCopy)
-                        .cornerRadius(50)
-                        .frame(height: 40)
-                        .opacity(0.05)
-                } else {
-                    Rectangle()
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(Color.yellowButton)
-                        .cornerRadius(50)
-                        .frame(height: 40)
-                }
-                
-                HStack {
-                    if isRecurrenceCheckboxSelected {
-                        Text(title)
-                            .font(.system(size: 14))
-                            .foregroundColor(Color.yellowButton)
-                            .fontWeight(.bold)
-                            .cornerRadius(50)
-                    } else {
-                        Text(title)
-                            .font(.system(size: 14))
-                            .foregroundColor(Color.blackCopy)
-                            .fontWeight(.bold)
-                            .cornerRadius(50)
-                    }
-                    
-                    Spacer()
-                }
-                .padding(.horizontal, 20)
+            HStack {
+                Text(title)
+                    .font(.system(size: 14))
+                    .foregroundColor(Color.blackCopy)
+                    .fontWeight(.bold)
+                    .cornerRadius(50)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
+                    .background(
+                        Capsule()
+                            .fill(Color.white)
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color.blackCopy.opacity(0.2), lineWidth: 0.5)
+                    )
+                Spacer()
             }
         }
     }
