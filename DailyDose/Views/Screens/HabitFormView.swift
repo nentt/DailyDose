@@ -303,7 +303,7 @@ struct HabitFormView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             
-            GoalSetterCard(habitGoal: $habitGoal)
+//            GoalSetterCard(habitGoal: $habitGoal)
         }
     }
     
