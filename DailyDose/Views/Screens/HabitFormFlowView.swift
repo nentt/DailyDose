@@ -194,7 +194,6 @@ struct HabitFormFlowView: View {
                 .padding()
                 .frame(height: 100)
                 .background(Color.mauveBackground)
-                .clipShape(TopRoundedRectangle())
             }
         }
     }
@@ -552,6 +551,24 @@ struct HabitFormFlowView: View {
     //
     //    }
 }
+//
+//struct TopRoundedRectangle: Shape {
+//    var radius: CGFloat = 30
+//    
+//    func path(in rect: CGRect) -> Path {
+//        var path = Path()
+//        
+//        path.move(to: CGPoint(x: 0, y: radius))
+//        path.addQuadCurve(to: CGPoint(x: radius, y: 0), control: CGPoint(x: 0, y: 0))
+//        path.addLine(to: CGPoint(x: rect.width - radius, y: 0))
+//        path.addQuadCurve(to: CGPoint(x: rect.width, y: radius), control: CGPoint(x: rect.width, y: 0))
+//        path.addLine(to: CGPoint(x: rect.width, y: rect.height)) // droite
+//        path.addLine(to: CGPoint(x: 0, y: rect.height)) // bas
+//        path.closeSubpath()
+//        
+//        return path
+//    }
+//}
 
 #Preview {
     HabitFormFlowView()
