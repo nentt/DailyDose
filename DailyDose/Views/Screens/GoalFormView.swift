@@ -31,7 +31,7 @@ struct GoalFormView: View {
                 .keyboardType(.numberPad)
                 .focused($isGoalNumberKeyboardFocused)
                 .opacity(0)
-                
+            
             
             VStack {
                 Spacer()
@@ -85,10 +85,10 @@ struct GoalFormView: View {
                     .font(.custom("Syne-ExtraBold", size: 90))
                     .padding(.trailing, 20)
                     .onChange(of: goalNumber) { oldValue, newValue in
-                            if newValue > numberGoalLimit {
-                                goalNumber = numberGoalLimit
-                            }
+                        if newValue > numberGoalLimit {
+                            goalNumber = numberGoalLimit
                         }
+                    }
                 
                 VStack(alignment: .leading) {
                     Text("steps")
@@ -106,99 +106,118 @@ struct GoalFormView: View {
     
     //MARK: Define your goal
     var goalSettings: some View {
-        HStack {
-            Button {
-                goalNumber = 5
-                isGoalNumberKeyboardFocused = false
-                showCustomGoalValidationButton = false
-                
-                
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(.blackCopy.opacity(0.1))
-                        .frame(width: 50, height: 50)
+            HStack {
+                Button {
+                    goalNumber = 5
+                    isGoalNumberKeyboardFocused = false
+                    showCustomGoalValidationButton = false
                     
-                    Text("5")
-                        .font(.custom("Syne-Regular", size: 22))
-                        .foregroundColor(.blackCopy.opacity(0.5))
-                        .padding(.top, -5)
+                    
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(.white)
+                            .frame(width: 50, height: 50)
+                        
+                        Text("5")
+                            .font(.custom("Syne-Regular", size: 22))
+                            .foregroundColor(.blackCopy.opacity(0.5))
+                            .padding(.top, -5)
+                    }
+                }
+                
+                Button {
+                    goalNumber = 10
+                    isGoalNumberKeyboardFocused = false
+                    showCustomGoalValidationButton = false
+                    
+                    
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(.white)
+                            .frame(width: 50, height: 50)
+                        
+                        Text("10")
+                            .font(.custom("Syne-Regular", size: 22))
+                            .foregroundColor(.blackCopy.opacity(0.5))
+                            .padding(.top, -5)
+                    }
+                }
+                
+                Button {
+                    goalNumber = 15
+                    isGoalNumberKeyboardFocused = false
+                    showCustomGoalValidationButton = false
+                    
+                    
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(.white)
+                            .frame(width: 50, height: 50)
+                        
+                        Text("15")
+                            .font(.custom("Syne-Regular", size: 22))
+                            .foregroundColor(.blackCopy.opacity(0.5))
+                            .padding(.top, -5)
+                    }
+                }
+                
+                Button {
+                    goalNumber = 30
+                    isGoalNumberKeyboardFocused = false
+                    showCustomGoalValidationButton = false
+                    
+                    
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(.white)
+                            .frame(width: 50, height: 50)
+                        
+                        Text("30")
+                            .font(.custom("Syne-Regular", size: 22))
+                            .foregroundColor(.blackCopy.opacity(0.5))
+                            .padding(.top, -5)
+                    }
+                }
+                
+                Button {
+                    goalNumber = 60
+                    isGoalNumberKeyboardFocused = false
+                    showCustomGoalValidationButton = false
+                    
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(.white)
+                            .frame(width: 50, height: 50)
+                        
+                        Text("60")
+                            .font(.custom("Syne-Regular", size: 22))
+                            .foregroundColor(.blackCopy.opacity(0.5))
+                            .padding(.top, -3)
+                    }
+                }
+                Spacer()
+                
+                Button {
+                    goalNumber = 0
+                    isGoalNumberKeyboardFocused = true
+                    showCustomGoalValidationButton = true
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(.blackCopy.opacity(0.1))
+                            .frame(width: 50, height: 50)
+                        
+                        Image(systemName: "circle.grid.3x3.fill")
+                            .font(.custom("Syne-Regular", size: 22))
+                            .foregroundColor(.blackCopy.opacity(0.5))
+                    }
                 }
             }
-            
-            Button {
-                goalNumber = 10
-                isGoalNumberKeyboardFocused = false
-                showCustomGoalValidationButton = false
-                
-                
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(.blackCopy.opacity(0.1))
-                        .frame(width: 50, height: 50)
-                    
-                    Text("10")
-                        .font(.custom("Syne-Regular", size: 22))
-                        .foregroundColor(.blackCopy.opacity(0.5))
-                        .padding(.top, -5)
-                }
-            }
-            
-            Button {
-                goalNumber = 30
-                isGoalNumberKeyboardFocused = false
-                showCustomGoalValidationButton = false
-                
-                
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(.blackCopy.opacity(0.1))
-                        .frame(width: 50, height: 50)
-                    
-                    Text("30")
-                        .font(.custom("Syne-Regular", size: 22))
-                        .foregroundColor(.blackCopy.opacity(0.5))
-                        .padding(.top, -5)
-                }
-            }
-            
-            Button {
-                goalNumber = 60
-                isGoalNumberKeyboardFocused = false
-                showCustomGoalValidationButton = false
-                
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(.blackCopy.opacity(0.1))
-                        .frame(width: 50, height: 50)
-                    
-                    Text("60")
-                        .font(.custom("Syne-Regular", size: 22))
-                        .foregroundColor(.blackCopy.opacity(0.5))
-                        .padding(.top, -3)
-                }
-            }
-            Spacer()
-            
-            Button {
-                goalNumber = 0
-                isGoalNumberKeyboardFocused = true
-                showCustomGoalValidationButton = true
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(.blackCopy.opacity(0.1))
-                        .frame(width: 50, height: 50)
-                    
-                    Image(systemName: "circle.grid.3x3.fill")
-                        .font(.custom("Syne-Regular", size: 22))
-                        .foregroundColor(.blackCopy.opacity(0.5))
-                }
-            }
-        }
         .padding(.horizontal, 20)
     }
     
@@ -233,10 +252,10 @@ extension Int {
         let thousand = number / 1000
         
         if thousand >= 1 {
-                    let truncated = floor(thousand * 10) / 10  // tronque au lieu d’arrondir
-                    return truncated.truncatingRemainder(dividingBy: 1) == 0
-                        ? "\(Int(truncated))k"
-                        : String(format: "%.1fk", truncated)
+            let truncated = floor(thousand * 10) / 10  // tronque au lieu d’arrondir
+            return truncated.truncatingRemainder(dividingBy: 1) == 0
+            ? "\(Int(truncated))k"
+            : String(format: "%.1fk", truncated)
         } else {
             return "\(self)"
         }
