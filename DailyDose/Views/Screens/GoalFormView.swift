@@ -20,18 +20,40 @@ struct GoalFormView: View {
     @State private var isTextFieldFocused: Bool = false
     @State private var showCustomRecurrenceSheet: Bool = false
     @State private var habitGoal: Int = 5
+    @State private var currentPage = 0
     
     
     var body: some View {
         ZStack {
             Color.mauveBackground.ignoresSafeArea()
+            
             VStack {
                 goalView
-                Spacer()
-                    goalSettings
-                        .padding(.top, 50)
-                        .padding(.bottom, 50)
-                goalDescription
+                
+                TabView(selection: $currentPage) {
+                    VStack {
+                        Spacer()
+                        goalSettings
+                            .padding(.top, 50)
+                            .padding(.bottom, 50)
+                        Spacer()
+                        goalDescription
+                    }
+                    .tag(0)
+                    .background(Color.mauveBackground)
+                }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                
+                HStack(spacing: 8) {
+                    ForEach(0..<5) { index in
+                        Rectangle()
+                            .fill(index == currentPage ? Color.yellowButton : Color.blackCopy.opacity(0.1))
+                            .frame(height: 4)
+                            .cornerRadius(2)
+                    }
+                }
+                .padding(.horizontal, 40)
+                .padding(.top, 10)
             }
             .padding(.top, 50)
             
@@ -39,7 +61,6 @@ struct GoalFormView: View {
                 .keyboardType(.numberPad)
                 .focused($isGoalNumberKeyboardFocused)
                 .opacity(0)
-            
             
             VStack {
                 Spacer()
@@ -63,16 +84,12 @@ struct GoalFormView: View {
                             .foregroundColor(.yellowButton)
                     }
                     .padding(.top, 20)
-                    
                 })
-                
             }
         }
-        
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 ZStack(alignment: .trailing) {
-                    
                     Text("set your goal")
                         .font(.custom("Syne-SemiBold", size: 17))
                         .foregroundColor(.blackCopy.opacity(0.4))
