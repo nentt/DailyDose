@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RecurrenceCheckbox: View {
+struct RecurrenceCell: View {
     let title: String
     let action: () -> Void
     @Binding var isRecurrenceCheckboxSelected: Bool
@@ -16,20 +16,16 @@ struct RecurrenceCheckbox: View {
         Button(action: action) {
             HStack {
                 Text(title)
-                    .font(.system(size: 14))
-                    .foregroundColor(Color.blackCopy)
-                    .fontWeight(.bold)
+                    .font(.custom("Syne-Regular", size: 22))
+                    .foregroundColor(.blackCopy.opacity(0.5))
                     .cornerRadius(50)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 20)
+                    .padding(.vertical, 25)
+                    .padding(.horizontal, 40)
                     .background(
                         Capsule()
                             .fill(Color.white)
                     )
-                    .overlay(
-                        Capsule()
-                            .stroke(Color.blackCopy.opacity(0.2), lineWidth: 0.5)
-                    )
+                    
                 Spacer()
             }
         }
@@ -37,5 +33,5 @@ struct RecurrenceCheckbox: View {
 }
 
 #Preview {
-    RecurrenceCheckbox(title: "Minutes", action: {}, isRecurrenceCheckboxSelected: .constant(false))
+    RecurrenceCell(title: "Minutes", action: {}, isRecurrenceCheckboxSelected: .constant(false))
 }

@@ -224,7 +224,7 @@ struct HabitFormView: View {
                         .font(.custom("Syne-Medium", size: 19))
                     
                     ScrollView(.vertical, showsIndicators: false) {
-                        RecurrenceCheckbox(
+                        RecurrenceCell(
                             title: "Minutes",
                             action: {
                                 unit = .minutes(habitGoal)
@@ -233,7 +233,7 @@ struct HabitFormView: View {
                             isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == "Minutes")
                         )
                         
-                        RecurrenceCheckbox(
+                        RecurrenceCell(
                             title: "Hours",
                             action: {
                                 unit = .hours(habitGoal)
@@ -242,7 +242,7 @@ struct HabitFormView: View {
                             isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == "Hours")
                         )
                         
-                        RecurrenceCheckbox(
+                        RecurrenceCell(
                             title: "Days",
                             action: {
                                 unit = .days(habitGoal)
@@ -251,7 +251,7 @@ struct HabitFormView: View {
                             isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == "Days")
                         )
                         
-                        RecurrenceCheckbox(
+                        RecurrenceCell(
                             title: "Months",
                             action: {
                                 unit = .months(habitGoal)
@@ -261,7 +261,7 @@ struct HabitFormView: View {
                         )
                         
                         ForEach(customRecurrenceUnitsList, id: \.self) { customUnitTitle in
-                            RecurrenceCheckbox(
+                            RecurrenceCell(
                                 title: customUnitTitle,
                                 action: {
                                     unit = .custom(habitGoal, customUnitTitle)
@@ -271,7 +271,7 @@ struct HabitFormView: View {
                             )
                         }
                         
-                        RecurrenceCheckbox(
+                        RecurrenceCell(
                             title: "Other",
                             action: {
                                 isTextFieldFocused = true

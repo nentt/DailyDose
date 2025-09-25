@@ -21,6 +21,8 @@ struct GoalFormView: View {
     @State private var showCustomRecurrenceSheet: Bool = false
     @State private var habitGoal: Int = 5
     @State private var currentPage = 0
+    @State var isRecurrenceCheckboxSelected: Bool = false
+
     
     
     var body: some View {
@@ -28,7 +30,7 @@ struct GoalFormView: View {
             Color.mauveBackground.ignoresSafeArea()
             
             VStack {
-                goalView
+                HabitView
                 
                 TabView(selection: $currentPage) {
                     VStack {
@@ -41,6 +43,10 @@ struct GoalFormView: View {
                     }
                     .tag(0)
                     .background(Color.mauveBackground)
+                    
+                    recurrenceSettings
+                        .tag(1)
+                        .background(Color.mauveBackground)
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
@@ -50,6 +56,11 @@ struct GoalFormView: View {
                             .fill(index == currentPage ? Color.yellowButton : Color.blackCopy.opacity(0.1))
                             .frame(height: 4)
                             .cornerRadius(2)
+                            .onTapGesture {
+                                withAnimation {
+                                    currentPage = index
+                                }
+                            }
                     }
                 }
                 .padding(.horizontal, 40)
@@ -101,8 +112,8 @@ struct GoalFormView: View {
     }
     
     
-    //MARK: Goal view
-    var goalView: some View {
+    //MARK: Habit view
+    var HabitView: some View {
         VStack {
             HStack(spacing: 0) {
                 Text(goalNumber.roundedWithAbbreviations)
@@ -280,8 +291,24 @@ struct GoalFormView: View {
                 .padding(.leading, 20)
             Spacer()
         }
-            
         
+        
+    }
+    
+    //MARK: Define your recurrence
+    var recurrenceSettings: some View {
+        HStack {
+            ForEach(Unit.allDefaults, id: \.self) { unit in
+                RecurrenceCell(
+                    title: unit.recurrenceCell,
+                    action: {
+                        
+                    },
+                    isRecurrenceCheckboxSelected: $isRecurrenceCheckboxSelected
+                )
+            }
+        }
+        .padding()
     }
 }
 

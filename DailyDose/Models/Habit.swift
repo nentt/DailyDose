@@ -46,7 +46,9 @@ enum Unit: Hashable {
     case minutes(Int)
     case hours(Int)
     case days(Int)
+    case weeks(Int)
     case months(Int)
+    case times(Int)
     case custom(Int, String)
     
     var description: String {
@@ -57,10 +59,33 @@ enum Unit: Hashable {
             return recurrence.pluralized("hour")
         case .days(let recurrence):
             return recurrence.pluralized("day")
+        case .weeks(let recurrence):
+            return recurrence.pluralized("weeks")
         case .months(let recurrence):
             return recurrence.pluralized("month")
+        case .times(let recurrence):
+            return recurrence.pluralized("times")
         case .custom(let recurrence, let unit):
             return "\(recurrence) \(unit)"
+        }
+    }
+    
+    var recurrenceCell: String {
+        switch self {
+        case .minutes:
+            return "minutes"
+        case .hours:
+            return "hours"
+        case .days:
+            return "days"
+        case .weeks:
+            return "weeks"
+        case .months:
+            return "months"
+        case .times:
+            return "times"
+        case .custom:
+            return "other"
         }
     }
 }
@@ -93,6 +118,12 @@ extension HabitPeriodicity.Kind {
         case .challenge: return "challenge"
 
         }
+    }
+}
+
+extension Unit {
+    static var allDefaults: [Unit] {
+        [.minutes(5), .hours(1), .days(7), .weeks(3), .months(1), .times(1)]
     }
 }
 
