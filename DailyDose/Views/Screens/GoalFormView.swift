@@ -50,21 +50,25 @@ struct GoalFormView: View {
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
-                HStack(spacing: 8) {
-                    ForEach(0..<5) { index in
-                        Rectangle()
-                            .fill(index == currentPage ? Color.yellowButton : Color.blackCopy.opacity(0.1))
-                            .frame(height: 4)
-                            .cornerRadius(2)
-                            .onTapGesture {
-                                withAnimation {
-                                    currentPage = index
+                if isGoalNumberKeyboardFocused {
+                    
+                } else {
+                    HStack(spacing: 8) {
+                        ForEach(0..<5) { index in
+                            Rectangle()
+                                .fill(index == currentPage ? Color.yellowButton : Color.blackCopy.opacity(0.1))
+                                .frame(height: 4)
+                                .cornerRadius(2)
+                                .onTapGesture {
+                                    withAnimation {
+                                        currentPage = index
+                                    }
                                 }
-                            }
+                        }
                     }
+                    .padding(.horizontal, 40)
+                    .padding(.top, 10)
                 }
-                .padding(.horizontal, 40)
-                .padding(.top, 10)
             }
             .padding(.top, 50)
             
@@ -284,13 +288,16 @@ struct GoalFormView: View {
     //MARK: Goal description
     var goalDescription: some View {
         HStack {
-            Text("Decide how big your next streak should be.")
-                .frame(width: 250, height: 130)
-                .foregroundColor(.blackCopy)
-                .font(.custom("Syne-SemiBold", size: 30))
-                .padding(.leading, 20)
-            Spacer()
+                Text("Decide how big your next streak should be.")
+                    .frame(width: 250, height: 130)
+                    .foregroundColor(.blackCopy)
+                    .font(.custom("Syne-SemiBold", size: isGoalNumberKeyboardFocused ? 17 : 30))
+                    .padding(.leading, 20)
+                    .opacity(isGoalNumberKeyboardFocused ? 0.6 : 1.0)
+                Spacer()
+            
         }
+        .animation(.easeOut(duration: 0.5), value: isGoalNumberKeyboardFocused)
         
         
     }
