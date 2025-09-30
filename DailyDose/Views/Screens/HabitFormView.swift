@@ -230,7 +230,7 @@ struct HabitFormView: View {
                                 unit = .minutes(habitGoal)
                                 selectedRecurrenceUnit = "Minutes"
                             },
-                            isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == "Minutes")
+                            isRecurrenceCellSelected: .constant(selectedRecurrenceUnit == "Minutes")
                         )
                         
                         RecurrenceCell(
@@ -239,7 +239,7 @@ struct HabitFormView: View {
                                 unit = .hours(habitGoal)
                                 selectedRecurrenceUnit = "Hours"
                             },
-                            isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == "Hours")
+                            isRecurrenceCellSelected: .constant(selectedRecurrenceUnit == "Hours")
                         )
                         
                         RecurrenceCell(
@@ -248,7 +248,7 @@ struct HabitFormView: View {
                                 unit = .days(habitGoal)
                                 selectedRecurrenceUnit = "Days"
                             },
-                            isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == "Days")
+                            isRecurrenceCellSelected: .constant(selectedRecurrenceUnit == "Days")
                         )
                         
                         RecurrenceCell(
@@ -257,7 +257,7 @@ struct HabitFormView: View {
                                 unit = .months(habitGoal)
                                 selectedRecurrenceUnit = "Months"
                             },
-                            isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == "Months")
+                            isRecurrenceCellSelected: .constant(selectedRecurrenceUnit == "Months")
                         )
                         
                         ForEach(customRecurrenceUnitsList, id: \.self) { customUnitTitle in
@@ -267,7 +267,7 @@ struct HabitFormView: View {
                                     unit = .custom(habitGoal, customUnitTitle)
                                     selectedRecurrenceUnit = customUnitTitle
                                 },
-                                isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == customUnitTitle)
+                                isRecurrenceCellSelected: .constant(selectedRecurrenceUnit == customUnitTitle)
                             )
                         }
                         
@@ -278,7 +278,7 @@ struct HabitFormView: View {
                                 showCustomRecurrenceSheet = true
                                 selectedRecurrenceUnit = "Other"
                             },
-                            isRecurrenceCheckboxSelected: .constant(selectedRecurrenceUnit == "Other")
+                            isRecurrenceCellSelected: .constant(selectedRecurrenceUnit == "Other")
                         )
                         .padding(.bottom, 30)
                         

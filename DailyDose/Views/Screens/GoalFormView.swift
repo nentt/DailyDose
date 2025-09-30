@@ -15,14 +15,17 @@ struct GoalFormView: View {
     private let numberGoalLimit = 10000
     
     @State private var unit: Unit = .minutes(5)
-    @State private var selectedRecurrenceUnit: String = "Minutes"
-    @State private var customRecurrenceUnitsList: [String] = []
-    @State private var isTextFieldFocused: Bool = false
+    @State private var selectedRecurrenceUnit: String = "minutes"
+    @FocusState private var isRecurrenceKeyboardFocused: Bool
     @State private var showCustomRecurrenceSheet: Bool = false
+    @State private var customRecurrence: String = ""
+    @State private var showCustomRecurrenceValidationButton = false
     @State private var habitGoal: Int = 5
     @State private var currentPage = 0
-    @State var isRecurrenceCheckboxSelected: Bool = false
-
+    @State var isRecurrenceCellSelected: Bool = false
+    let columns = [GridItem(.flexible(minimum: 120, maximum: 200), spacing: 12)]
+    
+    
     
     
     var body: some View {
@@ -44,9 +47,15 @@ struct GoalFormView: View {
                     .tag(0)
                     .background(Color.mauveBackground)
                     
-                    recurrenceSettings
-                        .tag(1)
-                        .background(Color.mauveBackground)
+                    VStack {
+                        Spacer()
+                        recurrenceSettings
+                        Spacer()
+                        recurrenceDescription
+                    }
+                    .tag(1)
+                    .background(Color.mauveBackground)
+                    
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
@@ -81,6 +90,18 @@ struct GoalFormView: View {
                 Spacer()
                 if showCustomGoalValidationButton {
                     customGoalValidationButton
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+            }
+            
+            TextField("", value: $customRecurrence, formatter: NumberFormatter())
+                .focused($isRecurrenceKeyboardFocused)
+                .opacity(0)
+            
+            VStack {
+                Spacer()
+                if showCustomRecurrenceValidationButton {
+                    customRecurrenceValidationButton
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
             }
@@ -132,7 +153,7 @@ struct GoalFormView: View {
                     }
                 
                 VStack(alignment: .leading) {
-                    Text("steps")
+                    Text("\(selectedRecurrenceUnit)")
                         .font(.custom("Syne-Regular", size: 17))
                         .foregroundColor(.primary)
                     
@@ -288,36 +309,124 @@ struct GoalFormView: View {
     //MARK: Goal description
     var goalDescription: some View {
         HStack {
-                Text("Decide how big your next streak should be.")
-                    .frame(width: 250, height: 130)
-                    .foregroundColor(.blackCopy)
-                    .font(.custom("Syne-SemiBold", size: isGoalNumberKeyboardFocused ? 17 : 30))
-                    .padding(.leading, 20)
-                    .opacity(isGoalNumberKeyboardFocused ? 0.6 : 1.0)
-                Spacer()
+            Text("Decide how big your new streak should be.")
+                .frame(width: 250, height: 130)
+                .foregroundColor(.blackCopy)
+                .font(.custom("Syne-SemiBold", size: isGoalNumberKeyboardFocused ? 17 : 30))
+                .padding(.leading, 20)
+                .opacity(isGoalNumberKeyboardFocused ? 0.6 : 1.0)
+            Spacer()
             
         }
         .animation(.easeOut(duration: 0.5), value: isGoalNumberKeyboardFocused)
-        
-        
     }
     
     //MARK: Define your recurrence
     var recurrenceSettings: some View {
-        HStack {
-            ForEach(Unit.allDefaults, id: \.self) { unit in
+        VStack {
+            HStack {
                 RecurrenceCell(
-                    title: unit.recurrenceCell,
+                    title: "Minutes",
                     action: {
-                        
+                        selectedRecurrenceUnit = "minutes"
                     },
-                    isRecurrenceCheckboxSelected: $isRecurrenceCheckboxSelected
+                    isRecurrenceCellSelected: $isRecurrenceCellSelected
+                )
+                
+                RecurrenceCell(
+                    title: "Hours",
+                    action: {
+                        selectedRecurrenceUnit = "hours"
+                    },
+                    isRecurrenceCellSelected: $isRecurrenceCellSelected
+                )
+                
+                RecurrenceCell(
+                    title: "Days",
+                    action: {
+                        selectedRecurrenceUnit = "days"
+                    },
+                    isRecurrenceCellSelected: $isRecurrenceCellSelected
+                )
+                
+            }
+            .padding(.bottom, 2)
+            
+            HStack {
+                RecurrenceCell(
+                    title: "Months",
+                    action: {
+                        selectedRecurrenceUnit = "months"
+                    },
+                    isRecurrenceCellSelected: $isRecurrenceCellSelected
+                )
+                
+                RecurrenceCell(
+                    title: "Times",
+                    action: {
+                        selectedRecurrenceUnit = "times"
+                    },
+                    isRecurrenceCellSelected: $isRecurrenceCellSelected
+                )
+                
+                RecurrenceCell(
+                    title: "  ",
+                    action: {
+                        isRecurrenceKeyboardFocused = true
+                        showCustomRecurrenceValidationButton = true
+                        customRecurrence = selectedRecurrenceUnit
+                    },
+                    isRecurrenceCellSelected: $isRecurrenceCellSelected
+                )
+                .overlay(
+                    Image(systemName: "plus")
+                        .font(.custom("Syne-Regular", size: 30))
+                        .foregroundColor(.blackCopy.opacity(0.5))
+
                 )
             }
         }
-        .padding()
+        .frame(height: 250)
+
+    }
+    
+    //MARK: Recurrence description
+    var recurrenceDescription: some View {
+        HStack {
+            Text("Choose how to track your streak.")
+                .frame(width: 250, height: 130)
+                .foregroundColor(.blackCopy)
+                .font(.custom("Syne-SemiBold", size: 30))
+                .padding(.leading, 20)
+            Spacer()
+            
+        }
+    }
+    
+    //MARK: Custom recurrence validation
+    var customRecurrenceValidationButton: some View {
+        HStack {
+            Spacer()
+            Button(action: {
+                isRecurrenceKeyboardFocused = false
+                showCustomRecurrenceValidationButton = false
+                
+                
+            }) {
+                Image(systemName: "checkmark")
+                    .foregroundColor(.yellowButton)
+                    .frame(width: 24, height: 24)
+                    .padding()
+                    .background(Color.blackCopy)
+                    .clipShape(Circle())
+                    .padding()
+                    .frame(height: 100)
+                    .background(Color.mauveBackground)
+            }
+        }
     }
 }
+
 
 extension Int {
     var roundedWithAbbreviations: String {

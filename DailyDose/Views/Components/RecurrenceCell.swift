@@ -10,7 +10,7 @@ import SwiftUI
 struct RecurrenceCell: View {
     let title: String
     let action: () -> Void
-    @Binding var isRecurrenceCheckboxSelected: Bool
+    @Binding var isRecurrenceCellSelected: Bool
     
     var body: some View {
         Button(action: action) {
@@ -19,19 +19,19 @@ struct RecurrenceCell: View {
                     .font(.custom("Syne-Regular", size: 22))
                     .foregroundColor(.blackCopy.opacity(0.5))
                     .cornerRadius(50)
-                    .padding(.vertical, 25)
-                    .padding(.horizontal, 40)
+                    .padding(.vertical, 15)
+                    .padding(.horizontal, 25)
                     .background(
                         Capsule()
                             .fill(Color.white)
                     )
                     
-                Spacer()
             }
         }
     }
 }
 
 #Preview {
-    RecurrenceCell(title: "Minutes", action: {}, isRecurrenceCheckboxSelected: .constant(false))
+    RecurrenceCell(title: "Minutes", action: {}, isRecurrenceCellSelected: .constant(false))
+        .background(Color.mauveBackground)
 }
