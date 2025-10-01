@@ -354,8 +354,7 @@ struct GoalFormView: View {
                         showCustomUnitValidationButton = false
 
                     },
-                    isUnitCellSelected: $isUnitCellSelected,
-                    backgroundColor: Color.white
+                    isUnitCellSelected: $isUnitCellSelected
                 )
                 
                 UnitCell(
@@ -367,9 +366,7 @@ struct GoalFormView: View {
 
 
                     },
-                    isUnitCellSelected: $isUnitCellSelected,
-                    backgroundColor: Color.white
-
+                    isUnitCellSelected: $isUnitCellSelected
                 )
                 
                 UnitCell(
@@ -381,8 +378,7 @@ struct GoalFormView: View {
 
 
                     },
-                    isUnitCellSelected: $isUnitCellSelected,
-                    backgroundColor: Color.white
+                    isUnitCellSelected: $isUnitCellSelected
                 )
                 
             }
@@ -397,8 +393,7 @@ struct GoalFormView: View {
                         showCustomUnitValidationButton = false
 
                     },
-                    isUnitCellSelected: $isUnitCellSelected,
-                    backgroundColor: Color.white
+                    isUnitCellSelected: $isUnitCellSelected
                 )
                 
                 UnitCell(
@@ -410,8 +405,7 @@ struct GoalFormView: View {
 
 
                     },
-                    isUnitCellSelected: $isUnitCellSelected,
-                    backgroundColor: Color.white
+                    isUnitCellSelected: $isUnitCellSelected
                 )
                 
                 UnitCell(
