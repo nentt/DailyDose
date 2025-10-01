@@ -224,61 +224,61 @@ struct HabitFormView: View {
                         .font(.custom("Syne-Medium", size: 19))
                     
                     ScrollView(.vertical, showsIndicators: false) {
-                        RecurrenceCell(
+                        UnitCell(
                             title: "Minutes",
                             action: {
                                 unit = .minutes(habitGoal)
                                 selectedRecurrenceUnit = "Minutes"
                             },
-                            isRecurrenceCellSelected: .constant(selectedRecurrenceUnit == "Minutes")
+                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Minutes")
                         )
                         
-                        RecurrenceCell(
+                        UnitCell(
                             title: "Hours",
                             action: {
                                 unit = .hours(habitGoal)
                                 selectedRecurrenceUnit = "Hours"
                             },
-                            isRecurrenceCellSelected: .constant(selectedRecurrenceUnit == "Hours")
+                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Hours")
                         )
                         
-                        RecurrenceCell(
+                        UnitCell(
                             title: "Days",
                             action: {
                                 unit = .days(habitGoal)
                                 selectedRecurrenceUnit = "Days"
                             },
-                            isRecurrenceCellSelected: .constant(selectedRecurrenceUnit == "Days")
+                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Days")
                         )
                         
-                        RecurrenceCell(
+                        UnitCell(
                             title: "Months",
                             action: {
                                 unit = .months(habitGoal)
                                 selectedRecurrenceUnit = "Months"
                             },
-                            isRecurrenceCellSelected: .constant(selectedRecurrenceUnit == "Months")
+                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Months")
                         )
                         
                         ForEach(customRecurrenceUnitsList, id: \.self) { customUnitTitle in
-                            RecurrenceCell(
+                            UnitCell(
                                 title: customUnitTitle,
                                 action: {
                                     unit = .custom(habitGoal, customUnitTitle)
                                     selectedRecurrenceUnit = customUnitTitle
                                 },
-                                isRecurrenceCellSelected: .constant(selectedRecurrenceUnit == customUnitTitle)
+                                isUnitCellSelected: .constant(selectedRecurrenceUnit == customUnitTitle)
                             )
                         }
                         
-                        RecurrenceCell(
+                        UnitCell(
                             title: "Other",
                             action: {
                                 isTextFieldFocused = true
                                 showCustomRecurrenceSheet = true
                                 selectedRecurrenceUnit = "Other"
                             },
-                            isRecurrenceCellSelected: .constant(selectedRecurrenceUnit == "Other")
+                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Other")
                         )
                         .padding(.bottom, 30)
                         

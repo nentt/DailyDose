@@ -30,6 +30,7 @@ struct HabitFormFlowView: View {
     //    @FocusState private var isRecurrenceFocused: Bool
     //    @State private var customRecurrence: String = ""
     @State private var recurrenceOffset: CGFloat = UIScreen.main.bounds.height
+    @State private var customUnit: String = "minutes"
     
     
     

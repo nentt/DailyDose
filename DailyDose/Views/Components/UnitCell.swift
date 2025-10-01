@@ -7,23 +7,24 @@
 
 import SwiftUI
 
-struct RecurrenceCell: View {
+struct UnitCell: View {
     let title: String
     let action: () -> Void
-    @Binding var isRecurrenceCellSelected: Bool
+    @Binding var isUnitCellSelected: Bool
+    var backgroundColor: Color = .white
     
     var body: some View {
         Button(action: action) {
             HStack {
                 Text(title)
-                    .font(.custom("Syne-Regular", size: 22))
+                    .font(.custom("Syne-Regular", size: 20))
                     .foregroundColor(.blackCopy.opacity(0.5))
                     .cornerRadius(50)
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 25)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
                     .background(
                         Capsule()
-                            .fill(Color.white)
+                            .fill(backgroundColor)
                     )
                     
             }
@@ -32,6 +33,6 @@ struct RecurrenceCell: View {
 }
 
 #Preview {
-    RecurrenceCell(title: "Minutes", action: {}, isRecurrenceCellSelected: .constant(false))
+    UnitCell(title: "Minutes", action: {}, isUnitCellSelected: .constant(false))
         .background(Color.mauveBackground)
 }
