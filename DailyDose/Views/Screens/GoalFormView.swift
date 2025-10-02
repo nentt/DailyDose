@@ -23,9 +23,6 @@ struct GoalFormView: View {
     @State private var showCustomUnitSheet: Bool = false
     @FocusState private var isUnitTextFocused: Bool
 
-    
-    @State private var showCustomUnitValidationButton = false
-    
     @State private var habitGoal: Int = 5
     @State private var currentPage = 0
     let columns = [GridItem(.flexible(minimum: 120, maximum: 200), spacing: 12)]
@@ -113,14 +110,6 @@ struct GoalFormView: View {
             
             VStack {
                 Spacer()
-                if showCustomUnitValidationButton {
-                    customUnitValidationButton
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                }
-            }
-            
-            VStack {
-                Spacer()
                 if showCustomUnitSheet {
                     customUnitSheet
                         .transition(.move(edge: .bottom).combined(with: .opacity))
@@ -174,10 +163,12 @@ struct GoalFormView: View {
                     }
                 
                 VStack(alignment: .leading) {
-                    Text("\(selectedUnit)")
+                    Text(selectedUnit.isEmpty ? "unit" : "\(selectedUnit)")
                         .font(.custom("Syne-Regular", size: 17))
-                        .foregroundColor(.primary)
-                    
+                        .foregroundColor(selectedUnit.isEmpty ? .blackCopy.opacity(0.2) : .primary)
+                        .fontWeight(selectedUnit.isEmpty ? .bold : .regular)
+                        .underline(selectedUnit.isEmpty, color: .yellowButton)
+
                     Text("daily")
                         .font(.custom("Syne-Regular", size: 17))
                         .foregroundColor(.secondary)
@@ -351,8 +342,6 @@ struct GoalFormView: View {
                     action: {
                         selectedUnit = "minutes"
                         isUnitKeyboardFocused = false
-                        showCustomUnitValidationButton = false
-
                     },
                     isUnitCellSelected: $isUnitCellSelected
                 )
@@ -362,9 +351,6 @@ struct GoalFormView: View {
                     action: {
                         selectedUnit = "hours"
                         isUnitKeyboardFocused = false
-                        showCustomUnitValidationButton = false
-
-
                     },
                     isUnitCellSelected: $isUnitCellSelected
                 )
@@ -374,9 +360,6 @@ struct GoalFormView: View {
                     action: {
                         selectedUnit = "days"
                         isUnitKeyboardFocused = false
-                        showCustomUnitValidationButton = false
-
-
                     },
                     isUnitCellSelected: $isUnitCellSelected
                 )
@@ -390,8 +373,6 @@ struct GoalFormView: View {
                     action: {
                         selectedUnit = "months"
                         isUnitKeyboardFocused = false
-                        showCustomUnitValidationButton = false
-
                     },
                     isUnitCellSelected: $isUnitCellSelected
                 )
@@ -401,9 +382,6 @@ struct GoalFormView: View {
                     action: {
                         selectedUnit = "times"
                         isUnitKeyboardFocused = false
-                        showCustomUnitValidationButton = false
-
-
                     },
                     isUnitCellSelected: $isUnitCellSelected
                 )
@@ -445,28 +423,6 @@ struct GoalFormView: View {
         .animation(.easeOut(duration: 0.5), value: showCustomUnitSheet)
     }
     
-    //MARK: Custom unit validation
-    var customUnitValidationButton: some View {
-        HStack {
-            Spacer()
-            Button(action: {
-                isUnitKeyboardFocused = false
-                showCustomUnitValidationButton = false
-                
-                
-            }) {
-                Image(systemName: "checkmark")
-                    .foregroundColor(.yellowButton)
-                    .frame(width: 24, height: 24)
-                    .padding()
-                    .background(Color.blackCopy)
-                    .clipShape(Circle())
-                    .padding()
-                    .frame(height: 100)
-                    .background(Color.mauveBackground)
-            }
-        }
-    }
     
     //MARK: Custom Unit Sheet
     var customUnitSheet: some View {
