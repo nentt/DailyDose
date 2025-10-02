@@ -66,6 +66,11 @@ struct GoalFormView: View {
                     .tag(1)
                     .background(Color.mauveBackground)
                     
+                    VStack {
+                        frequencySettings
+                    }
+                    .tag(2)
+                    
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
@@ -73,7 +78,7 @@ struct GoalFormView: View {
                     
                 } else {
                     HStack(spacing: 8) {
-                        ForEach(0..<5) { index in
+                        ForEach(0..<3) { index in
                             Rectangle()
                                 .fill(index == currentPage ? Color.yellowButton : Color.blackCopy.opacity(0.1))
                                 .frame(height: 4)
@@ -488,6 +493,13 @@ struct GoalFormView: View {
                 .frame(height: 100)
                 .background(Color.mauveBackground)
             }
+        }
+    }
+    
+    //MARK: Define your frequency
+    var frequencySettings: some View {
+        VStack {
+            
         }
     }
     
