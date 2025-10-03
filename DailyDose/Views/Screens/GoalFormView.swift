@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct GoalFormView: View {
+    @State private var habitGoal: Int = 5
+    @State private var currentPage = 0
+    let columns = [GridItem(.flexible(minimum: 120, maximum: 200), spacing: 12)]
+    
     @Environment(\.dismiss) private var dismiss
     @State private var goalNumber: Int = 5
     @FocusState private var isGoalNumberKeyboardFocused: Bool
@@ -22,11 +26,10 @@ struct GoalFormView: View {
     @FocusState private var isUnitKeyboardFocused: Bool
     @State private var showCustomUnitSheet: Bool = false
     @FocusState private var isUnitTextFocused: Bool
-
-    @State private var habitGoal: Int = 5
-    @State private var currentPage = 0
-    let columns = [GridItem(.flexible(minimum: 120, maximum: 200), spacing: 12)]
     
+    @State private var selectedFrequency: String = "daily"
+    @State private var tappedFrequency: [Bool] = Array(repeating: false, count: 7)
+
     
     
     
@@ -67,7 +70,10 @@ struct GoalFormView: View {
                     .background(Color.mauveBackground)
                     
                     VStack {
+                        Spacer()
                         frequencySettings
+                        Spacer()
+                        FrequencyDescription
                     }
                     .tag(2)
                     
@@ -173,7 +179,7 @@ struct GoalFormView: View {
                         .foregroundColor(selectedUnit.isEmpty ? .blackCopy.opacity(0.2) : .primary)
                         .fontWeight(selectedUnit.isEmpty ? .bold : .regular)
                         .underline(selectedUnit.isEmpty, color: .yellowButton)
-
+                    
                     Text("daily")
                         .font(.custom("Syne-Regular", size: 17))
                         .foregroundColor(.secondary)
@@ -406,13 +412,13 @@ struct GoalFormView: View {
                     Image(systemName: "plus")
                         .font(.custom("Syne-Regular", size: 20))
                         .foregroundColor(.blackCopy.opacity(0.5))
-
+                    
                 )
             }
         }
         .padding(.top, (isUnitKeyboardFocused ? 170 : 0))
         .frame(height: 250)
-
+        
     }
     
     //MARK: Unit description
@@ -498,9 +504,40 @@ struct GoalFormView: View {
     
     //MARK: Define your frequency
     var frequencySettings: some View {
-        VStack {
-            
+        let days = ["M", "T", "W", "T", "F", "S", "S"]
+
+        return HStack {
+            ForEach(days.indices, id: \.self) { index in
+                Button {
+                    tappedFrequency[index].toggle()
+                } label: {
+                    VStack {
+                        Circle()
+                            .fill(tappedFrequency[index] ? .blackCopy.opacity(0.1) : .white)
+                            .frame(width: 45, height: 45)
+
+                        Text(days[index])
+                            .font(.custom("Syne-Regular", size: 22))
+                            .foregroundColor(.blackCopy.opacity(0.5))
+                            .padding(.top, 5)
+                    }
+                }
+            }
         }
+        .padding(.horizontal, 20)
+    }
+    
+    //MARK: Frequency description
+    var FrequencyDescription: some View {
+        HStack {
+            Text("Pick the days to commit to your streak.")
+                .frame(width: 250, height: 130)
+                .foregroundColor(.blackCopy)
+                .font(.custom("Syne-SemiBold", size: 30))
+                .padding(.leading, 10)
+            Spacer()
+        }
+        .animation(.easeOut(duration: 0.5), value: showCustomUnitSheet)
     }
     
     private func dismissUnitTextSheet() {
