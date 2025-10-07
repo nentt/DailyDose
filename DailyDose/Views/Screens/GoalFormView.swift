@@ -22,7 +22,7 @@ struct GoalFormView: View {
     @State private var selectedUnit: String = "minutes"
     @State private var customUnit: String = "minutes"
     @State private var customUnitText: String = ""
-    @State var isUnitCellSelected: Bool = false
+    @State var isUnitCellSelected: String = "minutes"
     @FocusState private var isUnitKeyboardFocused: Bool
     @State private var showCustomUnitSheet: Bool = false
     @FocusState private var isUnitTextFocused: Bool
@@ -201,12 +201,13 @@ struct GoalFormView: View {
             } label: {
                 ZStack {
                     Circle()
-                        .fill(.white)
+                        .fill(goalNumber == 5 ? .yellowButton : .white)
                         .frame(width: 50, height: 50)
                     
                     Text("5")
                         .font(.custom("Syne-Regular", size: 22))
-                        .foregroundColor(.blackCopy.opacity(0.5))
+                        .fontWeight(goalNumber == 5 ? .bold : .regular)
+                        .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
                         .padding(.top, -5)
                 }
             }
@@ -220,12 +221,13 @@ struct GoalFormView: View {
             } label: {
                 ZStack {
                     Circle()
-                        .fill(.white)
+                        .fill(goalNumber == 10 ? .yellowButton : .white)
                         .frame(width: 50, height: 50)
                     
                     Text("10")
                         .font(.custom("Syne-Regular", size: 22))
-                        .foregroundColor(.blackCopy.opacity(0.5))
+                        .fontWeight(goalNumber == 10 ? .bold : .regular)
+                        .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
                         .padding(.top, -5)
                 }
             }
@@ -239,12 +241,13 @@ struct GoalFormView: View {
             } label: {
                 ZStack {
                     Circle()
-                        .fill(.white)
+                        .fill(goalNumber == 15 ? .yellowButton : .white)
                         .frame(width: 50, height: 50)
                     
                     Text("15")
                         .font(.custom("Syne-Regular", size: 22))
-                        .foregroundColor(.blackCopy.opacity(0.5))
+                        .fontWeight(goalNumber == 15 ? .bold : .regular)
+                        .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
                         .padding(.top, -5)
                 }
             }
@@ -258,12 +261,13 @@ struct GoalFormView: View {
             } label: {
                 ZStack {
                     Circle()
-                        .fill(.white)
+                        .fill(goalNumber == 30 ? .yellowButton : .white)
                         .frame(width: 50, height: 50)
                     
                     Text("30")
                         .font(.custom("Syne-Regular", size: 22))
-                        .foregroundColor(.blackCopy.opacity(0.5))
+                        .fontWeight(goalNumber == 30 ? .bold : .regular)
+                        .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
                         .padding(.top, -5)
                 }
             }
@@ -276,13 +280,14 @@ struct GoalFormView: View {
             } label: {
                 ZStack {
                     Circle()
-                        .fill(.white)
+                        .fill(goalNumber == 60 ? .yellowButton : .white)
                         .frame(width: 50, height: 50)
                     
                     Text("60")
                         .font(.custom("Syne-Regular", size: 22))
-                        .foregroundColor(.blackCopy.opacity(0.5))
-                        .padding(.top, -3)
+                        .fontWeight(goalNumber == 60 ? .bold : .regular)
+                        .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
+                        .padding(.top, -5)
                 }
             }
             Spacer()
@@ -354,7 +359,7 @@ struct GoalFormView: View {
                         selectedUnit = "minutes"
                         isUnitKeyboardFocused = false
                     },
-                    isUnitCellSelected: $isUnitCellSelected
+                    isUnitCellSelected: selectedUnit == "minutes"
                 )
                 
                 UnitCell(
@@ -363,7 +368,7 @@ struct GoalFormView: View {
                         selectedUnit = "hours"
                         isUnitKeyboardFocused = false
                     },
-                    isUnitCellSelected: $isUnitCellSelected
+                    isUnitCellSelected: selectedUnit == "hours"
                 )
                 
                 UnitCell(
@@ -372,7 +377,7 @@ struct GoalFormView: View {
                         selectedUnit = "days"
                         isUnitKeyboardFocused = false
                     },
-                    isUnitCellSelected: $isUnitCellSelected
+                    isUnitCellSelected: selectedUnit == "days"
                 )
                 
             }
@@ -385,7 +390,7 @@ struct GoalFormView: View {
                         selectedUnit = "months"
                         isUnitKeyboardFocused = false
                     },
-                    isUnitCellSelected: $isUnitCellSelected
+                    isUnitCellSelected: selectedUnit == "months"
                 )
                 
                 UnitCell(
@@ -394,7 +399,7 @@ struct GoalFormView: View {
                         selectedUnit = "times"
                         isUnitKeyboardFocused = false
                     },
-                    isUnitCellSelected: $isUnitCellSelected
+                    isUnitCellSelected: selectedUnit == "times"
                 )
                 
                 UnitCell(
@@ -405,7 +410,7 @@ struct GoalFormView: View {
                         showCustomUnitSheet = true
                         customUnitText = selectedUnit
                     },
-                    isUnitCellSelected: $isUnitCellSelected,
+                    isUnitCellSelected: selectedUnit == "",
                     backgroundColor: Color.blackCopy.opacity(0.1)
                 )
                 .overlay(
@@ -513,7 +518,7 @@ struct GoalFormView: View {
                 } label: {
                     VStack {
                         Circle()
-                            .fill(tappedFrequency[index] ? .blackCopy.opacity(0.1) : .white)
+                            .fill(tappedFrequency[index] ? .yellowButton : .white)
                             .frame(width: 45, height: 45)
 
                         Text(days[index])
@@ -534,7 +539,7 @@ struct GoalFormView: View {
                 .frame(width: 250, height: 130)
                 .foregroundColor(.blackCopy)
                 .font(.custom("Syne-SemiBold", size: 30))
-                .padding(.leading, 10)
+                .padding(.leading, 20)
             Spacer()
         }
         .animation(.easeOut(duration: 0.5), value: showCustomUnitSheet)

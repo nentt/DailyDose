@@ -10,7 +10,7 @@ import SwiftUI
 struct UnitCell: View {
     let title: String
     let action: () -> Void
-    @Binding var isUnitCellSelected: Bool
+    let isUnitCellSelected: Bool
     var backgroundColor: Color = .white
     
     var body: some View {
@@ -24,7 +24,7 @@ struct UnitCell: View {
                     .padding(.horizontal, 20)
                     .background(
                         Capsule()
-                            .fill(backgroundColor)
+                            .fill(isUnitCellSelected ? Color.yellowButton : backgroundColor)
                     )
                     
             }
@@ -33,6 +33,6 @@ struct UnitCell: View {
 }
 
 #Preview {
-    UnitCell(title: "Minutes", action: {}, isUnitCellSelected: .constant(false))
+    UnitCell(title: "Minutes", action: {}, isUnitCellSelected: false)
         .background(Color.mauveBackground)
 }

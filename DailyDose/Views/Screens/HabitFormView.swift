@@ -223,68 +223,68 @@ struct HabitFormView: View {
                     Text("Track your \n progress in...")
                         .font(.custom("Syne-Medium", size: 19))
                     
-                    ScrollView(.vertical, showsIndicators: false) {
-                        UnitCell(
-                            title: "Minutes",
-                            action: {
-                                unit = .minutes(habitGoal)
-                                selectedRecurrenceUnit = "Minutes"
-                            },
-                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Minutes")
-                        )
-                        
-                        UnitCell(
-                            title: "Hours",
-                            action: {
-                                unit = .hours(habitGoal)
-                                selectedRecurrenceUnit = "Hours"
-                            },
-                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Hours")
-                        )
-                        
-                        UnitCell(
-                            title: "Days",
-                            action: {
-                                unit = .days(habitGoal)
-                                selectedRecurrenceUnit = "Days"
-                            },
-                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Days")
-                        )
-                        
-                        UnitCell(
-                            title: "Months",
-                            action: {
-                                unit = .months(habitGoal)
-                                selectedRecurrenceUnit = "Months"
-                            },
-                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Months")
-                        )
-                        
-                        ForEach(customRecurrenceUnitsList, id: \.self) { customUnitTitle in
-                            UnitCell(
-                                title: customUnitTitle,
-                                action: {
-                                    unit = .custom(habitGoal, customUnitTitle)
-                                    selectedRecurrenceUnit = customUnitTitle
-                                },
-                                isUnitCellSelected: .constant(selectedRecurrenceUnit == customUnitTitle)
-                            )
-                        }
-                        
-                        UnitCell(
-                            title: "Other",
-                            action: {
-                                isTextFieldFocused = true
-                                showCustomRecurrenceSheet = true
-                                selectedRecurrenceUnit = "Other"
-                            },
-                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Other")
-                        )
-                        .padding(.bottom, 30)
-                        
-                        Spacer()
-                        
-                    }
+//                    ScrollView(.vertical, showsIndicators: false) {
+//                        UnitCell(
+//                            title: "Minutes",
+//                            action: {
+//                                unit = .minutes(habitGoal)
+//                                selectedRecurrenceUnit = "Minutes"
+//                            },
+//                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Minutes")
+//                        )
+//                        
+//                        UnitCell(
+//                            title: "Hours",
+//                            action: {
+//                                unit = .hours(habitGoal)
+//                                selectedRecurrenceUnit = "Hours"
+//                            },
+//                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Hours")
+//                        )
+//                        
+//                        UnitCell(
+//                            title: "Days",
+//                            action: {
+//                                unit = .days(habitGoal)
+//                                selectedRecurrenceUnit = "Days"
+//                            },
+//                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Days")
+//                        )
+//                        
+//                        UnitCell(
+//                            title: "Months",
+//                            action: {
+//                                unit = .months(habitGoal)
+//                                selectedRecurrenceUnit = "Months"
+//                            },
+//                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Months")
+//                        )
+//                        
+//                        ForEach(customRecurrenceUnitsList, id: \.self) { customUnitTitle in
+//                            UnitCell(
+//                                title: customUnitTitle,
+//                                action: {
+//                                    unit = .custom(habitGoal, customUnitTitle)
+//                                    selectedRecurrenceUnit = customUnitTitle
+//                                },
+//                                isUnitCellSelected: .constant(selectedRecurrenceUnit == customUnitTitle)
+//                            )
+//                        }
+//                        
+//                        UnitCell(
+//                            title: "Other",
+//                            action: {
+//                                isTextFieldFocused = true
+//                                showCustomRecurrenceSheet = true
+//                                selectedRecurrenceUnit = "Other"
+//                            },
+//                            isUnitCellSelected: .constant(selectedRecurrenceUnit == "Other")
+//                        )
+//                        .padding(.bottom, 30)
+//                        
+//                        Spacer()
+//                        
+//                    }
                     .mask(
                         LinearGradient(
                             gradient: Gradient(stops: [
