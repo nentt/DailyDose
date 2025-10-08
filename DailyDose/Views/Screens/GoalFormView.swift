@@ -27,8 +27,31 @@ struct GoalFormView: View {
     @State private var showCustomUnitSheet: Bool = false
     @FocusState private var isUnitTextFocused: Bool
     
-    @State private var selectedFrequency: String = "daily"
     @State private var tappedFrequency: [Bool] = Array(repeating: false, count: 7)
+    
+    var recurrence: String {
+        
+        if selectedUnit == "days" {
+            return "daily"
+        }
+        
+        guard selectedUnit == "minutes" || selectedUnit == "hours" else {
+            return "custom"
+        }
+        
+        let selectedDays = tappedFrequency.filter { $0 }.count
+        
+        switch selectedDays {
+        case 7:
+            return "daily"
+        case 1...6:
+            return "weekly"
+        default:
+            return "daily"
+    }
+    
+}
+
 
     
     
@@ -101,6 +124,12 @@ struct GoalFormView: View {
                 }
             }
             .padding(.top, 50)
+            .onChange(of: selectedUnit) {
+                if selectedUnit.lowercased() == "days" {
+                    tappedFrequency = Array(repeating: true, count: 7)
+                }
+                
+            }
             
             TextField("", value: $goalNumber, formatter: NumberFormatter())
                 .keyboardType(.numberPad)
@@ -174,13 +203,13 @@ struct GoalFormView: View {
                     }
                 
                 VStack(alignment: .leading) {
-                    Text(selectedUnit.isEmpty ? "unit" : "\(selectedUnit)")
+                    Text(selectedUnit.isEmpty ? "unit" : goalNumber.pluralizedUnit(selectedUnit))
                         .font(.custom("Syne-Regular", size: 17))
                         .foregroundColor(selectedUnit.isEmpty ? .blackCopy.opacity(0.2) : .primary)
                         .fontWeight(selectedUnit.isEmpty ? .bold : .regular)
                         .underline(selectedUnit.isEmpty, color: .yellowButton)
                     
-                    Text("daily")
+                    Text(recurrence)
                         .font(.custom("Syne-Regular", size: 17))
                         .foregroundColor(.secondary)
                 }
@@ -572,6 +601,30 @@ extension Int {
             : String(format: "%.1fk", truncated)
         } else {
             return "\(self)"
+        }
+    }
+}
+
+extension Int {
+    func pluralizedUnit(_ word: String) -> String {
+        if self <= 1 {
+            switch word.lowercased() {
+                case "minutes": return "minute"
+                case "hours": return "hour"
+                case "days": return "day"
+                case "months": return "month"
+                case "times": return "time"
+                default: return word
+            }
+        } else  {
+            switch word.lowercased() {
+                case "minutes": return "minutes"
+                case "hours": return "hours"
+                case "days": return "days"
+                case "months": return "months"
+                case "times": return "times"
+                default: return word
+            }
         }
     }
 }
