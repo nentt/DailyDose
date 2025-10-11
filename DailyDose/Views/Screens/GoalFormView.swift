@@ -27,16 +27,40 @@ struct GoalFormView: View {
     @State private var showCustomUnitSheet: Bool = false
     @FocusState private var isUnitTextFocused: Bool
     
-    @State private var tappedFrequency: [Bool] = Array(repeating: false, count: 7)
+    @State private var tappedFrequency: [Bool] = Array(repeating: true, count: 7)
+    @State private var timeRecurrence: String = "weekly"
+    var timeRecurrenceOption = ["weekly", "monthly"]
     
     var recurrence: String {
         
-        if selectedUnit == "days" {
-            return "daily"
+        if selectedUnit == "days" || selectedUnit == "months" {
+              return "challenge"
+          }
+          
+        let selectedDaysTime = tappedFrequency.filter {$0}.count
+        
+        if selectedUnit == "times" {
+            switch selectedDaysTime {
+            case 7:
+                return "daily"
+            case 1...6:
+                return timeRecurrence
+            default:
+                return "daily"
+            }
         }
         
-        guard selectedUnit == "minutes" || selectedUnit == "hours" else {
-            return "custom"
+        guard selectedUnit == "minutes" || selectedUnit == "hours" || selectedUnit == "times" else {
+            let selectedDaysCustomUnit = tappedFrequency.filter { $0 }.count
+            
+            switch selectedDaysCustomUnit {
+            case 7:
+                return "daily"
+            case 1...6:
+                return "weekly"
+            default:
+                return "daily"
+            }
         }
         
         let selectedDays = tappedFrequency.filter { $0 }.count
@@ -125,10 +149,9 @@ struct GoalFormView: View {
             }
             .padding(.top, 50)
             .onChange(of: selectedUnit) {
-                if selectedUnit.lowercased() == "days" {
+                if selectedUnit.lowercased() == "days" ||  selectedUnit.lowercased() == "months" || selectedUnit.lowercased() == "minutes" || selectedUnit.lowercased() == "hours" || selectedUnit.lowercased() == "times"{
                     tappedFrequency = Array(repeating: true, count: 7)
                 }
-                
             }
             
             TextField("", value: $goalNumber, formatter: NumberFormatter())
@@ -387,6 +410,7 @@ struct GoalFormView: View {
                     action: {
                         selectedUnit = "minutes"
                         isUnitKeyboardFocused = false
+                        tappedFrequency = Array(repeating: false, count: 7)
                     },
                     isUnitCellSelected: selectedUnit == "minutes"
                 )
@@ -396,6 +420,7 @@ struct GoalFormView: View {
                     action: {
                         selectedUnit = "hours"
                         isUnitKeyboardFocused = false
+                        tappedFrequency = Array(repeating: false, count: 7)
                     },
                     isUnitCellSelected: selectedUnit == "hours"
                 )
@@ -427,6 +452,7 @@ struct GoalFormView: View {
                     action: {
                         selectedUnit = "times"
                         isUnitKeyboardFocused = false
+                        tappedFrequency = Array(repeating: false, count: 7)
                     },
                     isUnitCellSelected: selectedUnit == "times"
                 )
@@ -438,6 +464,7 @@ struct GoalFormView: View {
                         isUnitTextFocused = true
                         showCustomUnitSheet = true
                         customUnitText = selectedUnit
+                        tappedFrequency = Array(repeating: false, count: 7)
                     },
                     isUnitCellSelected: selectedUnit == "",
                     backgroundColor: Color.blackCopy.opacity(0.1)
@@ -538,27 +565,65 @@ struct GoalFormView: View {
     
     //MARK: Define your frequency
     var frequencySettings: some View {
-        let days = ["M", "T", "W", "T", "F", "S", "S"]
+        VStack {
+            let days = ["M", "T", "W", "T", "F", "S", "S"]
+            let selectedDays = tappedFrequency.filter {$0}.count
 
-        return HStack {
-            ForEach(days.indices, id: \.self) { index in
-                Button {
-                    tappedFrequency[index].toggle()
-                } label: {
-                    VStack {
-                        Circle()
-                            .fill(tappedFrequency[index] ? .yellowButton : .white)
-                            .frame(width: 45, height: 45)
+            
+            return VStack {
+                HStack {
+                    Spacer()
+                    if selectedDays == 7 {
+                        Text("Everyday".uppercased())
+                    } else if selectedDays > 0 {
+                        Text("\(selectedDays) x / week".uppercased())
+                    } else {
+                        Text("Choose at least 1 day".uppercased())
+                            
+                    }
+                }
+                .font(.custom("Syne-Regular", size: 17))
+                .foregroundColor(.blackCopy.opacity(0.5))
+                .padding(.bottom, 20)
 
-                        Text(days[index])
-                            .font(.custom("Syne-Regular", size: 22))
-                            .foregroundColor(.blackCopy.opacity(0.5))
-                            .padding(.top, 5)
+                
+                HStack {
+                    ForEach(days.indices, id: \.self) { index in
+                        Button {
+                            tappedFrequency[index].toggle()
+                        } label: {
+                            VStack {
+                                Circle()
+                                    .fill(tappedFrequency[index] ? .yellowButton : .white)
+                                    .frame(width: 45, height: 45)
+                                
+                                Text(days[index])
+                                    .font(.custom("Syne-Regular", size: 22))
+                                    .foregroundColor(.blackCopy.opacity(0.5))
+                                    .padding(.top, 5)
+                            }
+                        }
+                    }
+                }
+                if selectedUnit == "times" {
+                    let selectedDays = tappedFrequency.filter { $0 }.count
+                    if (1...6).contains(selectedDays) {
+                        Picker("Recurrence", selection: $timeRecurrence) {
+                            ForEach(timeRecurrenceOption, id: \.self) { option in
+                                Text(option.capitalized)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .padding(.top, 20)
+                        .transition(.opacity)
+                        .animation(.easeInOut, value: tappedFrequency)
                     }
                 }
             }
+            .padding(.horizontal, 20)
+            
+            
         }
-        .padding(.horizontal, 20)
     }
     
     //MARK: Frequency description
