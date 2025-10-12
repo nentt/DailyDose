@@ -29,22 +29,22 @@ struct GoalFormView: View {
     
     @State private var tappedFrequency: [Bool] = Array(repeating: true, count: 7)
     @State private var timeRecurrence: String = "weekly"
-    var timeRecurrenceOption = ["weekly", "monthly"]
+    var timeRecurrenceOption = ["daily", "weekly", "monthly"]
     
     var recurrence: String {
         
         if selectedUnit == "days" || selectedUnit == "months" {
-              return "challenge"
-          }
-          
-        let selectedDaysTime = tappedFrequency.filter {$0}.count
+            return "challenge"
+        }
         
         if selectedUnit == "times" {
-            switch selectedDaysTime {
-            case 7:
+            switch timeRecurrence {
+            case "daily":
                 return "daily"
-            case 1...6:
-                return timeRecurrence
+            case "weekly":
+                return "weekly"
+            case "monthly":
+                return "monthly"
             default:
                 return "daily"
             }
@@ -72,11 +72,11 @@ struct GoalFormView: View {
             return "weekly"
         default:
             return "daily"
+        }
+        
     }
     
-}
-
-
+    
     
     
     
@@ -566,11 +566,33 @@ struct GoalFormView: View {
     //MARK: Define your frequency
     var frequencySettings: some View {
         VStack {
-            let days = ["M", "T", "W", "T", "F", "S", "S"]
-            let selectedDays = tappedFrequency.filter {$0}.count
-
             
-            return VStack {
+            if selectedUnit == "times" {
+                VStack {
+                    HStack {
+                        Spacer()
+                        Text("Anytime".uppercased())
+                    }
+                        .font(.custom("Syne-Regular", size: 17))
+                        .foregroundColor(.blackCopy.opacity(0.5))
+                        .padding(.bottom, 20)
+                        .padding(.trailing, 20)
+                    Picker("Recurrence", selection: $timeRecurrence) {
+                        ForEach(timeRecurrenceOption, id: \.self) { option in
+                            Text(option.capitalized)
+                        }
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.top, 20)
+                .padding(.horizontal, 20)
+                .transition(.opacity)
+                .animation(.easeInOut, value: tappedFrequency)
+            } else {
+                
+                let days = ["M", "T", "W", "T", "F", "S", "S"]
+                let selectedDays = tappedFrequency.filter {$0}.count
+                
                 HStack {
                     Spacer()
                     if selectedDays == 7 {
@@ -579,13 +601,14 @@ struct GoalFormView: View {
                         Text("\(selectedDays) x / week".uppercased())
                     } else {
                         Text("Choose at least 1 day".uppercased())
-                            
+                        
                     }
                 }
                 .font(.custom("Syne-Regular", size: 17))
                 .foregroundColor(.blackCopy.opacity(0.5))
                 .padding(.bottom, 20)
-
+                .padding(.trailing, 20)
+                
                 
                 HStack {
                     ForEach(days.indices, id: \.self) { index in
@@ -605,24 +628,8 @@ struct GoalFormView: View {
                         }
                     }
                 }
-                if selectedUnit == "times" {
-                    let selectedDays = tappedFrequency.filter { $0 }.count
-                    if (1...6).contains(selectedDays) {
-                        Picker("Recurrence", selection: $timeRecurrence) {
-                            ForEach(timeRecurrenceOption, id: \.self) { option in
-                                Text(option.capitalized)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .padding(.top, 20)
-                        .transition(.opacity)
-                        .animation(.easeInOut, value: tappedFrequency)
-                    }
-                }
+                .padding(.horizontal, 20)
             }
-            .padding(.horizontal, 20)
-            
-            
         }
     }
     
@@ -674,21 +681,21 @@ extension Int {
     func pluralizedUnit(_ word: String) -> String {
         if self <= 1 {
             switch word.lowercased() {
-                case "minutes": return "minute"
-                case "hours": return "hour"
-                case "days": return "day"
-                case "months": return "month"
-                case "times": return "time"
-                default: return word
+            case "minutes": return "minute"
+            case "hours": return "hour"
+            case "days": return "day"
+            case "months": return "month"
+            case "times": return "time"
+            default: return word
             }
         } else  {
             switch word.lowercased() {
-                case "minutes": return "minutes"
-                case "hours": return "hours"
-                case "days": return "days"
-                case "months": return "months"
-                case "times": return "times"
-                default: return word
+            case "minutes": return "minutes"
+            case "hours": return "hours"
+            case "days": return "days"
+            case "months": return "months"
+            case "times": return "times"
+            default: return word
             }
         }
     }
