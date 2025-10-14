@@ -28,8 +28,7 @@ struct GoalFormView: View {
     @FocusState private var isUnitTextFocused: Bool
     
     @State private var tappedFrequency: [Bool] = Array(repeating: true, count: 7)
-    @State private var timeRecurrence: String = "weekly"
-    var timeRecurrenceOption = ["daily", "weekly", "monthly"]
+    @State private var timeRecurrence: Frequency = .weekly
     
     var recurrence: String {
         
@@ -39,14 +38,12 @@ struct GoalFormView: View {
         
         if selectedUnit == "times" {
             switch timeRecurrence {
-            case "daily":
+            case .daily:
                 return "daily"
-            case "weekly":
+            case .weekly:
                 return "weekly"
-            case "monthly":
+            case .monthly:
                 return "monthly"
-            default:
-                return "daily"
             }
         }
         
@@ -575,13 +572,9 @@ struct GoalFormView: View {
                     }
                         .font(.custom("Syne-Regular", size: 17))
                         .foregroundColor(.blackCopy.opacity(0.5))
-                        .padding(.bottom, 20)
                         .padding(.trailing, 20)
-                    Picker("Recurrence", selection: $timeRecurrence) {
-                        ForEach(timeRecurrenceOption, id: \.self) { option in
-                            Text(option.capitalized)
-                        }
-                    }
+                    
+                    CustomFrequencyPicker(selectedFrequency: $timeRecurrence)
                 }
                 .pickerStyle(.segmented)
                 .padding(.top, 20)
