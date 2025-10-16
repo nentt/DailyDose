@@ -12,6 +12,8 @@ struct GoalFormView: View {
     @State private var currentPage = 0
     let columns = [GridItem(.flexible(minimum: 120, maximum: 200), spacing: 12)]
     
+    @Binding var customHabitText: String
+    
     @Environment(\.dismiss) private var dismiss
     @State private var goalNumber: Int = 5
     @FocusState private var isGoalNumberKeyboardFocused: Bool
@@ -82,53 +84,68 @@ struct GoalFormView: View {
             Color.mauveBackground.ignoresSafeArea()
             
             VStack {
-                HabitView
-                
-                TabView(selection: $currentPage) {
-                    VStack {
-                        Spacer()
-                        goalSettings
-                            .padding(.top, 50)
-                            .padding(.bottom, 50)
-                        Spacer()
-                        goalDescription
-                    }
-                    .tag(0)
-                    .background(Color.mauveBackground)
-                    
-                    VStack {
-                        Spacer()
-                        if showCustomUnitSheet {
-                            
-                        } else {
-                            UnitSettings
-                        }
-                        Spacer()
-                        if showCustomUnitSheet {
-                            
-                        } else {
-                            UnitDescription
-                        }
-                    }
-                    .tag(1)
-                    .background(Color.mauveBackground)
-                    
-                    VStack {
-                        Spacer()
-                        frequencySettings
-                        Spacer()
-                        FrequencyDescription
-                    }
-                    .tag(2)
-                    
+                if currentPage != 3 {
+                    HabitView
+                        .transition(.move(edge: .bottom))
+                        .padding(.bottom, 150)
+                        .animation(.easeOut(duration: 0.5), value: isGoalNumberKeyboardFocused)
+                        .animation(.easeOut(duration: 0.5), value: isUnitKeyboardFocused)
+                        .animation(.easeOut(duration: 0.5), value: showCustomUnitSheet)
                 }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
-                if isGoalNumberKeyboardFocused || isUnitKeyboardFocused {
+                if !(isGoalNumberKeyboardFocused || isUnitKeyboardFocused || showCustomUnitSheet) {
+                    TabView(selection: $currentPage) {
+                        VStack {
+                            Spacer()
+                            goalSettings
+                            Spacer()
+                            goalDescription
+                        }
+                        .tag(0)
+                        .background(Color.mauveBackground)
+                        
+                        VStack {
+                            Spacer()
+                            if showCustomUnitSheet {
+                                
+                            } else {
+                                UnitSettings
+                            }
+                            Spacer()
+                            if showCustomUnitSheet {
+                                
+                            } else {
+                                UnitDescription
+                            }
+                        }
+                        .tag(1)
+                        .background(Color.mauveBackground)
+                        
+                        VStack {
+                            Spacer()
+                            frequencySettings
+                            Spacer()
+                            FrequencyDescription
+                        }
+                        .tag(2)
+                        
+                        VStack {
+                            HStack {
+                                habitRecap
+                                Spacer()
+                            }
+                        }
+                        .tag(3)
+                        
+                    }
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                }
+                
+                if isGoalNumberKeyboardFocused || isUnitKeyboardFocused || showCustomUnitSheet || currentPage == 3 {
                     
                 } else {
                     HStack(spacing: 8) {
-                        ForEach(0..<3) { index in
+                        ForEach(0..<4) { index in
                             Rectangle()
                                 .fill(index == currentPage ? Color.yellowButton : Color.blackCopy.opacity(0.1))
                                 .frame(height: 4)
@@ -196,11 +213,19 @@ struct GoalFormView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 ZStack(alignment: .trailing) {
-                    Text("set your goal")
-                        .font(.custom("Syne-SemiBold", size: 17))
-                        .foregroundColor(.blackCopy.opacity(0.4))
-                        .textCase(.uppercase)
-                        .padding(.top, 30)
+                    if currentPage == 3 {
+                        Text("review your habit")
+                            .font(.custom("Syne-SemiBold", size: 17))
+                            .foregroundColor(.blackCopy.opacity(0.4))
+                            .textCase(.uppercase)
+                            .padding(.top, 30)
+                    } else {
+                        Text("set your goal")
+                            .font(.custom("Syne-SemiBold", size: 17))
+                            .foregroundColor(.blackCopy.opacity(0.4))
+                            .textCase(.uppercase)
+                            .padding(.top, 30)
+                    }
                 }
             }
         }
@@ -357,6 +382,7 @@ struct GoalFormView: View {
                 }
             }
         }
+        .padding(.bottom, 70)
         .padding(.horizontal, 20)
     }
     
@@ -395,7 +421,6 @@ struct GoalFormView: View {
             Spacer()
             
         }
-        .animation(.easeOut(duration: 0.5), value: isGoalNumberKeyboardFocused)
     }
     
     //MARK: Define your unit
@@ -403,7 +428,7 @@ struct GoalFormView: View {
         VStack {
             HStack {
                 UnitCell(
-                    title: "Minutes",
+                    title: "MINUTES",
                     action: {
                         selectedUnit = "minutes"
                         isUnitKeyboardFocused = false
@@ -413,7 +438,7 @@ struct GoalFormView: View {
                 )
                 
                 UnitCell(
-                    title: "Hours",
+                    title: "HOURS",
                     action: {
                         selectedUnit = "hours"
                         isUnitKeyboardFocused = false
@@ -423,7 +448,7 @@ struct GoalFormView: View {
                 )
                 
                 UnitCell(
-                    title: "Days",
+                    title: "DAYS",
                     action: {
                         selectedUnit = "days"
                         isUnitKeyboardFocused = false
@@ -436,7 +461,7 @@ struct GoalFormView: View {
             
             HStack {
                 UnitCell(
-                    title: "Months",
+                    title: "MONTHS",
                     action: {
                         selectedUnit = "months"
                         isUnitKeyboardFocused = false
@@ -445,7 +470,7 @@ struct GoalFormView: View {
                 )
                 
                 UnitCell(
-                    title: "Times",
+                    title: "TIMES",
                     action: {
                         selectedUnit = "times"
                         isUnitKeyboardFocused = false
@@ -573,6 +598,7 @@ struct GoalFormView: View {
                         .font(.custom("Syne-Regular", size: 17))
                         .foregroundColor(.blackCopy.opacity(0.5))
                         .padding(.trailing, 20)
+                        .padding(.bottom, 20)
                     
                     CustomFrequencyPicker(selectedFrequency: $timeRecurrence)
                 }
@@ -622,6 +648,7 @@ struct GoalFormView: View {
                     }
                 }
                 .padding(.horizontal, 20)
+                .padding(.bottom, 80)
             }
         }
     }
@@ -629,14 +656,62 @@ struct GoalFormView: View {
     //MARK: Frequency description
     var FrequencyDescription: some View {
         HStack {
-            Text("Pick the days to commit to your streak.")
-                .frame(width: 250, height: 130)
-                .foregroundColor(.blackCopy)
-                .font(.custom("Syne-SemiBold", size: 30))
-                .padding(.leading, 20)
-            Spacer()
+            if selectedUnit == "times" {
+                Text("Set how often you’ll repeat this habit.")
+                    .frame(width: 250, height: 130)
+                    .foregroundColor(.blackCopy)
+                    .font(.custom("Syne-SemiBold", size: 30))
+                    .padding(.leading, 20)
+                Spacer()
+
+            } else {
+                Text("Pick the days to commit to your streak.")
+                    .frame(width: 250, height: 130)
+                    .foregroundColor(.blackCopy)
+                    .font(.custom("Syne-SemiBold", size: 30))
+                    .padding(.leading, 20)
+                Spacer()
+            }
         }
         .animation(.easeOut(duration: 0.5), value: showCustomUnitSheet)
+    }
+    
+    //MARK: Habit recap
+    var habitRecap: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Text("I will \(customHabitText), \(goalNumber) \(goalNumber.pluralizedUnit(selectedUnit)) \(recurrence).")
+                    .frame(width: 250, height: 130)
+                    .foregroundColor(.blackCopy)
+                    .font(.custom("Syne-SemiBold", size: 30))
+                    .padding(.leading, 20)
+                    .animation(.easeInOut(duration: 0.6), value: customHabitText)
+                Spacer()
+            }
+            
+            Spacer()
+            
+            Button(action: {
+                
+            }, label: {
+                Text("CREATE HABIT")
+                    .font(.custom("Syne-SemiBold", size: 17))
+                    .fontWeight(.bold)
+                    .foregroundColor(.yellowButton)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 70)
+                    .background(Color.blackCopy)
+                    .cornerRadius(50)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 50)
+                            .stroke(Color.blackCopy, lineWidth: 3)
+                    }
+                
+            })
+            .padding(.horizontal, 30)
+            .padding(.bottom, 20)
+        }
     }
     
     private func dismissUnitTextSheet() {
@@ -696,5 +771,5 @@ extension Int {
 
 
 #Preview {
-    GoalFormView()
+    GoalFormView(customHabitText: .constant("run"))
 }

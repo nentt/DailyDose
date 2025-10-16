@@ -45,7 +45,7 @@ struct HabitFormFlowView: View {
             }
             .fullScreenCover(isPresented: $showGoalSheet){
                 NavigationStack {
-                    GoalFormView()
+                    GoalFormView(customHabitText: $customHabitText)
                 }
             }
             
@@ -499,6 +499,7 @@ struct HabitFormFlowView: View {
                         }
                     
                 })
+                .buttonStyle(.plain) 
                 .padding(.horizontal, 5)
             }
             

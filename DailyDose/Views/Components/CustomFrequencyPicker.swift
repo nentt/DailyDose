@@ -26,13 +26,13 @@ struct CustomFrequencyPicker: View {
                             .fill(Color.yellowButton)
                             .matchedGeometryEffect(id: "frequencyBackground", in: animation)
                             .frame(height: 45)
-                            .animation(.spring(response: 0.4, dampingFraction: 0.8), value: selectedFrequency)
+                            .animation(.spring(response: 0.6, dampingFraction: 0.8), value: selectedFrequency)
                     }
                     
                     Text(frequency.rawValue.uppercased())
                         .frame(width: 100)
-                        .font(.custom("Syne-Regular", size: 17))
-                        .foregroundStyle(selectedFrequency == frequency ? .blackCopy : .blackCopy.opacity(0.5))
+                        .font(.custom("Syne-Regular", size: 14))
+                        .foregroundStyle(selectedFrequency == frequency ? .blackCopy.opacity(0.5) : .blackCopy.opacity(0.5))
                         .bold(selectedFrequency == frequency)
                 }
                 .contentShape(Rectangle())

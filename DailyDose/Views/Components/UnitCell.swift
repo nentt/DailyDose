@@ -17,11 +17,12 @@ struct UnitCell: View {
         Button(action: action) {
             HStack {
                 Text(title)
-                    .font(.custom("Syne-Regular", size: 20))
+                    .font(.custom("Syne-Regular", size: 14))
+                    .fontWeight(isUnitCellSelected ? .bold : .regular)
                     .foregroundColor(.blackCopy.opacity(0.5))
                     .cornerRadius(50)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 20)
+                    .padding(.vertical, 20)
+                    .padding(.horizontal, 30)
                     .background(
                         Capsule()
                             .fill(isUnitCellSelected ? Color.yellowButton : backgroundColor)
