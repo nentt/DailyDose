@@ -78,28 +78,65 @@ struct GoalFormView: View {
     
     
     
-    
     var body: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             Color.mauveBackground.ignoresSafeArea()
             
             VStack {
-                if currentPage != 3 {
                     HabitView
-                        .transition(.move(edge: .bottom))
-                        .padding(.bottom, 150)
-                        .animation(.easeOut(duration: 0.5), value: isGoalNumberKeyboardFocused)
-                        .animation(.easeOut(duration: 0.5), value: isUnitKeyboardFocused)
-                        .animation(.easeOut(duration: 0.5), value: showCustomUnitSheet)
+                        .padding(.bottom, 100)
+                        .zIndex(2)
+            }
+            .padding(.top, 50)
+            .onChange(of: selectedUnit) {
+                if selectedUnit.lowercased() == "days" ||  selectedUnit.lowercased() == "months" || selectedUnit.lowercased() == "minutes" || selectedUnit.lowercased() == "hours" || selectedUnit.lowercased() == "times"{
+                    tappedFrequency = Array(repeating: true, count: 7)
                 }
+            }
+            
+            TextField("", value: $goalNumber, formatter: NumberFormatter())
+                .keyboardType(.numberPad)
+                .focused($isGoalNumberKeyboardFocused)
+                .opacity(0)
                 
+            
+            VStack {
+                Spacer()
+                if showCustomGoalValidationButton {
+                    customGoalValidationButton
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+            }
+            
+            TextField("", value: $customUnit, formatter: NumberFormatter())
+                .focused($isUnitKeyboardFocused)
+                .opacity(0)
+            
+            VStack {
+                Spacer()
+                if showCustomUnitSheet {
+                    customUnitSheet
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+            }
+            
+            VStack {
+                Spacer(minLength: 250)
                 if !(isGoalNumberKeyboardFocused || isUnitKeyboardFocused || showCustomUnitSheet) {
                     TabView(selection: $currentPage) {
                         VStack {
                             Spacer()
-                            goalSettings
+                            if showCustomGoalValidationButton {
+                                
+                            } else {
+                                goalSettings
+                            }
                             Spacer()
-                            goalDescription
+                            if showCustomGoalValidationButton {
+                                
+                            } else {
+                                goalDescription
+                            }
                         }
                         .tag(0)
                         .background(Color.mauveBackground)
@@ -129,13 +166,13 @@ struct GoalFormView: View {
                         }
                         .tag(2)
                         
-                        VStack {
-                            HStack {
-                                habitRecap
-                                Spacer()
-                            }
-                        }
-                        .tag(3)
+//                        VStack {
+//                            HStack {
+//                                habitRecap
+//                                Spacer()
+//                            }
+//                        }
+//                        .tag(3)
                         
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -145,7 +182,7 @@ struct GoalFormView: View {
                     
                 } else {
                     HStack(spacing: 8) {
-                        ForEach(0..<4) { index in
+                        ForEach(0..<3) { index in
                             Rectangle()
                                 .fill(index == currentPage ? Color.yellowButton : Color.blackCopy.opacity(0.1))
                                 .frame(height: 4)
@@ -159,37 +196,6 @@ struct GoalFormView: View {
                     }
                     .padding(.horizontal, 40)
                     .padding(.top, 10)
-                }
-            }
-            .padding(.top, 50)
-            .onChange(of: selectedUnit) {
-                if selectedUnit.lowercased() == "days" ||  selectedUnit.lowercased() == "months" || selectedUnit.lowercased() == "minutes" || selectedUnit.lowercased() == "hours" || selectedUnit.lowercased() == "times"{
-                    tappedFrequency = Array(repeating: true, count: 7)
-                }
-            }
-            
-            TextField("", value: $goalNumber, formatter: NumberFormatter())
-                .keyboardType(.numberPad)
-                .focused($isGoalNumberKeyboardFocused)
-                .opacity(0)
-            
-            VStack {
-                Spacer()
-                if showCustomGoalValidationButton {
-                    customGoalValidationButton
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                }
-            }
-            
-            TextField("", value: $customUnit, formatter: NumberFormatter())
-                .focused($isUnitKeyboardFocused)
-                .opacity(0)
-            
-            VStack {
-                Spacer()
-                if showCustomUnitSheet {
-                    customUnitSheet
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
             }
         }
@@ -238,7 +244,7 @@ struct GoalFormView: View {
             HStack(spacing: 0) {
                 Text(goalNumber.roundedWithAbbreviations)
                     .foregroundColor(.yellowButton.opacity(0.8))
-                    .font(.custom("Syne-ExtraBold", size: 90))
+                    .font(.custom("Syne-ExtraBold", size: 80))
                     .padding(.trailing, 20)
                     .onChange(of: goalNumber) { oldValue, newValue in
                         if newValue > numberGoalLimit {
@@ -265,148 +271,151 @@ struct GoalFormView: View {
     
     //MARK: Define your goal
     var goalSettings: some View {
-        HStack {
-            Button {
-                goalNumber = 5
-                isGoalNumberKeyboardFocused = false
-                showCustomGoalValidationButton = false
-                
-                
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(goalNumber == 5 ? .yellowButton : .white)
-                        .frame(width: 50, height: 50)
+        VStack {
+            HStack {
+                Button {
+                    goalNumber = 5
+                    isGoalNumberKeyboardFocused = false
+                    showCustomGoalValidationButton = false
                     
-                    Text("5")
-                        .font(.custom("Syne-Regular", size: 22))
-                        .fontWeight(goalNumber == 5 ? .bold : .regular)
-                        .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
-                        .padding(.top, -5)
+                    
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(goalNumber == 5 ? .yellowButton : .white)
+                            .frame(width: 50, height: 50)
+                        
+                        Text("5")
+                            .font(.custom("Syne-Regular", size: 22))
+                            .fontWeight(goalNumber == 5 ? .bold : .regular)
+                            .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
+                            .padding(.top, -5)
+                    }
                 }
-            }
-            
-            Button {
-                goalNumber = 10
-                isGoalNumberKeyboardFocused = false
-                showCustomGoalValidationButton = false
                 
-                
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(goalNumber == 10 ? .yellowButton : .white)
-                        .frame(width: 50, height: 50)
+                Button {
+                    goalNumber = 10
+                    isGoalNumberKeyboardFocused = false
+                    showCustomGoalValidationButton = false
                     
-                    Text("10")
-                        .font(.custom("Syne-Regular", size: 22))
-                        .fontWeight(goalNumber == 10 ? .bold : .regular)
-                        .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
-                        .padding(.top, -5)
+                    
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(goalNumber == 10 ? .yellowButton : .white)
+                            .frame(width: 50, height: 50)
+                        
+                        Text("10")
+                            .font(.custom("Syne-Regular", size: 22))
+                            .fontWeight(goalNumber == 10 ? .bold : .regular)
+                            .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
+                            .padding(.top, -5)
+                    }
                 }
-            }
-            
-            Button {
-                goalNumber = 15
-                isGoalNumberKeyboardFocused = false
-                showCustomGoalValidationButton = false
                 
-                
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(goalNumber == 15 ? .yellowButton : .white)
-                        .frame(width: 50, height: 50)
+                Button {
+                    goalNumber = 15
+                    isGoalNumberKeyboardFocused = false
+                    showCustomGoalValidationButton = false
                     
-                    Text("15")
-                        .font(.custom("Syne-Regular", size: 22))
-                        .fontWeight(goalNumber == 15 ? .bold : .regular)
-                        .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
-                        .padding(.top, -5)
+                    
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(goalNumber == 15 ? .yellowButton : .white)
+                            .frame(width: 50, height: 50)
+                        
+                        Text("15")
+                            .font(.custom("Syne-Regular", size: 22))
+                            .fontWeight(goalNumber == 15 ? .bold : .regular)
+                            .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
+                            .padding(.top, -5)
+                    }
                 }
-            }
-            
-            Button {
-                goalNumber = 30
-                isGoalNumberKeyboardFocused = false
-                showCustomGoalValidationButton = false
                 
-                
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(goalNumber == 30 ? .yellowButton : .white)
-                        .frame(width: 50, height: 50)
+                Button {
+                    goalNumber = 30
+                    isGoalNumberKeyboardFocused = false
+                    showCustomGoalValidationButton = false
                     
-                    Text("30")
-                        .font(.custom("Syne-Regular", size: 22))
-                        .fontWeight(goalNumber == 30 ? .bold : .regular)
-                        .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
-                        .padding(.top, -5)
+                    
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(goalNumber == 30 ? .yellowButton : .white)
+                            .frame(width: 50, height: 50)
+                        
+                        Text("30")
+                            .font(.custom("Syne-Regular", size: 22))
+                            .fontWeight(goalNumber == 30 ? .bold : .regular)
+                            .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
+                            .padding(.top, -5)
+                    }
                 }
-            }
-            
-            Button {
-                goalNumber = 60
-                isGoalNumberKeyboardFocused = false
-                showCustomGoalValidationButton = false
                 
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(goalNumber == 60 ? .yellowButton : .white)
-                        .frame(width: 50, height: 50)
+                Button {
+                    goalNumber = 60
+                    isGoalNumberKeyboardFocused = false
+                    showCustomGoalValidationButton = false
                     
-                    Text("60")
-                        .font(.custom("Syne-Regular", size: 22))
-                        .fontWeight(goalNumber == 60 ? .bold : .regular)
-                        .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
-                        .padding(.top, -5)
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(goalNumber == 60 ? .yellowButton : .white)
+                            .frame(width: 50, height: 50)
+                        
+                        Text("60")
+                            .font(.custom("Syne-Regular", size: 22))
+                            .fontWeight(goalNumber == 60 ? .bold : .regular)
+                            .foregroundColor(goalNumber == 5 ? .blackCopy.opacity(0.4) : .blackCopy.opacity(0.5))
+                            .padding(.top, -5)
+                    }
                 }
-            }
-            Spacer()
-            
-            Button {
-                goalNumber = 0
-                isGoalNumberKeyboardFocused = true
-                showCustomGoalValidationButton = true
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(.blackCopy.opacity(0.1))
-                        .frame(width: 50, height: 50)
-                    
-                    Image(systemName: "circle.grid.3x3.fill")
-                        .font(.custom("Syne-Regular", size: 22))
-                        .foregroundColor(.blackCopy.opacity(0.5))
+                Spacer()
+                
+                Button {
+                    goalNumber = 0
+                    isGoalNumberKeyboardFocused = true
+                    showCustomGoalValidationButton = true
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(.blackCopy.opacity(0.1))
+                            .frame(width: 50, height: 50)
+                        
+                        Image(systemName: "circle.grid.3x3.fill")
+                            .font(.custom("Syne-Regular", size: 22))
+                            .foregroundColor(.blackCopy.opacity(0.5))
+                        
+                    }
                 }
             }
         }
-        .padding(.bottom, 70)
         .padding(.horizontal, 20)
     }
     
     //MARK: Custom goal validation
     var customGoalValidationButton: some View {
-        HStack {
-            Spacer()
-            Button(action: {
-                isGoalNumberKeyboardFocused = false
-                showCustomGoalValidationButton = false
-                
-                
-            }) {
-                Image(systemName: "checkmark")
-                    .foregroundColor(.yellowButton)
-                    .frame(width: 24, height: 24)
-                    .padding()
-                    .background(Color.blackCopy)
-                    .clipShape(Circle())
-                    .padding()
-                    .frame(height: 100)
-                    .background(Color.mauveBackground)
+            HStack {
+                Spacer()
+                Button(action: {
+                    isGoalNumberKeyboardFocused = false
+                    showCustomGoalValidationButton = false
+                    
+                    
+                }) {
+                    Image(systemName: "checkmark")
+                        .foregroundColor(.yellowButton)
+                        .frame(width: 24, height: 24)
+                        .padding()
+                        .background(Color.blackCopy)
+                        .clipShape(Circle())
+                        .padding()
+                        .frame(height: 100)
+                        .background(Color.mauveBackground)
+                }
             }
-        }
+            .frame(height: 100)
     }
     
     //MARK: Goal description
@@ -415,13 +424,14 @@ struct GoalFormView: View {
             Text("Decide how big your new streak should be.")
                 .frame(width: 250, height: 130)
                 .foregroundColor(.blackCopy)
-                .font(.custom("Syne-SemiBold", size: isGoalNumberKeyboardFocused ? 17 : 30))
+                .font(.custom("Syne-SemiBold", size: 30))
                 .padding(.leading, 20)
-                .opacity(isGoalNumberKeyboardFocused ? 0.6 : 1.0)
             Spacer()
             
         }
     }
+    
+
     
     //MARK: Define your unit
     var UnitSettings: some View {
@@ -499,8 +509,8 @@ struct GoalFormView: View {
                 )
             }
         }
-        .padding(.top, (isUnitKeyboardFocused ? 170 : 0))
-        .frame(height: 250)
+//        .padding(.top, (isUnitKeyboardFocused ? 170 : 0))
+//        .frame(height: 250)
         
     }
     
@@ -514,7 +524,6 @@ struct GoalFormView: View {
                 .padding(.leading, 10)
             Spacer()
         }
-        .animation(.easeOut(duration: 0.5), value: showCustomUnitSheet)
     }
     
     
@@ -601,6 +610,7 @@ struct GoalFormView: View {
                         .padding(.bottom, 20)
                     
                     CustomFrequencyPicker(selectedFrequency: $timeRecurrence)
+                        .padding(.bottom, 130)
                 }
                 .pickerStyle(.segmented)
                 .padding(.top, 20)
@@ -673,7 +683,6 @@ struct GoalFormView: View {
                 Spacer()
             }
         }
-        .animation(.easeOut(duration: 0.5), value: showCustomUnitSheet)
     }
     
     //MARK: Habit recap
@@ -686,7 +695,7 @@ struct GoalFormView: View {
                     .foregroundColor(.blackCopy)
                     .font(.custom("Syne-SemiBold", size: 30))
                     .padding(.leading, 20)
-                    .animation(.easeInOut(duration: 0.6), value: customHabitText)
+                    
                 Spacer()
             }
             
