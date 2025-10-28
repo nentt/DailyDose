@@ -32,6 +32,8 @@ struct GoalFormView: View {
     @State private var tappedFrequency: [Bool] = Array(repeating: true, count: 7)
     @State private var timeRecurrence: Frequency = .weekly
     
+    @State private var showHabitSheet: Bool = false
+    
     var recurrence: String {
         
         if selectedUnit == "days" || selectedUnit == "months" {
@@ -83,9 +85,9 @@ struct GoalFormView: View {
             Color.mauveBackground.ignoresSafeArea()
             
             VStack {
-                    HabitView
-                        .padding(.bottom, 100)
-                        .zIndex(2)
+                HabitView
+                    .padding(.bottom, 100)
+                    .zIndex(2)
             }
             .padding(.top, 50)
             .onChange(of: selectedUnit) {
@@ -98,7 +100,7 @@ struct GoalFormView: View {
                 .keyboardType(.numberPad)
                 .focused($isGoalNumberKeyboardFocused)
                 .opacity(0)
-                
+            
             
             VStack {
                 Spacer()
@@ -165,15 +167,6 @@ struct GoalFormView: View {
                             FrequencyDescription
                         }
                         .tag(2)
-                        
-//                        VStack {
-//                            HStack {
-//                                habitRecap
-//                                Spacer()
-//                            }
-//                        }
-//                        .tag(3)
-                        
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 }
@@ -219,12 +212,37 @@ struct GoalFormView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 ZStack(alignment: .trailing) {
-                    if currentPage == 3 {
-                        Text("review your habit")
-                            .font(.custom("Syne-SemiBold", size: 17))
-                            .foregroundColor(.blackCopy.opacity(0.4))
-                            .textCase(.uppercase)
-                            .padding(.top, 30)
+                    if currentPage == 2 {
+                        Button {
+                            showHabitSheet = true
+                        } label: {
+                            HStack(spacing: 6) {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.yellowButton)
+                                        .frame(width: 18, height: 18)
+                                    Image(systemName: "plus")
+                                        .font(.system(size: 10, weight: .bold))
+                                        .foregroundColor(.blackCopy)
+                                }
+                                
+                                Text("Habit")
+                                    .font(.custom("Syne-SemiBold", size: 17))
+                                    .foregroundColor(.white)
+                                    .textCase(.uppercase)
+                            }
+                            .frame(width: 110, height: 50)
+                            .background(Color.blackCopy)
+                            .cornerRadius(50)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 50)
+                                    .stroke(Color.blackCopy, lineWidth: 3)
+                            }
+                            .padding(.top, 20)
+                            .opacity(currentPage == 2 ? 1 : 0)
+                            .animation(.easeInOut(duration: 0.4), value: currentPage)
+                        }
+
                     } else {
                         Text("set your goal")
                             .font(.custom("Syne-SemiBold", size: 17))
@@ -234,6 +252,16 @@ struct GoalFormView: View {
                     }
                 }
             }
+        }
+        .sheet(isPresented: $showHabitSheet) {
+            HabitSummarySheet(
+                customHabitText: customHabitText,
+                goalNumber: goalNumber,
+                selectedUnit: selectedUnit,
+                recurrence: recurrence
+            )
+            .presentationDetents([.fraction(0.5)])
+            .presentationDragIndicator(.visible)
         }
     }
     
@@ -396,26 +424,26 @@ struct GoalFormView: View {
     
     //MARK: Custom goal validation
     var customGoalValidationButton: some View {
-            HStack {
-                Spacer()
-                Button(action: {
-                    isGoalNumberKeyboardFocused = false
-                    showCustomGoalValidationButton = false
-                    
-                    
-                }) {
-                    Image(systemName: "checkmark")
-                        .foregroundColor(.yellowButton)
-                        .frame(width: 24, height: 24)
-                        .padding()
-                        .background(Color.blackCopy)
-                        .clipShape(Circle())
-                        .padding()
-                        .frame(height: 100)
-                        .background(Color.mauveBackground)
-                }
+        HStack {
+            Spacer()
+            Button(action: {
+                isGoalNumberKeyboardFocused = false
+                showCustomGoalValidationButton = false
+                
+                
+            }) {
+                Image(systemName: "checkmark")
+                    .foregroundColor(.yellowButton)
+                    .frame(width: 24, height: 24)
+                    .padding()
+                    .background(Color.blackCopy)
+                    .clipShape(Circle())
+                    .padding()
+                    .frame(height: 100)
+                    .background(Color.mauveBackground)
             }
-            .frame(height: 100)
+        }
+        .frame(height: 100)
     }
     
     //MARK: Goal description
@@ -431,7 +459,7 @@ struct GoalFormView: View {
         }
     }
     
-
+    
     
     //MARK: Define your unit
     var UnitSettings: some View {
@@ -509,8 +537,8 @@ struct GoalFormView: View {
                 )
             }
         }
-//        .padding(.top, (isUnitKeyboardFocused ? 170 : 0))
-//        .frame(height: 250)
+        //        .padding(.top, (isUnitKeyboardFocused ? 170 : 0))
+        //        .frame(height: 250)
         
     }
     
@@ -604,10 +632,10 @@ struct GoalFormView: View {
                         Spacer()
                         Text("Anytime".uppercased())
                     }
-                        .font(.custom("Syne-Regular", size: 17))
-                        .foregroundColor(.blackCopy.opacity(0.5))
-                        .padding(.trailing, 20)
-                        .padding(.bottom, 20)
+                    .font(.custom("Syne-Regular", size: 17))
+                    .foregroundColor(.blackCopy.opacity(0.5))
+                    .padding(.trailing, 20)
+                    .padding(.bottom, 20)
                     
                     CustomFrequencyPicker(selectedFrequency: $timeRecurrence)
                         .padding(.bottom, 130)
@@ -673,7 +701,7 @@ struct GoalFormView: View {
                     .font(.custom("Syne-SemiBold", size: 30))
                     .padding(.leading, 20)
                 Spacer()
-
+                
             } else {
                 Text("Pick the days to commit to your streak.")
                     .frame(width: 250, height: 130)
@@ -695,7 +723,7 @@ struct GoalFormView: View {
                     .foregroundColor(.blackCopy)
                     .font(.custom("Syne-SemiBold", size: 30))
                     .padding(.leading, 20)
-                    
+                
                 Spacer()
             }
             
