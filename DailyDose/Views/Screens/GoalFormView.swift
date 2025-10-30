@@ -91,7 +91,9 @@ struct GoalFormView: View {
             }
             .padding(.top, 50)
             .onChange(of: selectedUnit) {
-                if selectedUnit.lowercased() == "days" ||  selectedUnit.lowercased() == "months" || selectedUnit.lowercased() == "minutes" || selectedUnit.lowercased() == "hours" || selectedUnit.lowercased() == "times"{
+                let unit = selectedUnit.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+
+                if selectedUnit.lowercased() == "days" ||  selectedUnit.lowercased() == "months" || selectedUnit.lowercased() == "minutes" || selectedUnit.lowercased() == "hours" || selectedUnit.lowercased() == "times" || !unit.isEmpty {
                     tappedFrequency = Array(repeating: true, count: 7)
                 }
             }
@@ -710,44 +712,6 @@ struct GoalFormView: View {
                     .padding(.leading, 20)
                 Spacer()
             }
-        }
-    }
-    
-    //MARK: Habit recap
-    var habitRecap: some View {
-        VStack {
-            Spacer()
-            HStack {
-                Text("I will \(customHabitText), \(goalNumber) \(goalNumber.pluralizedUnit(selectedUnit)) \(recurrence).")
-                    .frame(width: 250, height: 130)
-                    .foregroundColor(.blackCopy)
-                    .font(.custom("Syne-SemiBold", size: 30))
-                    .padding(.leading, 20)
-                
-                Spacer()
-            }
-            
-            Spacer()
-            
-            Button(action: {
-                
-            }, label: {
-                Text("CREATE HABIT")
-                    .font(.custom("Syne-SemiBold", size: 17))
-                    .fontWeight(.bold)
-                    .foregroundColor(.yellowButton)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 70)
-                    .background(Color.blackCopy)
-                    .cornerRadius(50)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 50)
-                            .stroke(Color.blackCopy, lineWidth: 3)
-                    }
-                
-            })
-            .padding(.horizontal, 30)
-            .padding(.bottom, 20)
         }
     }
     

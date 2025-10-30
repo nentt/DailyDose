@@ -23,18 +23,18 @@ struct HabitSummarySheet: View {
             VStack(alignment: .center) {
                 Spacer()
                 Text("You did it!")
-                    .font(.custom("Syne-SemiBold", size: 28))
+                    .font(.custom("Syne-SemiBold", size: 22))
                     .foregroundColor(.blackCopy)
                     .padding(.bottom, 10)
                 
                 Text("Now check in—does it feel exciting, light, and doable?")
-                    .font(.custom("Syne-medium", size: 20))
+                    .font(.custom("Syne-medium", size: 17))
                     .foregroundColor(.blackCopy)
                     .padding(.bottom, 20)
                     .multilineTextAlignment(.center)
                 
                 
-                Text("I will \(customHabitText), \(goalNumber) \(selectedUnit), \(recurrence) ")
+                Text("I will \(customHabitText), \(goalNumber) \(goalNumber.pluralizedUnit(selectedUnit)), \(recurrence) ")
                     .font(.custom("Syne-ExtraBold", size: 24))
                     .foregroundColor(.blackCopy)
                 
