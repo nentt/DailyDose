@@ -13,6 +13,7 @@ enum Route: Hashable {
 struct MainView: View {
     @State private var habits: [Habit] = Habit.sampleHabits
     @State private var path = NavigationPath()
+    @State private var selectedHabit: Habit?
     
     
     var body: some View {
@@ -106,15 +107,24 @@ struct MainView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(habits) { habit in
-                            HabitCell(habit: habit)
+                            Button {
+                                selectedHabit = habit
+                            } label: {
+                                HabitCell(habit: habit)
+                            }
                         }
                     }
                 }
                 .padding(.horizontal, 20)
                 
-                VStack {
-                    Text("activity")
-                        .font(.custom("Syne-Regular", size: 18))
+                VStack(alignment: .leading) {
+                    Text(selectedHabit?.title ?? "Select a habit")
+                        .font(.custom("Syne-SemiBold", size: 24))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                    Spacer()
+
+
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 200)
@@ -131,11 +141,20 @@ struct MainView: View {
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .habitForm:
-                    HabitFormFlowView()
+                    HabitFormFlowView { newHabit in
+                            habits.insert(newHabit, at: 0)
+                            selectedHabit = newHabit
+                        
+                    }
                 }
             }
+            .onAppear {
+                if selectedHabit == nil {
+                    selectedHabit = habits.first
+                }
+            }
+            
         }
-        
     }
 }
 

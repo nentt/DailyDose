@@ -34,6 +34,9 @@ struct GoalFormView: View {
     
     @State private var showHabitSheet: Bool = false
     
+    let onCreateHabit: (Habit) -> Void
+
+    
     var recurrence: String {
         
         if selectedUnit == "days" || selectedUnit == "months" {
@@ -260,7 +263,11 @@ struct GoalFormView: View {
                 customHabitText: customHabitText,
                 goalNumber: goalNumber,
                 selectedUnit: selectedUnit,
-                recurrence: recurrence
+                recurrence: recurrence,
+                onCreateHabit: { newHabit in
+                    onCreateHabit(newHabit)
+                    dismiss()
+                }
             )
             .presentationDetents([.fraction(0.5)])
             .presentationDragIndicator(.visible)
@@ -772,5 +779,5 @@ extension Int {
 
 
 #Preview {
-    GoalFormView(customHabitText: .constant("run"))
+    GoalFormView(customHabitText: .constant("run"), onCreateHabit: { _ in })
 }

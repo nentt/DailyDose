@@ -32,6 +32,9 @@ struct HabitFormFlowView: View {
     @State private var recurrenceOffset: CGFloat = UIScreen.main.bounds.height
     @State private var customUnit: String = "minutes"
     
+    let onCreateHabit: (Habit) -> Void
+
+    
     
     
     var body: some View {
@@ -45,7 +48,14 @@ struct HabitFormFlowView: View {
             }
             .fullScreenCover(isPresented: $showGoalSheet){
                 NavigationStack {
-                    GoalFormView(customHabitText: $customHabitText)
+                    GoalFormView(
+                        customHabitText: $customHabitText,
+                        onCreateHabit: { newHabit in
+                                       onCreateHabit(newHabit)
+                                       showGoalSheet = false
+                                       dismiss()
+                                   }
+                    )
                 }
             }
             
@@ -119,7 +129,7 @@ struct HabitFormFlowView: View {
                     .font(.custom("Syne-SemiBold", size: 25))
                 
                 
-                Text(customHabitText.isEmpty ? "habit" : customHabitText)
+                Text(customHabitText.isEmpty ? "habit" : customHabitText.lowercased())
                     .foregroundColor(isHabitTextFocused ? .blackCopy.opacity(0.2) : .blackCopy.opacity(0.4))
                     .font(.custom("Syne-SemiBold", size: 25))
                     .underline(true, color: .yellowButton)
@@ -573,5 +583,5 @@ struct HabitFormFlowView: View {
 //}
 
 #Preview {
-    HabitFormFlowView()
+    HabitFormFlowView(onCreateHabit: { _ in })
 }

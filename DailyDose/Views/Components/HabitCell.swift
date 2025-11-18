@@ -16,7 +16,7 @@ struct HabitCell: View {
                 Image(systemName: "circle")
                     .font(.system(size: 35, weight: .thin))
                     .multilineTextAlignment(.leading)
-                Text(habit.title)
+                Text(habit.title.firstUppercased)
                     .font(.custom("Syne-SemiBold", size: 19))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -34,6 +34,11 @@ struct HabitCell: View {
     }
 }
 
+extension String {
+    var firstUppercased: String {
+        prefix(1).uppercased() + dropFirst()
+    }
+}
 #Preview {
     HabitCell(habit: Habit(title: "pilates", progress: 6, objective: 2, periodicity: .weekly(.hours(2))))
 }
