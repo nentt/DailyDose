@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Habit: Identifiable, Hashable {
     let id = UUID()
@@ -13,6 +14,7 @@ struct Habit: Identifiable, Hashable {
     let progress: Int
     let objective: Int
     let periodicity: HabitPeriodicity
+    let image: HabitImage = .none
     
     static let sampleHabits: [Habit] = [
         Habit(title: "No sugar", progress: 6, objective: 30, periodicity: .challenge(.months(1))),
@@ -88,6 +90,12 @@ enum Unit: Hashable {
             return "other"
         }
     }
+}
+
+enum HabitImage: Hashable {
+    case asset(String)
+    case user(UIImage)
+    case none
 }
 
 extension Int {

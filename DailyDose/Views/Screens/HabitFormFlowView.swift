@@ -31,6 +31,7 @@ struct HabitFormFlowView: View {
     //    @State private var customRecurrence: String = ""
     @State private var recurrenceOffset: CGFloat = UIScreen.main.bounds.height
     @State private var customUnit: String = "minutes"
+    @State private var selectedDefaultHabit: DefaultHabit? = .none
     
     let onCreateHabit: (Habit) -> Void
 
@@ -43,6 +44,7 @@ struct HabitFormFlowView: View {
             VStack {
                 Spacer()
                 defineHabit
+                defaultHabits
                 Spacer()
                 button
             }
@@ -129,7 +131,11 @@ struct HabitFormFlowView: View {
                     .font(.custom("Syne-SemiBold", size: 25))
                 
                 
-                Text(customHabitText.isEmpty ? "habit" : customHabitText.lowercased())
+                Text(
+                    !customHabitText.isEmpty
+                        ? customHabitText.lowercased()
+                    : (selectedDefaultHabit?.title.lowercased() ?? "habit")
+                )
                     .foregroundColor(isHabitTextFocused ? .blackCopy.opacity(0.2) : .blackCopy.opacity(0.4))
                     .font(.custom("Syne-SemiBold", size: 25))
                     .underline(true, color: .yellowButton)
@@ -139,6 +145,16 @@ struct HabitFormFlowView: View {
                     }
             }
             .padding()
+    }
+    
+    //MARK: Default Habits
+    var defaultHabits: some View {
+        VStack {
+            DefaultHabitsScrollPicker(selectedHabit: $selectedDefaultHabit, onHabitSelected: { habit in
+                selectedDefaultHabit = habit
+            })
+        }
+        
     }
     
     //MARK: Custom Habit Sheet

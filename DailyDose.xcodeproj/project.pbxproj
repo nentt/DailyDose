@@ -26,6 +26,9 @@
 		6E580D502DED7DF700FFF5CC /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E580D4F2DED7DF700FFF5CC /* Habit.swift */; };
 		6E580D542DEF765C00FFF5CC /* HabitFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E580D532DEF765C00FFF5CC /* HabitFormView.swift */; };
 		6E734CD62E9E7BBA00229A2B /* CustomFrequencyPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E734CD52E9E7BBA00229A2B /* CustomFrequencyPicker.swift */; };
+		6EA7D8002ED6ED4000BC722C /* DefaultHabitsScrollPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA7D7FF2ED6ED4000BC722C /* DefaultHabitsScrollPicker.swift */; };
+		6EA7D8032ED7404800BC722C /* DefaultHabitScrollVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA7D8022ED7404800BC722C /* DefaultHabitScrollVM.swift */; };
+		6EA7D8052ED760D500BC722C /* DefaultHabit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA7D8042ED760D500BC722C /* DefaultHabit.swift */; };
 		6EB929E82E6FEF160022A6D4 /* GoalFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB929E72E6FEF160022A6D4 /* GoalFormView.swift */; };
 		6EC489172E0B06C3004C99A4 /* PeriodicityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC489162E0B06C3004C99A4 /* PeriodicityButton.swift */; };
 		6ED2D0472E1E3DF600921DEC /* CustomRecurrenceSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED2D0462E1E3DF600921DEC /* CustomRecurrenceSheet.swift */; };
@@ -55,6 +58,9 @@
 		6E580D4F2DED7DF700FFF5CC /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		6E580D532DEF765C00FFF5CC /* HabitFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitFormView.swift; sourceTree = "<group>"; };
 		6E734CD52E9E7BBA00229A2B /* CustomFrequencyPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFrequencyPicker.swift; sourceTree = "<group>"; };
+		6EA7D7FF2ED6ED4000BC722C /* DefaultHabitsScrollPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHabitsScrollPicker.swift; sourceTree = "<group>"; };
+		6EA7D8022ED7404800BC722C /* DefaultHabitScrollVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHabitScrollVM.swift; sourceTree = "<group>"; };
+		6EA7D8042ED760D500BC722C /* DefaultHabit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHabit.swift; sourceTree = "<group>"; };
 		6EB929E72E6FEF160022A6D4 /* GoalFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalFormView.swift; sourceTree = "<group>"; };
 		6EC489162E0B06C3004C99A4 /* PeriodicityButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodicityButton.swift; sourceTree = "<group>"; };
 		6ED2D0462E1E3DF600921DEC /* CustomRecurrenceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRecurrenceSheet.swift; sourceTree = "<group>"; };
@@ -96,6 +102,7 @@
 				6E580D342DEB910800FFF5CC /* Info.plist */,
 				6E580D242DEB8D8000FFF5CC /* DailyDoseApp.swift */,
 				6E580D4E2DED7D8900FFF5CC /* Models */,
+				6EA7D8012ED7401900BC722C /* View Models */,
 				6E580D492DED775200FFF5CC /* Views */,
 				6E580D282DEB8D8400FFF5CC /* Assets.xcassets */,
 				6E580D2A2DEB8D8400FFF5CC /* Preview Content */,
@@ -157,6 +164,7 @@
 				6ED2D0462E1E3DF600921DEC /* CustomRecurrenceSheet.swift */,
 				6E734CD52E9E7BBA00229A2B /* CustomFrequencyPicker.swift */,
 				6EF07C732EAFADBE001C36DB /* HabitSummarySheet.swift */,
+				6EA7D7FF2ED6ED4000BC722C /* DefaultHabitsScrollPicker.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -165,8 +173,17 @@
 			isa = PBXGroup;
 			children = (
 				6E580D4F2DED7DF700FFF5CC /* Habit.swift */,
+				6EA7D8042ED760D500BC722C /* DefaultHabit.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		6EA7D8012ED7401900BC722C /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				6EA7D8022ED7404800BC722C /* DefaultHabitScrollVM.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,9 +268,12 @@
 			files = (
 				6ED2D0472E1E3DF600921DEC /* CustomRecurrenceSheet.swift in Sources */,
 				6E580D4D2DED7A4E00FFF5CC /* HabitCell.swift in Sources */,
+				6EA7D8002ED6ED4000BC722C /* DefaultHabitsScrollPicker.swift in Sources */,
 				6E4B65122E03E14500BAC833 /* UnitCell.swift in Sources */,
+				6EA7D8032ED7404800BC722C /* DefaultHabitScrollVM.swift in Sources */,
 				6E580D272DEB8D8000FFF5CC /* MainView.swift in Sources */,
 				6E734CD62E9E7BBA00229A2B /* CustomFrequencyPicker.swift in Sources */,
+				6EA7D8052ED760D500BC722C /* DefaultHabit.swift in Sources */,
 				6EF07C742EAFADBE001C36DB /* HabitSummarySheet.swift in Sources */,
 				6E580D502DED7DF700FFF5CC /* Habit.swift in Sources */,
 				6EB929E82E6FEF160022A6D4 /* GoalFormView.swift in Sources */,
@@ -403,6 +423,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -433,6 +454,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

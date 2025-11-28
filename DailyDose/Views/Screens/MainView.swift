@@ -34,11 +34,12 @@ struct MainView: View {
                 }
                 
                 Text("Track Your \nHabits")
-                    .font(.custom("Syne-SemiBold", size: 40))
+                    .font(.custom("Syne-SemiBold", size: 37))
                     .foregroundColor(.blackCopy)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 20)
                     .padding(.top, -10)
+                
                 
                 HStack {
                     VStack {
@@ -117,20 +118,37 @@ struct MainView: View {
                 }
                 .padding(.horizontal, 20)
                 
-                VStack(alignment: .leading) {
-                    Text(selectedHabit?.title ?? "Select a habit")
-                        .font(.custom("Syne-SemiBold", size: 24))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding()
-                    Spacer()
-
-
-                }
-                .frame(maxWidth: .infinity)
-                .frame(height: 200)
-                .background(Color.white.opacity(0.3))
-                .cornerRadius(15)
-                .padding(.horizontal, 20)
+//                VStack(alignment: .leading) {
+//                    //                    Text(selectedHabit?.title.firstUppercased ?? "Select a habit")
+//                    //                        .font(.custom("Syne-SemiBold", size: 28))
+//                    //                        .frame(maxWidth: .infinity, alignment: .leading)
+//                    //                        .padding()
+//                    Spacer()
+//                    
+//                    VStack {
+//                        HStack {
+//                            Text("10")
+//                                .font(.custom("Syne-ExtraBold", size: 80))
+//                                .foregroundColor(.blackCopy.opacity(0.8))
+//                                .overlay(alignment: .topTrailing) {
+//                                    ZStack {
+//                                        EightPointStar()
+//                                            .fill(Color.yellowButton)
+//                                            .frame(width: 55, height: 55)
+//                                            .offset(x: 25, y: 5)
+//                                        Image(systemName: "chevron.right")
+//                                            .font(.custom("Syne-Bold", size: 15))
+//                                            .foregroundColor(.blackCopy)
+//                                            .offset(x: 25, y: 5)
+//                                    }
+//                                }
+//                        }
+//                        
+//                        Text("let's get started!")
+//                            .font(.custom("Syne-SemiBold", size: 16))
+//                            .foregroundColor(.secondary)
+//                    }
+//                }
                 
                 Spacer()
             }
@@ -142,8 +160,8 @@ struct MainView: View {
                 switch route {
                 case .habitForm:
                     HabitFormFlowView { newHabit in
-                            habits.insert(newHabit, at: 0)
-                            selectedHabit = newHabit
+                        habits.insert(newHabit, at: 0)
+                        selectedHabit = newHabit
                         
                     }
                 }
@@ -153,7 +171,32 @@ struct MainView: View {
                     selectedHabit = habits.first
                 }
             }
+        }
+        
+    }
+    
+    struct EightPointStar: Shape {
+        func path(in rect: CGRect) -> Path {
+            let center = CGPoint(x: rect.midX, y: rect.midY)
+            let outerRadius = min(rect.width, rect.height) / 2
+            let innerRadius = outerRadius * 0.45
+            var path = Path()
             
+            for i in 0..<16 { // 2 * 8 sommets
+                let angle = (Double(i) * .pi) / 8
+                let radius = i.isMultiple(of: 2) ? outerRadius : innerRadius
+                let point = CGPoint(
+                    x: center.x + CGFloat(cos(angle)) * radius,
+                    y: center.y + CGFloat(sin(angle)) * radius
+                )
+                if i == 0 {
+                    path.move(to: point)
+                } else {
+                    path.addLine(to: point)
+                }
+            }
+            path.closeSubpath()
+            return path
         }
     }
 }
