@@ -32,9 +32,8 @@ struct HabitFormFlowView: View {
     @State private var recurrenceOffset: CGFloat = UIScreen.main.bounds.height
     @State private var customUnit: String = "minutes"
     @State private var selectedDefaultHabit: DefaultHabit? = .none
-    
     let onCreateHabit: (Habit) -> Void
-
+    @State private var showDefaultHabitsScrollPicker = true
     
     
     
@@ -142,6 +141,7 @@ struct HabitFormFlowView: View {
                     .onTapGesture {
                         showCustomHabitTextSheet = true
                         isHabitTextFocused = true
+                        showDefaultHabitsScrollPicker = false
                     }
             }
             .padding()
@@ -150,9 +150,11 @@ struct HabitFormFlowView: View {
     //MARK: Default Habits
     var defaultHabits: some View {
         VStack {
-            DefaultHabitsScrollPicker(selectedHabit: $selectedDefaultHabit, onHabitSelected: { habit in
-                selectedDefaultHabit = habit
-            })
+            if showDefaultHabitsScrollPicker {
+                DefaultHabitsScrollPicker(selectedHabit: $selectedDefaultHabit, onHabitSelected: { habit in
+                    selectedDefaultHabit = habit
+                })
+            }
         }
         
     }
@@ -191,6 +193,7 @@ struct HabitFormFlowView: View {
                     if customHabitText.isEmpty {
                         Button(action: {
                             dismissCustomHabitTextSheet()
+                            showDefaultHabitsScrollPicker = true
                         }) {
                             Image(systemName: "xmark")
                                 .foregroundColor(.yellowButton)
@@ -485,11 +488,12 @@ struct HabitFormFlowView: View {
     //MARK: Button
     var button: some View {
         HStack {
-            if customHabitText == "" {
+            if customHabitText == "" && selectedDefaultHabit == .none {
                 Button(action: {
                     
                     showCustomHabitTextSheet = true
                     isHabitTextFocused = true
+                    showDefaultHabitsScrollPicker = false
                     
                 }, label: {
                     Text("DEFINE HABIT")
