@@ -52,10 +52,10 @@ struct HabitFormFlowView: View {
                     GoalFormView(
                         customHabitText: $customHabitText,
                         onCreateHabit: { newHabit in
-                                       onCreateHabit(newHabit)
-                                       showGoalSheet = false
-                                       dismiss()
-                                   }
+                            onCreateHabit(newHabit)
+                            showGoalSheet = false
+                            dismiss()
+                        }, selectedDefaultHabit: selectedDefaultHabit
                     )
                 }
             }

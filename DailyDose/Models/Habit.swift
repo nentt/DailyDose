@@ -14,14 +14,14 @@ struct Habit: Identifiable, Hashable {
     let progress: Int
     let objective: Int
     let periodicity: HabitPeriodicity
-    let image: HabitImage = .none
+    let image: HabitImage
     
     static let sampleHabits: [Habit] = [
-        Habit(title: "No sugar", progress: 6, objective: 30, periodicity: .challenge(.months(1))),
-        Habit(title: "Read book", progress: 2, objective: 4, periodicity: .weekly(.hours(1))),
-        Habit(title: "News podcast", progress: 2, objective: 4, periodicity: .daily(.minutes(15))),
-        Habit(title: "75 Hard challenge", progress: 2, objective: 4, periodicity: .challenge(.days(75))),
-        Habit(title: "Learn EN words", progress: 5, objective: 50, periodicity: .weekly(.custom(5, "words")))
+        Habit(title: "No sugar", progress: 6, objective: 30, periodicity: .challenge(.months(1)), image: .asset("stop sugar")),
+        Habit(title: "Stretch", progress: 2, objective: 4, periodicity: .daily(.minutes(5)), image: .asset("stretch")),
+        Habit(title: "Run", progress: 2, objective: 4, periodicity: .weekly(.hours(1)), image: .asset("run")),
+        Habit(title: "Eat proteins", progress: 2, objective: 4, periodicity: .daily(.custom(110, "grams")), image: .asset("proteins")),
+        Habit(title: "do pilates", progress: 5, objective: 50, periodicity: .weekly(.times(2)), image: .asset("pilates"))
     ]
         
     
@@ -66,7 +66,7 @@ enum Unit: Hashable {
         case .months(let recurrence):
             return recurrence.pluralized("month")
         case .times(let recurrence):
-            return recurrence.pluralized("times")
+            return recurrence.pluralized("time")
         case .custom(let recurrence, let unit):
             return "\(recurrence) \(unit)"
         }

@@ -35,6 +35,10 @@ struct GoalFormView: View {
     @State private var showHabitSheet: Bool = false
     
     let onCreateHabit: (Habit) -> Void
+    
+    let selectedDefaultHabit: DefaultHabit?
+
+
 
     
     var recurrence: String {
@@ -260,7 +264,8 @@ struct GoalFormView: View {
         }
         .sheet(isPresented: $showHabitSheet) {
             HabitSummarySheet(
-                customHabitText: customHabitText,
+                customHabitText: customHabitText, 
+                selectedDefaultHabit: selectedDefaultHabit,
                 goalNumber: goalNumber,
                 selectedUnit: selectedUnit,
                 recurrence: recurrence,
@@ -463,6 +468,7 @@ struct GoalFormView: View {
                 .foregroundColor(.blackCopy)
                 .font(.custom("Syne-SemiBold", size: 30))
                 .padding(.leading, 20)
+                .baselineOffset(2)
             Spacer()
             
         }
@@ -475,7 +481,7 @@ struct GoalFormView: View {
         VStack {
             HStack {
                 UnitCell(
-                    title: "MINUTES",
+                    title: "minutes",
                     action: {
                         selectedUnit = "minutes"
                         isUnitKeyboardFocused = false
@@ -485,7 +491,7 @@ struct GoalFormView: View {
                 )
                 
                 UnitCell(
-                    title: "HOURS",
+                    title: "hours",
                     action: {
                         selectedUnit = "hours"
                         isUnitKeyboardFocused = false
@@ -495,7 +501,7 @@ struct GoalFormView: View {
                 )
                 
                 UnitCell(
-                    title: "DAYS",
+                    title: "days",
                     action: {
                         selectedUnit = "days"
                         isUnitKeyboardFocused = false
@@ -508,7 +514,7 @@ struct GoalFormView: View {
             
             HStack {
                 UnitCell(
-                    title: "MONTHS",
+                    title: "months",
                     action: {
                         selectedUnit = "months"
                         isUnitKeyboardFocused = false
@@ -517,7 +523,7 @@ struct GoalFormView: View {
                 )
                 
                 UnitCell(
-                    title: "TIMES",
+                    title: "times",
                     action: {
                         selectedUnit = "times"
                         isUnitKeyboardFocused = false
@@ -779,5 +785,5 @@ extension Int {
 
 
 #Preview {
-    GoalFormView(customHabitText: .constant("run"), onCreateHabit: { _ in })
+    GoalFormView(customHabitText: .constant("run"), onCreateHabit: { _ in }, selectedDefaultHabit: DefaultHabit(title: "Run", image: "run"))
 }

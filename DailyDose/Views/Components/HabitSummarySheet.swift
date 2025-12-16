@@ -9,10 +9,29 @@ import SwiftUI
 
 struct HabitSummarySheet: View {
     let customHabitText: String
+    let selectedDefaultHabit: DefaultHabit?
     let goalNumber: Int
     let selectedUnit: String
     let recurrence: String
     let onCreateHabit: (Habit) -> Void
+    var habitText: String {
+        if !customHabitText.isEmpty {
+            return customHabitText.lowercased()
+        } else {
+            return selectedDefaultHabit?.title.lowercased() ?? ""
+        }
+    }
+    @State private var selectedUserImage: UIImage? = nil
+
+    var habitImage: HabitImage {
+        if let userImage = selectedUserImage {
+            return .user(userImage)
+        } else if let defaultHabit = selectedDefaultHabit {
+            return .asset(defaultHabit.image)
+        } else {
+            return .none
+        }
+    }
     
     @Environment (\.dismiss) private var dismiss
     
@@ -35,7 +54,7 @@ struct HabitSummarySheet: View {
                     .multilineTextAlignment(.center)
                 
                 
-                Text("I will \(customHabitText.lowercased()), \(goalNumber.roundedWithAbbreviations) \(goalNumber.pluralizedUnit(selectedUnit)), \(recurrence == "challenge" ? "as a growth challenge" : recurrence).")
+                Text("I will \(habitText), \(goalNumber.roundedWithAbbreviations) \(goalNumber.pluralizedUnit(selectedUnit)), \(recurrence == "challenge" ? "as a growth challenge" : recurrence).")
                     .font(.custom("Syne-ExtraBold", size: 19))
                     .foregroundColor(.blackCopy)
                 
@@ -62,7 +81,6 @@ struct HabitSummarySheet: View {
                         case "times":
                             unit = .times(goalNumber)
                         default:
-                            // Pour les unités custom (comme "steps", "pages", etc.)
                             unit = .custom(goalNumber, selectedUnit)
                         }
                     
@@ -75,14 +93,15 @@ struct HabitSummarySheet: View {
                         case "challenge":
                             periodicity = .challenge(unit)
                         default:
-                            periodicity = .daily(unit) // Par défaut
+                            periodicity = .daily(unit)
                         }
                     
                     let newHabit = Habit(
-                            title: customHabitText,
+                            title: habitText,
                             progress: 0,
                             objective: goalNumber,
-                            periodicity: periodicity
+                            periodicity: periodicity,
+                            image: habitImage
                         )
                     
                     onCreateHabit(newHabit)
@@ -112,5 +131,5 @@ struct HabitSummarySheet: View {
 }
 
 #Preview {
-    HabitSummarySheet(customHabitText: "Practice english", goalNumber: 2, selectedUnit: "hours", recurrence: "challenge", onCreateHabit: { _ in })
+    HabitSummarySheet(customHabitText: "Practice english", selectedDefaultHabit: DefaultHabit(title: "Run", image: "run"), goalNumber: 2, selectedUnit: "hours", recurrence: "challenge", onCreateHabit: { _ in })
 }
