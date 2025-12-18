@@ -156,11 +156,7 @@ struct MainView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
                         ForEach(habits) { habit in
-                            Button {
-                                selectedHabit = habit
-                            } label: {
-                                HabitCell(habit: habit)
-                            }
+                            HabitCell(habit: habit)
                         }
                     }
                 }

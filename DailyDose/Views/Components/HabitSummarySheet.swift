@@ -90,6 +90,8 @@ struct HabitSummarySheet: View {
                             periodicity = .daily(unit)
                         case "weekly":
                             periodicity = .weekly(unit)
+                        case "monthly":
+                            periodicity = .monthly(unit)
                         case "challenge":
                             periodicity = .challenge(unit)
                         default:
@@ -100,7 +102,8 @@ struct HabitSummarySheet: View {
                             title: habitText,
                             progress: 0,
                             objective: goalNumber,
-                            periodicity: periodicity,
+                            periodicity: periodicity, 
+                            unit: unit,
                             image: habitImage
                         )
                     

@@ -14,14 +14,15 @@ struct Habit: Identifiable, Hashable {
     let progress: Int
     let objective: Int
     let periodicity: HabitPeriodicity
+    let unit: Unit
     let image: HabitImage
     
     static let sampleHabits: [Habit] = [
-        Habit(title: "No sugar", progress: 6, objective: 30, periodicity: .challenge(.months(1)), image: .asset("stop sugar")),
-        Habit(title: "Stretch", progress: 2, objective: 4, periodicity: .daily(.minutes(5)), image: .asset("stretch")),
-        Habit(title: "Run", progress: 2, objective: 4, periodicity: .weekly(.hours(1)), image: .asset("run")),
-        Habit(title: "Eat proteins", progress: 2, objective: 4, periodicity: .daily(.custom(110, "grams")), image: .asset("proteins")),
-        Habit(title: "do pilates", progress: 5, objective: 50, periodicity: .weekly(.times(2)), image: .asset("pilates"))
+        Habit(title: "Stop sugar", progress: 6, objective: 30, periodicity: .challenge(.months(1)), unit: .months(1), image: .asset("stop sugar")),
+        Habit(title: "Stretch", progress: 2, objective: 4, periodicity: .daily(.minutes(5)), unit: .minutes(5), image: .asset("stretch")),
+        Habit(title: "Run", progress: 2, objective: 4, periodicity: .weekly(.hours(1)), unit: .hours(1), image: .asset("running")),
+        Habit(title: "Eat proteins", progress: 2, objective: 4, periodicity: .daily(.custom(110, "grams")), unit: .custom(110, "grams"), image: .asset("proteins")),
+        Habit(title: "do pilates", progress: 5, objective: 50, periodicity: .weekly(.times(2)), unit: .weeks(2), image: .asset("pilates"))
     ]
         
     
@@ -30,6 +31,7 @@ struct Habit: Identifiable, Hashable {
 enum HabitPeriodicity: Hashable {
     case daily(Unit)
     case weekly(Unit)
+    case monthly(Unit)
     case challenge(Unit)
     
     var description: String {
@@ -38,6 +40,8 @@ enum HabitPeriodicity: Hashable {
             return "\(time.description) daily"
         case .weekly(let time):
             return "\(time.description) weekly"
+        case .monthly(let time):
+            return "\(time.description) monthly"
         case .challenge(let time):
             return "\(time.description) challenge"
         }
@@ -106,14 +110,15 @@ extension Int {
 
 extension HabitPeriodicity {
     enum Kind {
-        case daily, weekly, challenge
+        case daily, weekly, monthly, challenge
     }
     
     var kind: Kind {
         switch self {
         case .daily: return .daily
         case .weekly: return .weekly
-        case .challenge: return .challenge 
+        case .monthly: return .monthly
+        case .challenge: return .challenge
         }
     }
 }
@@ -123,6 +128,7 @@ extension HabitPeriodicity.Kind {
         switch self {
         case .daily: return "daily"
         case .weekly: return "weekly"
+        case .monthly: return "monthly"
         case .challenge: return "challenge"
 
         }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6E4B65122E03E14500BAC833 /* UnitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4B65112E03E14400BAC833 /* UnitCell.swift */; };
+		6E54DB402EF1AEDC0062CB95 /* HabitTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E54DB3F2EF1AEDC0062CB95 /* HabitTrackingView.swift */; };
 		6E580D252DEB8D8000FFF5CC /* DailyDoseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E580D242DEB8D8000FFF5CC /* DailyDoseApp.swift */; };
 		6E580D272DEB8D8000FFF5CC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E580D262DEB8D8000FFF5CC /* MainView.swift */; };
 		6E580D292DEB8D8400FFF5CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E580D282DEB8D8400FFF5CC /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		6E4B65112E03E14400BAC833 /* UnitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitCell.swift; sourceTree = "<group>"; };
+		6E54DB3F2EF1AEDC0062CB95 /* HabitTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackingView.swift; sourceTree = "<group>"; };
 		6E580D212DEB8D8000FFF5CC /* DailyDose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyDose.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E580D242DEB8D8000FFF5CC /* DailyDoseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDoseApp.swift; sourceTree = "<group>"; };
 		6E580D262DEB8D8000FFF5CC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				6E580D532DEF765C00FFF5CC /* HabitFormView.swift */,
 				6EDEA1022E4B03E90045D06C /* HabitFormFlowView.swift */,
 				6EB929E72E6FEF160022A6D4 /* GoalFormView.swift */,
+				6E54DB3F2EF1AEDC0062CB95 /* HabitTrackingView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				6E580D272DEB8D8000FFF5CC /* MainView.swift in Sources */,
 				6E734CD62E9E7BBA00229A2B /* CustomFrequencyPicker.swift in Sources */,
 				6EA7D8052ED760D500BC722C /* DefaultHabit.swift in Sources */,
+				6E54DB402EF1AEDC0062CB95 /* HabitTrackingView.swift in Sources */,
 				6EF07C742EAFADBE001C36DB /* HabitSummarySheet.swift in Sources */,
 				6E580D502DED7DF700FFF5CC /* Habit.swift in Sources */,
 				6EB929E82E6FEF160022A6D4 /* GoalFormView.swift in Sources */,

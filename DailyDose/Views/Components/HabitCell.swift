@@ -82,7 +82,7 @@ extension String {
 }
 #Preview {
     VStack {
-        HabitCell(habit: Habit(title: "pilates", progress: 6, objective: 2, periodicity: .weekly(.hours(2)), image: .asset("run")))
+        HabitCell(habit: Habit(title: "pilates", progress: 6, objective: 2, periodicity: .weekly(.hours(2)), unit: .hours(2), image: .asset("run")))
     }
     .padding()
 

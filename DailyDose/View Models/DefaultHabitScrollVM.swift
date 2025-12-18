@@ -14,7 +14,7 @@ class DefaultHabitScrollVM: ObservableObject {
         DefaultHabit(title: "Hit the gym", image: "workout"),
         DefaultHabit(title: "Do Pilates", image: "pilates"),
         DefaultHabit(title: "Stop sugar", image: "stop sugar"),
-        DefaultHabit(title: "Eat proteins", image: "protein"),
+        DefaultHabit(title: "Eat proteins", image: "proteins"),
         DefaultHabit(title: "Drink water", image: "drink water")
     ]
 }

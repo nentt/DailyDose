@@ -16,7 +16,7 @@ struct UnitCell: View {
     var body: some View {
         Button(action: action) {
             HStack {
-                Text(isUnitCellSelected ? title.uppercased() : title)
+                Text(title)
                     .font(.custom("Syne-Regular", size: 14))
                     .fontWeight(.bold)
                     .foregroundColor(.blackCopy.opacity(0.5))
