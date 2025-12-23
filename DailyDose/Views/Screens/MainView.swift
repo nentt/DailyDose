@@ -156,7 +156,9 @@ struct MainView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
                         ForEach(habits) { habit in
-                            HabitCell(habit: habit)
+                            NavigationLink(value: habit) {
+                                HabitCell(habit: habit)
+                            }
                         }
                     }
                 }
@@ -179,6 +181,9 @@ struct MainView: View {
                         
                     }
                 }
+            }
+            .navigationDestination(for: Habit.self) { habit in
+                HabitTrackingView(habit: habit)
             }
             .onAppear {
                 if selectedHabit == nil {

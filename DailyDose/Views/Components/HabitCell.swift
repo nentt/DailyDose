@@ -34,16 +34,13 @@ struct HabitCell: View {
                 VStack {
                         HStack {
                             Spacer()
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "arrow.up.right")
+                        
+                            Image(systemName: "arrow.up.right")
                                     .font(.system(size: 25))
                                     .foregroundColor(.blackCopy)
                                     .frame(width: 50, height: 50)
                                     .background(Circle().fill(Color.yellowButton))
-                            }
-                            .padding(20)
+                                    .padding(20)
                         }
                         Spacer()
                     }

@@ -10,10 +10,13 @@ import SwiftUI
 struct HabitTrackingView: View {
     let habit: Habit
     @State private var isTracking = false
+    @State private var showEndButton = false
+    @State private var buttonScale: CGFloat = 1.0
+    @State private var buttonOffset: CGFloat = 0
     @State private var elapsedSeconds: Int = 0
     @State private var startDate: Date?
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-
+    
     
     var hours: Int {
         elapsedSeconds / 3600
@@ -27,145 +30,200 @@ struct HabitTrackingView: View {
     
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                switch habit.image {
-                case .asset(let name):
-                    Image(name)
-                        .resizable()
-                        .scaledToFill()
-                        .ignoresSafeArea()
-                        .blur(radius: 15)
-                case .user(let uiImage):
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .scaledToFill()
-                        .ignoresSafeArea()
-                case .none:
-                    Color(.blackCopy)
-                        .ignoresSafeArea()
-                }
+        ZStack {
+            switch habit.image {
+            case .asset(let name):
+                Image(name)
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+                    .blur(radius: 15)
+            case .user(let uiImage):
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+            case .none:
+                Color(.blackCopy)
+                    .ignoresSafeArea()
+            }
+            VStack {
+                
                 VStack {
                     
+                    Spacer()
+                    
+                    
+                    HStack {
+                        TimeUnitText(
+                            value: hours,
+                            isActive: elapsedSeconds >= 3600
+                        )
+                        
+                        TimeSeparator()
+                        
+                        TimeUnitText(
+                            value: minutes,
+                            isActive: elapsedSeconds >= 60
+                        )
+                        
+                        TimeSeparator()
+                        
+                        TimeUnitText(
+                            value: seconds,
+                            isActive: true
+                        )
+                    }
+                    
+                    
+                    Text("Finish in ")
+                        .font(.custom("Syne-ExtraBold", size: 15))
+                        .foregroundColor(.mauveBackground)
+                    Spacer()
+                    
                     VStack {
+//                        Button {
+//                            isTracking = false
+//                        } label: {
+//                            Image(systemName: "xmark")
+//                                .font(.system(size: 30))
+//                                .foregroundColor(.blackCopy)
+//                                .frame(width: 80, height: 80)
+//                                .background(Circle().fill(Color.mauveBackground))
+//                                .overlay(
+//                                    Circle()
+//                                        .stroke(Color.mauveBackground.opacity(0.4), lineWidth: 10)
+//                                        .frame(width: 80, height: 80)
+//                                )
+//                                .padding(.horizontal, 5)
+//                        }
+//                        .padding(.bottom, 20)
                         
-                        Spacer()
-                        
-                        
-                        HStack {
-                            TimeUnitText(
-                                value: hours,
-                                isActive: elapsedSeconds >= 3600
-                            )
-                            
-                            TimeSeparator()
-                            
-                            TimeUnitText(
-                                value: minutes,
-                                isActive: elapsedSeconds >= 60
-                            )
-                            
-                            TimeSeparator()
-                            
-                            TimeUnitText(
-                                value: seconds,
-                                isActive: true
-                            )
-                        }
-                        
-                        
-                        Text("Finish in ")
-                            .font(.custom("Syne-ExtraBold", size: 15))
-                            .foregroundColor(.mauveBackground)
-                        Spacer()
-                        
-                        HStack {
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "xmark")
-                                    .font(.system(size: 30))
-                                    .foregroundColor(.blackCopy)
-                                    .frame(width: 80, height: 80)
-                                    .background(Circle().fill(Color.mauveBackground))
-                                    .overlay(
-                                        Circle()
-                                            .stroke(Color.mauveBackground.opacity(0.4), lineWidth: 10)
-                                            .frame(width: 80, height: 80)
-                                    )
-                                    .padding(.horizontal, 5)
-                            }
-                            .padding(.bottom, 20)
-                            
-                            Button {
-                                    startDate = Date()
+                        Button {
+                            if isTracking {
+                                withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
+                                    isTracking = false
+                                    buttonScale = 1.5
+                                    buttonOffset = -100
+                                    showEndButton = true
+                                }
+                            } else {
+                                withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
                                     isTracking = true
-                            } label: {
-                                Image(systemName: "play.fill")
-                                    .font(.system(size: 30))
-                                    .foregroundColor(.blackCopy)
-                                    .frame(width: 80, height: 80)
-                                    .background(Circle().fill(Color.yellowButton))
-                                    .overlay(
-                                        Circle()
-                                            .stroke(Color.mauveBackground.opacity(0.4), lineWidth: 10)
-                                            .frame(width: 80, height: 80)
-                                    )
-                                    .padding(.horizontal, 5)
+                                    buttonScale = 1.0
+                                    buttonOffset = 0
+                                    showEndButton = false
+                                }
                             }
-                            .padding(.bottom, 20)
+                            startDate = Date()
+                        } label: {
+                            Image(systemName: isTracking ? "pause.fill" : "play.fill")
+                                .font(.system(size: 30))
+                                .foregroundColor(.blackCopy)
+                                .frame(width: 80, height: 80)
+                                .background(Circle().fill(Color.yellowButton))
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.yellowButton.opacity(0.4), lineWidth: 10)
+                                        .frame(width: 80, height: 80)
+                                )
+                                .padding(.horizontal, 5)
+                        }
+                        .scaleEffect(buttonScale)
+                        .offset(y: buttonOffset)
+                        .padding(.bottom, 20)
+                        
+                        if showEndButton {
+                            HStack {
+                                Button(action: {
+                                    
+                                }, label: {
+                                    Text("RESET")
+                                        .font(.custom("Syne-SemiBold", size: 17))
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.blackCopy)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: 70)
+                                        .background(Color.mauveBackground)
+                                        .cornerRadius(50)
+                                        .overlay {
+                                            RoundedRectangle(cornerRadius: 50)
+                                                .stroke(Color.yellowButton, lineWidth: 3)
+                                        }
+                                })
+                                .transition(.move(edge: .bottom))
+                                
+                                Button(action: {
+                                    
+                                }, label: {
+                                    Text("END")
+                                        .font(.custom("Syne-SemiBold", size: 17))
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.blackCopy)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: 70)
+                                        .background(Color.mauveBackground)
+                                        .cornerRadius(50)
+                                        .overlay {
+                                            RoundedRectangle(cornerRadius: 50)
+                                                .stroke(Color.yellowButton, lineWidth: 3)
+                                        }
+                                    
+                                })
+                                .transition(.move(edge: .bottom))
+                            }
+                            .padding()
                         }
                     }
-                    
-                    
-                    
-                }
-                .padding()
-            }
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    VStack(alignment: .leading) {
-                        Text("\(habit.title.uppercased())")
-                            .font(.custom("Syne-Bold", size: 17))
-                            .foregroundColor(.white)
-                        Text("\(habit.unit.description)")
-                            .font(.custom("Syne-Bold", size: 14))
-                            .foregroundColor(.white)
-                    }
-                    .padding(.top, 20)
-                    
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    HStack(spacing: 12) {
-                        Button {
-                            // menu
-                        } label: {
-                            HStack(spacing: 4) {
-                                Circle().stroke(lineWidth: 2).frame(width: 6, height: 6)
-                                Circle().stroke(lineWidth: 2).frame(width: 6, height: 6)
-                                Circle().stroke(lineWidth: 2).frame(width: 6, height: 6)
-                            }
-                        }
-                        
-                        Button {
-                            // close
-                        } label: {
-                            Image(systemName: "xmark")
+                
+                
+            }
+            .padding()
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                VStack(alignment: .leading) {
+                    Text("\(habit.title.uppercased())")
+                        .font(.custom("Syne-Bold", size: 17))
+                        .foregroundColor(.white)
+                    Text("\(habit.unit.description)")
+                        .font(.custom("Syne-Bold", size: 14))
+                        .foregroundColor(.white)
+                }
+                .padding(.top, 20)
+                
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                HStack(spacing: 12) {
+                    Button {
+                        // menu
+                    } label: {
+                        HStack(spacing: 4) {
+                            Circle().stroke(lineWidth: 2).frame(width: 6, height: 6)
+                            Circle().stroke(lineWidth: 2).frame(width: 6, height: 6)
+                            Circle().stroke(lineWidth: 2).frame(width: 6, height: 6)
                         }
                     }
-                    .foregroundColor(.white)
+                    
+                    Button {
+                        // close
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
                 }
-            }
-            .onReceive(timer) { _ in
-                guard isTracking, let startDate else {
-                    return
-                }
-                elapsedSeconds = Int(Date().timeIntervalSince(startDate))
+                .foregroundColor(.white)
             }
         }
-        
+        .onReceive(timer) { _ in
+            guard isTracking, let startDate else {
+                return
+            }
+            elapsedSeconds = Int(Date().timeIntervalSince(startDate))
+        }
     }
     
 }
@@ -174,7 +232,7 @@ struct HabitTrackingView: View {
 struct TimeUnitText: View {
     let value: Int
     let isActive: Bool
-
+    
     var body: some View {
         Text(String(format: "%02d", value))
             .font(.custom("Syne-ExtraBold", size: 30))
