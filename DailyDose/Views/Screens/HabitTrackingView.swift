@@ -115,7 +115,7 @@ struct HabitTrackingView: View {
                                     showEndButton = false
                                 }
                             }
-                            startDate = Date()
+                            startDate = Date().addingTimeInterval(-Double(elapsedSeconds))
                         } label: {
                             Image(systemName: isTracking ? "pause.fill" : "play.fill")
                                 .font(.system(size: 30))
@@ -136,38 +136,43 @@ struct HabitTrackingView: View {
                         if showEndButton {
                             HStack {
                                 Button(action: {
-                                    
+                                    withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
+                                        startDate = nil
+                                        elapsedSeconds = 0
+                                        buttonScale = 1.0
+                                        buttonOffset = 0
+                                        showEndButton = false
+                                    }
                                 }, label: {
-                                    Text("RESET")
-                                        .font(.custom("Syne-SemiBold", size: 17))
-                                        .fontWeight(.bold)
+                                    Image(systemName: "arrow.clockwise")
+                                        .font(.system(size: 30))
                                         .foregroundColor(.blackCopy)
-                                        .frame(maxWidth: .infinity)
-                                        .frame(height: 70)
-                                        .background(Color.mauveBackground)
-                                        .cornerRadius(50)
-                                        .overlay {
-                                            RoundedRectangle(cornerRadius: 50)
-                                                .stroke(Color.yellowButton, lineWidth: 3)
-                                        }
+                                        .frame(width: 80, height: 80)
+                                        .background(Circle().fill(Color.white))
+                                        .overlay(
+                                            Circle()
+                                                .stroke(Color.white.opacity(0.4), lineWidth: 10)
+                                                .frame(width: 80, height: 80)
+                                        )
+                                        .padding(.horizontal, 5)
                                 })
                                 .transition(.move(edge: .bottom))
                                 
                                 Button(action: {
-                                    
+                                    isTracking = false
+                                    startDate = nil
                                 }, label: {
-                                    Text("END")
-                                        .font(.custom("Syne-SemiBold", size: 17))
-                                        .fontWeight(.bold)
+                                    Image(systemName: "stop")
+                                        .font(.system(size: 30))
                                         .foregroundColor(.blackCopy)
-                                        .frame(maxWidth: .infinity)
-                                        .frame(height: 70)
-                                        .background(Color.mauveBackground)
-                                        .cornerRadius(50)
-                                        .overlay {
-                                            RoundedRectangle(cornerRadius: 50)
-                                                .stroke(Color.yellowButton, lineWidth: 3)
-                                        }
+                                        .frame(width: 80, height: 80)
+                                        .background(Circle().fill(Color.white))
+                                        .overlay(
+                                            Circle()
+                                                .stroke(Color.white.opacity(0.4), lineWidth: 10)
+                                                .frame(width: 80, height: 80)
+                                        )
+                                        .padding(.horizontal, 5)
                                     
                                 })
                                 .transition(.move(edge: .bottom))
