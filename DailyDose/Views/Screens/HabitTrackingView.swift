@@ -138,11 +138,11 @@ struct HabitTrackingView: View {
                                 Button(action: {
                                     withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
                                         startDate = nil
-                                        elapsedSeconds = 0
                                         buttonScale = 1.0
                                         buttonOffset = 0
                                         showEndButton = false
                                     }
+                                    elapsedSeconds = 0
                                 }, label: {
                                     Image(systemName: "arrow.clockwise")
                                         .font(.system(size: 30))
