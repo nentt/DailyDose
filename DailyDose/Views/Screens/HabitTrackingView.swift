@@ -16,6 +16,7 @@ struct HabitTrackingView: View {
     @State private var elapsedSeconds: Int = 0
     @State private var startDate: Date?
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State private var stopTimer = false
     
     
     var hours: Int {
@@ -82,22 +83,20 @@ struct HabitTrackingView: View {
                     Spacer()
                     
                     VStack {
-//                        Button {
-//                            isTracking = false
-//                        } label: {
-//                            Image(systemName: "xmark")
-//                                .font(.system(size: 30))
-//                                .foregroundColor(.blackCopy)
-//                                .frame(width: 80, height: 80)
-//                                .background(Circle().fill(Color.mauveBackground))
-//                                .overlay(
-//                                    Circle()
-//                                        .stroke(Color.mauveBackground.opacity(0.4), lineWidth: 10)
-//                                        .frame(width: 80, height: 80)
-//                                )
-//                                .padding(.horizontal, 5)
-//                        }
-//                        .padding(.bottom, 20)
+                        if stopTimer && elapsedSeconds > 0 {
+                            Text("\(timeFormatSentence()) ADDED TO YOUR DAY!")
+                                .font(.custom("Syne-Bold", size: 19))
+                                .foregroundStyle(.yellowButton)
+                                .transition(
+                                    .asymmetric(
+                                        insertion: .move(edge: .bottom).combined(with: .opacity),
+                                        removal: .move(edge: .top).combined(with: .opacity)
+                                    )
+                                )
+                                .padding(.bottom, 70)
+                        }
+                        
+                            
                         
                         Button {
                             if isTracking {
@@ -141,6 +140,7 @@ struct HabitTrackingView: View {
                                         buttonScale = 1.0
                                         buttonOffset = 0
                                         showEndButton = false
+                                        isTracking = false
                                     }
                                     elapsedSeconds = 0
                                 }, label: {
@@ -159,8 +159,21 @@ struct HabitTrackingView: View {
                                 .transition(.move(edge: .bottom))
                                 
                                 Button(action: {
-                                    isTracking = false
-                                    startDate = nil
+                                    withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
+                                        startDate = nil
+                                        buttonScale = 1.0
+                                        buttonOffset = 0
+                                        showEndButton = false
+                                        isTracking = false
+                                    }
+                                    withAnimation(.easeInOut(duration: 1.3)) {
+                                        stopTimer = true
+                                    }
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+                                        withAnimation(.easeInOut(duration: 1.3)) {
+                                            stopTimer = false
+                                        }
+                                    }
                                 }, label: {
                                     Image(systemName: "stop")
                                         .font(.system(size: 30))
@@ -176,6 +189,8 @@ struct HabitTrackingView: View {
                                     
                                 })
                                 .transition(.move(edge: .bottom))
+                                
+                                
                             }
                             .padding()
                         }
@@ -231,6 +246,15 @@ struct HabitTrackingView: View {
         }
     }
     
+    func timeFormatSentence() -> Text {
+        if elapsedSeconds < 60 {
+            return Text(String(format: "\(seconds) SEC", seconds))
+        } else if elapsedSeconds > 60 && elapsedSeconds < 3600 {
+            return Text(String(format: "\(minutes) MIN", minutes))
+        } else {
+            return Text(String(format: elapsedSeconds > 3600 && elapsedSeconds < 7200 ? "\(hours) HOUR" : "\(hours) HOURS", hours))
+        }
+    }
 }
 
 
