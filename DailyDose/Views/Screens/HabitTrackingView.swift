@@ -13,7 +13,7 @@ struct HabitTrackingView: View {
     @State private var showEndButton = false
     @State private var buttonScale: CGFloat = 1.0
     @State private var buttonOffset: CGFloat = 0
-    @State private var elapsedSeconds: Int = 0
+    @State private var elapsedSeconds: Int = 7350
     @State private var startDate: Date?
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var stopTimer = false
@@ -84,16 +84,23 @@ struct HabitTrackingView: View {
                     
                     VStack {
                         if stopTimer && elapsedSeconds > 0 {
-                            Text("\(timeFormatSentence()) ADDED TO YOUR DAY!")
-                                .font(.custom("Syne-Bold", size: 19))
-                                .foregroundStyle(.yellowButton)
-                                .transition(
-                                    .asymmetric(
-                                        insertion: .move(edge: .bottom).combined(with: .opacity),
-                                        removal: .move(edge: .top).combined(with: .opacity)
-                                    )
+                            VStack {
+                                Text("\(timeFormatSentence())")
+                                    .font(.custom("Syne-ExtraBold", size: 29))
+                                    .foregroundStyle(.mauveBackground)
+                                    .padding(.bottom, 10)
+                                Text("ADDED TO YOUR DAY!")
+                                    .font(.custom("Syne-Bold", size: 19))
+                                    .foregroundStyle(.yellowButton)
+                                    
+                                    .padding(.bottom, 70)
+                            }
+                            .transition(
+                                .asymmetric(
+                                    insertion: .move(edge: .bottom).combined(with: .opacity),
+                                    removal: .move(edge: .top).combined(with: .opacity)
                                 )
-                                .padding(.bottom, 70)
+                            )
                         }
                         
                             
@@ -166,11 +173,11 @@ struct HabitTrackingView: View {
                                         showEndButton = false
                                         isTracking = false
                                     }
-                                    withAnimation(.easeInOut(duration: 1.3)) {
+                                    withAnimation(.easeInOut(duration: 1.6)) {
                                         stopTimer = true
                                     }
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
-                                        withAnimation(.easeInOut(duration: 1.3)) {
+                                        withAnimation(.easeInOut(duration: 1.6)) {
                                             stopTimer = false
                                         }
                                     }
@@ -246,13 +253,22 @@ struct HabitTrackingView: View {
         }
     }
     
+    
     func timeFormatSentence() -> Text {
-        if elapsedSeconds < 60 {
-            return Text(String(format: "\(seconds) SEC", seconds))
+        if elapsedSeconds > 3600 {
+            if hours > 0 && minutes == 0 {
+                return Text(String(format: elapsedSeconds > 3600 && elapsedSeconds < 7200 ? "\(hours) HOUR" : "\(hours) HOURS", hours))
+            } else {
+                return Text(String(format: "\(hours)h\(String(format: "%02d", minutes))", minutes))
+            }
         } else if elapsedSeconds > 60 && elapsedSeconds < 3600 {
-            return Text(String(format: "\(minutes) MIN", minutes))
+            if seconds == 0 {
+                return Text(String(format: "\(minutes) MIN", minutes))
+            } else {
+                return Text(String(format: "\(minutes):\(String(format: "%02d", seconds))", seconds))
+            }
         } else {
-            return Text(String(format: elapsedSeconds > 3600 && elapsedSeconds < 7200 ? "\(hours) HOUR" : "\(hours) HOURS", hours))
+            return Text(String(format: "\(seconds) SEC", seconds))
         }
     }
 }
