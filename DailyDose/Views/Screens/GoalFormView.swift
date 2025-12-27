@@ -157,7 +157,7 @@ struct GoalFormView: View {
                             if showCustomUnitSheet {
                                 
                             } else {
-                                UnitSettings
+                                unitSettings
                             }
                             Spacer()
                             if showCustomUnitSheet {
@@ -477,7 +477,7 @@ struct GoalFormView: View {
     
     
     //MARK: Define your unit
-    var UnitSettings: some View {
+    var unitSettings: some View {
         VStack {
             HStack {
                 UnitCell(
