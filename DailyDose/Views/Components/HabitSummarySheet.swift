@@ -33,7 +33,7 @@ struct HabitSummarySheet: View {
         }
     }
     
-    @Environment (\.dismiss) private var dismiss
+    @Environment(\.dismiss) private var dismiss
     
     
     var body: some View {

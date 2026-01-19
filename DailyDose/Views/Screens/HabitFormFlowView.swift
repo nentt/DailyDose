@@ -29,7 +29,6 @@ struct HabitFormFlowView: View {
     //    @State private var showCustomRecurrenceSheet = false
     //    @FocusState private var isRecurrenceFocused: Bool
     //    @State private var customRecurrence: String = ""
-    @State private var recurrenceOffset: CGFloat = UIScreen.main.bounds.height
     @State private var customUnit: String = "minutes"
     @State private var selectedDefaultHabit: DefaultHabit? = .none
     let onCreateHabit: (Habit) -> Void
@@ -89,10 +88,9 @@ struct HabitFormFlowView: View {
                             .animation(.spring(response: 0.3, dampingFraction: 0.5), value: showCustomHabitTextSheet)
                     }
                     .padding(.top, 20)
-                    
                 })
-                
             }
+            .sharedBackgroundVisibility(.hidden)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -117,6 +115,7 @@ struct HabitFormFlowView: View {
                     
                 }
             }
+            .sharedBackgroundVisibility(.hidden)
         }
     }
     

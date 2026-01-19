@@ -13,10 +13,11 @@ struct HabitTrackingView: View {
     @State private var showEndButton = false
     @State private var buttonScale: CGFloat = 1.0
     @State private var buttonOffset: CGFloat = 0
-    @State private var elapsedSeconds: Int = 7350
+    @State private var elapsedSeconds: Int = 0
     @State private var startDate: Date?
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var stopTimer = false
+    @Environment(\.dismiss) private var dismiss
     
     
     var hours: Int {
@@ -27,6 +28,18 @@ struct HabitTrackingView: View {
     }
     var seconds: Int {
         elapsedSeconds % 60
+    }
+    
+    var objectiveInSeconds: Int {
+        switch habit.unit {
+        case .minutes(_):
+            return habit.objective * 60
+        case .hours(_):
+            return habit.objective * 3600
+        default:
+            return 0
+        }
+        
     }
     
     
@@ -66,9 +79,11 @@ struct HabitTrackingView: View {
                         .font(.custom("Syne-Bold", size: 14))
                         .foregroundColor(.white)
                 }
+                .fixedSize(horizontal: true, vertical: false)
                 .padding(.top, 20)
                 
             }
+            .sharedBackgroundVisibility(.hidden)
             
             ToolbarItem(placement: .navigationBarTrailing) {
                 HStack(spacing: 12) {
@@ -83,13 +98,14 @@ struct HabitTrackingView: View {
                     }
                     
                     Button {
-                        // close
+                        dismiss()
                     } label: {
                         Image(systemName: "xmark")
                     }
                 }
                 .foregroundColor(.white)
             }
+            .sharedBackgroundVisibility(.hidden)
         }
         .onReceive(timer) { _ in
             guard isTracking, let startDate else {
@@ -131,9 +147,6 @@ struct HabitTrackingView: View {
                 }
                 
                 
-                Text("Finish in ")
-                    .font(.custom("Syne-ExtraBold", size: 15))
-                    .foregroundColor(.mauveBackground)
                 Spacer()
                 
                 VStack {
@@ -212,6 +225,7 @@ struct HabitTrackingView: View {
                                     withAnimation(.easeInOut(duration: 1.6)) {
                                         stopTimer = false
                                     }
+                                    elapsedSeconds = 0
                                 }
                             }, label: {
                                 Image(systemName: "stop")
