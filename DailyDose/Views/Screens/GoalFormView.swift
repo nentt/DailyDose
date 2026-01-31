@@ -484,7 +484,7 @@ struct GoalFormView: View {
         VStack {
             HStack {
                 UnitCell(
-                    title: "minutes",
+                    title: "MINUTES",
                     action: {
                         selectedUnit = "minutes"
                         isUnitKeyboardFocused = false
@@ -494,7 +494,7 @@ struct GoalFormView: View {
                 )
                 
                 UnitCell(
-                    title: "hours",
+                    title: "HOURS",
                     action: {
                         selectedUnit = "hours"
                         isUnitKeyboardFocused = false
@@ -504,7 +504,7 @@ struct GoalFormView: View {
                 )
                 
                 UnitCell(
-                    title: "days",
+                    title: "DAYS",
                     action: {
                         selectedUnit = "days"
                         isUnitKeyboardFocused = false
@@ -517,7 +517,7 @@ struct GoalFormView: View {
             
             HStack {
                 UnitCell(
-                    title: "months",
+                    title: "MONTHS",
                     action: {
                         selectedUnit = "months"
                         isUnitKeyboardFocused = false
@@ -526,7 +526,7 @@ struct GoalFormView: View {
                 )
                 
                 UnitCell(
-                    title: "times",
+                    title: "TIMES",
                     action: {
                         selectedUnit = "times"
                         isUnitKeyboardFocused = false

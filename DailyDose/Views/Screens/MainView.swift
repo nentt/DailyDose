@@ -94,11 +94,11 @@ struct MainView: View {
                                 
                                 VStack {
                                     RoundedRectangle(cornerRadius: 20)
-                                        .fill(.white)
+                                        .fill(.blackCopy.opacity(0.1))
                                         .gridCellColumns(1)
                                         .frame(height: 200)
                                     RoundedRectangle(cornerRadius: 20)
-                                        .fill(.white)
+                                        .fill(.blackCopy.opacity(0.1))
                                         .gridCellColumns(1)
                                         .frame(height: 200)
                                 }
@@ -111,13 +111,10 @@ struct MainView: View {
                             GridRow {
                                 
                                 RoundedRectangle(cornerRadius: 20)
-                                    .fill(.white)
+                                    .fill(.blackCopy.opacity(0.1))
                                     .gridCellColumns(1)
                                     .frame(height: 200)
-                                RoundedRectangle(cornerRadius: 20)
-                                    .fill(.white)
-                                    .gridCellColumns(1)
-                                    .frame(height: 200)
+                                HabitProgressCell()
                                 
                             }
                         }

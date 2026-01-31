@@ -1,0 +1,99 @@
+Last login: Sat Jan 31 18:26:00 on ttys000
+audreypenninckx@MacBook-Pro-de-Audrey ~ % cd /Users/audreypenninckx/Documents/Coding/iOS\ Projects/DailyDose
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git branch mes-vrais-commits f37a1f8
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git checkout mes-vrais-commits
+error: Your local changes to the following files would be overwritten by checkout:
+	.DS_Store
+	DAILYDOSE.xcodeproj/project.xcworkspace/xcuserdata/audreypenninckx.xcuserdatad/UserInterfaceState.xcuserstate
+Please commit your changes or stash them before you switch branches.
+Aborting
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git add .
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git commit -m "Sauvegarde temporaire"
+[master fee5e32] Sauvegarde temporaire
+ 4 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 DailyDose/.DS_Store
+ create mode 100644 DailyDose/Views/.DS_Store
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git checkout mes-vrais-commits
+Switched to branch 'mes-vrais-commits'
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git checkout master
+error: Your local changes to the following files would be overwritten by checkout:
+	DAILYDOSE.xcodeproj/project.xcworkspace/xcuserdata/audreypenninckx.xcuserdatad/UserInterfaceState.xcuserstate
+Please commit your changes or stash them before you switch branches.
+Aborting
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git add .
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git commit -m "Sauvegarde avant merge"
+[mes-vrais-commits c1637e2] Sauvegarde avant merge
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git merge mes-vrais-commits
+warning: Cannot merge binary files: .DS_Store (HEAD vs. mes-vrais-commits)
+Auto-merging .DS_Store
+CONFLICT (add/add): Merge conflict in .DS_Store
+warning: Cannot merge binary files: DAILYDOSE.xcodeproj/project.xcworkspace/xcuserdata/audreypenninckx.xcuserdatad/UserInterfaceState.xcuserstate (HEAD vs. mes-vrais-commits)
+Auto-merging DAILYDOSE.xcodeproj/project.xcworkspace/xcuserdata/audreypenninckx.xcuserdatad/UserInterfaceState.xcuserstate
+CONFLICT (content): Merge conflict in DAILYDOSE.xcodeproj/project.xcworkspace/xcuserdata/audreypenninckx.xcuserdatad/UserInterfaceState.xcuserstate
+Automatic merge failed; fix conflicts and then commit the result.
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git checkout --ours .DS_Store
+Updated 1 path from the index
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git checkout --ours DAILYDOSE.xcodeproj/project.xcworkspace/xcuserdata/audreypenninckx.xcuserdatad/UserInterfaceState.xcuserstate
+Updated 1 path from the index
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git add .
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git commit -m "Merge mes-vrais-commits"
+[master 1c04695] Merge mes-vrais-commits
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git push origin master
+Enumerating objects: 77, done.
+Counting objects: 100% (77/77), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (60/60), done.
+Writing objects: 100% (60/60), 530.25 KiB | 20.39 MiB/s, done.
+Total 60 (delta 25), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (25/25), completed with 10 local objects.
+To https://github.com/nentt/DailyDose.git
+   83dbb0a..1c04695  master -> master
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % echo ".DS_Store" >> .gitignore
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % echo "*.xcuserstate" >> .gitignore
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git add .gitignore
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git commit -m "Add gitignore"
+[master 9e6dbb2] Add gitignore
+ 1 file changed, 2 insertions(+)
+ create mode 100644 .gitignore
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % git push origin master
+```
+
+Appuyez sur **Entrée**.
+
+---
+
+## **Ou via Xcode (plus simple) :**
+
+1. Dans **Xcode**, faites **Cmd + N** (nouveau fichier)
+2. Choisissez **"Empty"** file
+3. Nommez-le exactement **`.gitignore`** (avec le point au début)
+4. Sauvegardez-le à la **racine de votre projet** (là où se trouve le dossier `DAILYDOSE.xcodeproj`)
+5. Ouvrez le fichier et écrivez dedans :
+```
+   .DS_Store
+   *.xcuserstate
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 305 bytes | 305.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/nentt/DailyDose.git
+   1c04695..9e6dbb2  master -> master
+zsh: no matches found: **Entrée**.
+zsh: command not found: ---
+zsh: no matches found: **Ou
+zsh: no matches found: **Xcode**,
+zsh: no matches found: **Empty**
+zsh: command not found: 3.
+zsh: number expected
+zsh: no matches found: **racine
+zsh: parse error near `)'
+zsh: parse error in command substitution
+audreypenninckx@MacBook-Pro-de-Audrey DailyDose % 

@@ -12,8 +12,8 @@ struct FocusedHabitCell: View {
     let geoWidth: Double
     
     var body: some View {
-        VStack {
-            
+        ZStack {
+            VStack {
                 switch habit.image {
                 case.asset(let name):
                     Image(name)
@@ -22,23 +22,23 @@ struct FocusedHabitCell: View {
                         .overlay(
                             LinearGradient(
                                 colors: [
-                                    Color.gray,
+                                    Color.white,
                                     Color.black.opacity(0.0)
                                 ],
                                 startPoint: .top,
                                 endPoint: .center
                             )
                         )
-                        .overlay(
-                            LinearGradient(
-                                colors: [
-                                    Color.gray,
-                                    Color.black.opacity(0.0)
-                                ],
-                                startPoint: .bottom,
-                                endPoint: .center
-                            )
-                        )
+//                        .overlay(
+//                            LinearGradient(
+//                                colors: [
+//                                    Color.gray,
+//                                    Color.black.opacity(0.0)
+//                                ],
+//                                startPoint: .bottom,
+//                                endPoint: .center
+//                            )
+//                        )
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                 case.user(let uiImage):
                     Image(uiImage: uiImage)
@@ -51,14 +51,17 @@ struct FocusedHabitCell: View {
                         .frame(width: 80, height: 80)
                         .foregroundStyle(.blackCopy.opacity(0.4))
                 }
-            
+            }
+            VStack {
+                VariableBlurView(maxBlurRadius: 20)
+            }
         }
         .frame(height: 410)
         .frame(width: geoWidth / 2 - 4)
         .overlay(alignment: .topLeading){
             Text("KEEP TRACKING")
                 .font(.custom("Syne-SemiBold", size: 14))
-                .foregroundStyle(.mauveBackground)
+                .foregroundStyle(.blackCopy)
                 .frame(width: 100)
                 .multilineTextAlignment(.leading)
                 .padding(.top, 10)
@@ -68,7 +71,7 @@ struct FocusedHabitCell: View {
         .overlay(alignment: .topTrailing){
             Image(systemName: "arrow.up.right")
                 .font(.system(size: 25))
-                .foregroundColor(.mauveBackground)
+                .foregroundColor(.blackCopy)
                 .padding(.top, 10)
                 .padding(.trailing, 10)
         }
