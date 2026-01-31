@@ -72,101 +72,63 @@ struct MainView: View {
                     .padding(.bottom, 20)
                 }
                 
-//                VStack {
-//                    Text("Track Your")
-//                        .font(.custom("Syne-Bold", size: 34))
-//                        .foregroundColor(.blackCopy)
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                        .padding(.horizontal, 20)
-//                        .padding(.top, -10)
-//                    
-//                    Text("Habits")
-//                        .font(.custom("Syne-Bold", size: 34))
-//                        .foregroundColor(.blackCopy)
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                        .padding(.horizontal, 20)
-//                        .padding(.top, -25)
-//                }
-                
-                
-                HStack {
+                GeometryReader { geo in
                     VStack {
-                        Text("5")
-                            .font(.custom("Syne-ExtraBold", size: 45))
-                            .foregroundColor(.yellowButton)
-                        Text("daily")
-                            .font(.custom("Syne-Regular", size: 14))
-                            .foregroundColor(.primary)
-                            .multilineTextAlignment(.center)
+                        Grid{
+                            GridRow {
+                                if let firstHabit = habits.first {
+                                    NavigationLink(value: firstHabit) {
+                                        FocusedHabitCell(habit: firstHabit, geoWidth: geo.size.width)
+                                            .clipped()
+                                            .cornerRadius(20)
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                } else if let randomHabit = Habit.sampleHabits.randomElement() {
+                                    NavigationLink(value: randomHabit) {
+                                        FocusedHabitCell(habit: randomHabit, geoWidth: geo.size.width)
+                                            .clipped()
+                                            .cornerRadius(20)
+                                    }
+                                }
+                                
+                                
+                                VStack {
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(.white)
+                                        .gridCellColumns(1)
+                                        .frame(height: 200)
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(.white)
+                                        .gridCellColumns(1)
+                                        .frame(height: 200)
+                                }
+                            }
+                        }
+                        .frame(width: geo.size.width)
                         
-                        Text("habit")
-                            .font(.custom("Syne-Regular", size: 14))
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
-                    }
-                    .padding(.horizontal, 30)
-                    
-                    Rectangle()
-                        .fill(Color.black.opacity(0.1))
-                        .frame(width: 1, height: 40)
-                        .padding(.vertical)
-                    
-                    VStack {
-                        Text("3")
-                            .font(.custom("Syne-ExtraBold", size: 45))
-                            .foregroundColor(.yellowButton)
-                        Text("weekly")
-                            .font(.custom("Syne-Regular", size: 14))
-                            .foregroundColor(.primary)
-                            .multilineTextAlignment(.center)
                         
-                        Text("habit")
-                            .font(.custom("Syne-Regular", size: 14))
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
-                    }
-                    .padding(.horizontal, 30)
-                    
-                    Rectangle()
-                        .fill(Color.black.opacity(0.1))
-                        .frame(width: 1, height: 40)
-                        .padding(.vertical, 20)
-                    
-                    
-                    VStack {
-                        Text("1")
-                            .font(.custom("Syne-ExtraBold", size: 45))
-                            .foregroundColor(.yellowButton)
-                        Text("yearly")
-                            .font(.custom("Syne-Regular", size: 14))
-                            .foregroundColor(.primary)
-                            .multilineTextAlignment(.center)
-                        
-                        Text("challenge")
-                            .font(.custom("Syne-Regular", size: 14))
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
-                    }
-                    .padding(.horizontal, 30)
-                    
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.bottom, 20)
-                
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack {
-                        ForEach(habits) { habit in
-                            NavigationLink(value: habit) {
-                                HabitCell(habit: habit)
+                        Grid {
+                            GridRow {
+                                
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(.white)
+                                    .gridCellColumns(1)
+                                    .frame(height: 200)
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(.white)
+                                    .gridCellColumns(1)
+                                    .frame(height: 200)
+                                
                             }
                         }
                     }
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 10)
                 
-
                 
                 Spacer()
+                
+                
             }
             .background {
                 Color("MauveBackground")

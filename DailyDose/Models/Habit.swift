@@ -18,8 +18,8 @@ struct Habit: Identifiable, Hashable {
     let image: HabitImage
     
     static let sampleHabits: [Habit] = [
-        Habit(title: "Stop sugar", progress: 6, objective: 30, periodicity: .challenge(.months(1)), unit: .months(1), image: .asset("stop sugar")),
         Habit(title: "Stretch", progress: 2, objective: 4, periodicity: .daily(.minutes(5)), unit: .minutes(5), image: .asset("stretch")),
+        Habit(title: "Stop sugar", progress: 6, objective: 30, periodicity: .challenge(.months(1)), unit: .months(1), image: .asset("stop sugar")),
         Habit(title: "Run", progress: 2, objective: 4, periodicity: .weekly(.hours(1)), unit: .hours(1), image: .asset("running")),
         Habit(title: "Eat proteins", progress: 2, objective: 4, periodicity: .daily(.custom(110, "grams")), unit: .custom(110, "grams"), image: .asset("proteins")),
         Habit(title: "do pilates", progress: 5, objective: 50, periodicity: .weekly(.times(2)), unit: .weeks(2), image: .asset("pilates"))
@@ -66,7 +66,7 @@ enum Unit: Hashable {
         case .days(let recurrence):
             return recurrence.pluralized("day")
         case .weeks(let recurrence):
-            return recurrence.pluralized("weeks")
+            return recurrence.pluralized("week")
         case .months(let recurrence):
             return recurrence.pluralized("month")
         case .times(let recurrence):

@@ -559,3 +559,150 @@
 //}
 //
 //
+
+
+//MAIN VIEW 
+
+//                HStack {
+//                    if let firstHabit = habits.first {
+//                        NavigationLink(value: firstHabit) {
+//                            FocusedHabitCell(habit: firstHabit)
+//                                .frame(maxWidth: .infinity)
+//                        }
+//                        .frame(maxWidth: .infinity)
+//                    } else if let randomHabit = Habit.sampleHabits.randomElement() {
+//                        NavigationLink(value: randomHabit) {
+//                            FocusedHabitCell(habit: randomHabit)
+//                                .frame(maxWidth: .infinity)
+//                        }
+//                    }
+//
+//
+//                }
+//                .frame(height: 410)
+                
+//                GeometryReader { geometry in
+//                    HStack {
+//                        Text("")
+//                            .frame(width: geometry.size.width / 2, height: 200)
+//                            .background(.white.opacity(0.9))
+//                            .clipShape(RoundedRectangle(cornerRadius: 20))
+//                        Image("habit_progress")
+//                            .resizable()
+//                            .scaledToFill()
+//                            .frame(width: geometry.size.width / 2, height: 200)
+//                            .clipShape(RoundedRectangle(cornerRadius: 20))
+//                            .opacity(0.7)
+//                    }
+//                }
+
+
+                
+//                VStack {
+//                    Text("Track Your")
+//                        .font(.custom("Syne-Bold", size: 34))
+//                        .foregroundColor(.blackCopy)
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                        .padding(.horizontal, 20)
+//                        .padding(.top, -10)
+//
+//                    Text("Habits")
+//                        .font(.custom("Syne-Bold", size: 34))
+//                        .foregroundColor(.blackCopy)
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                        .padding(.horizontal, 20)
+//                        .padding(.top, -25)
+//                }
+                
+                
+//                HStack {
+//                    VStack {
+//                        Text("5")
+//                            .font(.custom("Syne-ExtraBold", size: 45))
+//                            .foregroundColor(.yellowButton)
+//                        Text("daily")
+//                            .font(.custom("Syne-Regular", size: 14))
+//                            .foregroundColor(.primary)
+//                            .multilineTextAlignment(.center)
+//
+//                        Text("habit")
+//                            .font(.custom("Syne-Regular", size: 14))
+//                            .foregroundColor(.secondary)
+//                            .multilineTextAlignment(.center)
+//                    }
+//                    .padding(.horizontal, 30)
+//
+//                    Rectangle()
+//                        .fill(Color.black.opacity(0.1))
+//                        .frame(width: 1, height: 40)
+//                        .padding(.vertical)
+//
+//                    VStack {
+//                        Text("3")
+//                            .font(.custom("Syne-ExtraBold", size: 45))
+//                            .foregroundColor(.yellowButton)
+//                        Text("weekly")
+//                            .font(.custom("Syne-Regular", size: 14))
+//                            .foregroundColor(.primary)
+//                            .multilineTextAlignment(.center)
+//
+//                        Text("habit")
+//                            .font(.custom("Syne-Regular", size: 14))
+//                            .foregroundColor(.secondary)
+//                            .multilineTextAlignment(.center)
+//                    }
+//                    .padding(.horizontal, 30)
+//
+//                    Rectangle()
+//                        .fill(Color.black.opacity(0.1))
+//                        .frame(width: 1, height: 40)
+//                        .padding(.vertical, 20)
+//
+//
+//                    VStack {
+//                        Text("1")
+//                            .font(.custom("Syne-ExtraBold", size: 45))
+//                            .foregroundColor(.yellowButton)
+//                        Text("yearly")
+//                            .font(.custom("Syne-Regular", size: 14))
+//                            .foregroundColor(.primary)
+//                            .multilineTextAlignment(.center)
+//
+//                        Text("challenge")
+//                            .font(.custom("Syne-Regular", size: 14))
+//                            .foregroundColor(.secondary)
+//                            .multilineTextAlignment(.center)
+//                    }
+//                    .padding(.horizontal, 30)
+//
+//                }
+//                .frame(maxWidth: .infinity, alignment: .center)
+//                .padding(.bottom, 20)
+                
+                
+//                ScrollView(.vertical, showsIndicators: false) {
+//                    HStack(alignment: .top, spacing: 10) {
+//                        VStack {
+//                            ForEach(habits.indices.filter { $0 % 2 == 0 }, id: \.self) { index in
+//                                let position = index / 2
+//                                let isSquare = position % 2 == 0
+//
+//                                NavigationLink(value: habits[index]) {
+//                                    HabitCell(habit: habits[index], isSquare: isSquare)
+//                                }
+//                            }
+//                        }
+//
+//                        VStack {
+//                            ForEach(habits.indices.filter { $0 % 2 == 1 }, id: \.self) { index in
+//                                let position = index / 2
+//                                let isSquare = position % 2 == 1
+//
+//                                NavigationLink(value: habits[index]) {
+//                                    HabitCell(habit: habits[index], isSquare: isSquare)
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                .padding(.horizontal, 10)

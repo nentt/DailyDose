@@ -217,7 +217,9 @@ struct GoalFormView: View {
                     .padding(.top, 20)
                 })
             }
+            .sharedBackgroundVisibility(.hidden)
         }
+        
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 ZStack(alignment: .trailing) {
@@ -261,6 +263,7 @@ struct GoalFormView: View {
                     }
                 }
             }
+            .sharedBackgroundVisibility(.hidden)
         }
         .sheet(isPresented: $showHabitSheet) {
             HabitSummarySheet(
