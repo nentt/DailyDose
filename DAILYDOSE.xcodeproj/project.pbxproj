@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		6E18012D2F2E7AA50065DBAB /* HabitProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E18012C2F2E7AA50065DBAB /* HabitProgressCell.swift */; };
 		6E1801302F2EA0480065DBAB /* ProgressiveBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E18012F2F2EA0480065DBAB /* ProgressiveBlur.swift */; };
+		6E4337BC2F4CC0B800F78F67 /* UnitPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4337BB2F4CC0B800F78F67 /* UnitPicker.swift */; };
+		6E4337BE2F4CE39100F78F67 /* MultiStepsPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4337BD2F4CE39100F78F67 /* MultiStepsPicker.swift */; };
 		6E4B65122E03E14500BAC833 /* UnitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4B65112E03E14400BAC833 /* UnitCell.swift */; };
 		6E54DB402EF1AEDC0062CB95 /* HabitTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E54DB3F2EF1AEDC0062CB95 /* HabitTrackingView.swift */; };
 		6E580D252DEB8D8000FFF5CC /* DailyDoseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E580D242DEB8D8000FFF5CC /* DailyDoseApp.swift */; };
@@ -28,7 +30,7 @@
 		6E580D4D2DED7A4E00FFF5CC /* HabitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E580D4C2DED7A4E00FFF5CC /* HabitCell.swift */; };
 		6E580D502DED7DF700FFF5CC /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E580D4F2DED7DF700FFF5CC /* Habit.swift */; };
 		6E580D542DEF765C00FFF5CC /* HabitFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E580D532DEF765C00FFF5CC /* HabitFormView.swift */; };
-		6E734CD62E9E7BBA00229A2B /* CustomFrequencyPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E734CD52E9E7BBA00229A2B /* CustomFrequencyPicker.swift */; };
+		6E734CD62E9E7BBA00229A2B /* FrequencyPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E734CD52E9E7BBA00229A2B /* FrequencyPicker.swift */; };
 		6EA7D8002ED6ED4000BC722C /* DefaultHabitsScrollPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA7D7FF2ED6ED4000BC722C /* DefaultHabitsScrollPicker.swift */; };
 		6EA7D8032ED7404800BC722C /* DefaultHabitScrollVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA7D8022ED7404800BC722C /* DefaultHabitScrollVM.swift */; };
 		6EA7D8052ED760D500BC722C /* DefaultHabit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA7D8042ED760D500BC722C /* DefaultHabit.swift */; };
@@ -43,6 +45,8 @@
 /* Begin PBXFileReference section */
 		6E18012C2F2E7AA50065DBAB /* HabitProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitProgressCell.swift; sourceTree = "<group>"; };
 		6E18012F2F2EA0480065DBAB /* ProgressiveBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressiveBlur.swift; sourceTree = "<group>"; };
+		6E4337BB2F4CC0B800F78F67 /* UnitPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitPicker.swift; sourceTree = "<group>"; };
+		6E4337BD2F4CE39100F78F67 /* MultiStepsPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiStepsPicker.swift; sourceTree = "<group>"; };
 		6E4B65112E03E14400BAC833 /* UnitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitCell.swift; sourceTree = "<group>"; };
 		6E54DB3F2EF1AEDC0062CB95 /* HabitTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackingView.swift; sourceTree = "<group>"; };
 		6E580D212DEB8D8000FFF5CC /* DailyDose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DailyDose.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,7 +68,7 @@
 		6E580D4C2DED7A4E00FFF5CC /* HabitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCell.swift; sourceTree = "<group>"; };
 		6E580D4F2DED7DF700FFF5CC /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		6E580D532DEF765C00FFF5CC /* HabitFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitFormView.swift; sourceTree = "<group>"; };
-		6E734CD52E9E7BBA00229A2B /* CustomFrequencyPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFrequencyPicker.swift; sourceTree = "<group>"; };
+		6E734CD52E9E7BBA00229A2B /* FrequencyPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyPicker.swift; sourceTree = "<group>"; };
 		6EA7D7FF2ED6ED4000BC722C /* DefaultHabitsScrollPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHabitsScrollPicker.swift; sourceTree = "<group>"; };
 		6EA7D8022ED7404800BC722C /* DefaultHabitScrollVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHabitScrollVM.swift; sourceTree = "<group>"; };
 		6EA7D8042ED760D500BC722C /* DefaultHabit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHabit.swift; sourceTree = "<group>"; };
@@ -180,7 +184,9 @@
 				6EC489162E0B06C3004C99A4 /* PeriodicityButton.swift */,
 				6E4B65112E03E14400BAC833 /* UnitCell.swift */,
 				6ED2D0462E1E3DF600921DEC /* CustomRecurrenceSheet.swift */,
-				6E734CD52E9E7BBA00229A2B /* CustomFrequencyPicker.swift */,
+				6E734CD52E9E7BBA00229A2B /* FrequencyPicker.swift */,
+				6E4337BB2F4CC0B800F78F67 /* UnitPicker.swift */,
+				6E4337BD2F4CE39100F78F67 /* MultiStepsPicker.swift */,
 				6EF07C732EAFADBE001C36DB /* HabitSummarySheet.swift */,
 				6EA7D7FF2ED6ED4000BC722C /* DefaultHabitsScrollPicker.swift */,
 				6EF247CC2F268C97003DE35A /* FocusedHabitCell.swift */,
@@ -292,7 +298,9 @@
 				6E4B65122E03E14500BAC833 /* UnitCell.swift in Sources */,
 				6EA7D8032ED7404800BC722C /* DefaultHabitScrollVM.swift in Sources */,
 				6E580D272DEB8D8000FFF5CC /* MainView.swift in Sources */,
-				6E734CD62E9E7BBA00229A2B /* CustomFrequencyPicker.swift in Sources */,
+				6E4337BC2F4CC0B800F78F67 /* UnitPicker.swift in Sources */,
+				6E734CD62E9E7BBA00229A2B /* FrequencyPicker.swift in Sources */,
+				6E4337BE2F4CE39100F78F67 /* MultiStepsPicker.swift in Sources */,
 				6EA7D8052ED760D500BC722C /* DefaultHabit.swift in Sources */,
 				6E54DB402EF1AEDC0062CB95 /* HabitTrackingView.swift in Sources */,
 				6EF07C742EAFADBE001C36DB /* HabitSummarySheet.swift in Sources */,

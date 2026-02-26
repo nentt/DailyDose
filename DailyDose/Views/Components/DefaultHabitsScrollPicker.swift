@@ -14,7 +14,7 @@ struct DefaultHabitsScrollPicker: View {
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 12) {
+            HStack(spacing: 10) {
                 ForEach(defaultHabitVM.defaultHabits) { habit in
                     ZStack {
                         Image(habit.image)
@@ -28,7 +28,7 @@ struct DefaultHabitsScrollPicker: View {
                     }
                 }
             }
-            .padding()
+            .padding(.horizontal, 10)
         }
     }
 }

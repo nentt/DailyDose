@@ -19,14 +19,11 @@ struct UnitCell: View {
                 Text(title)
                     .font(.custom("Syne-Regular", size: 14))
                     .fontWeight(.bold)
-                    .foregroundColor(.blackCopy.opacity(0.5))
+                    .foregroundColor(isUnitCellSelected ? .blackCopy : .blackCopy.opacity(0.5))
                     .cornerRadius(50)
                     .padding(.vertical, 20)
                     .padding(.horizontal, 30)
-                    .background(
-                        Capsule()
-                            .fill(isUnitCellSelected ? Color.yellowButton : backgroundColor)
-                    )
+                    
                     
             }
         }

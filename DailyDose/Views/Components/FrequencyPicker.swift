@@ -13,7 +13,7 @@ enum Frequency: String, CaseIterable {
     case monthly = "monthly"
 }
 
-struct CustomFrequencyPicker: View {
+struct FrequencyPicker: View {
     @Binding var selectedFrequency: Frequency
     @Namespace private var animation
     
@@ -50,7 +50,7 @@ struct CustomFrequencyPicker: View {
 }
 
 #Preview {
-    CustomFrequencyPicker(selectedFrequency: .constant(Frequency.daily))
+    FrequencyPicker(selectedFrequency: .constant(Frequency.daily))
 }
 
 

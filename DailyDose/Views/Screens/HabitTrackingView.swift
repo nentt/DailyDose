@@ -173,12 +173,7 @@ struct HabitTrackingView: View {
                             .foregroundColor(.blackCopy)
                             .frame(width: 80, height: 80)
                             .background(Circle().fill(Color.yellowButton))
-                            .overlay(
-                                Circle()
-                                    .stroke(Color.yellowButton.opacity(0.4), lineWidth: 10)
-                                    .frame(width: 80, height: 80)
-                            )
-                            .padding(.horizontal, 5)
+                            
                     }
                     .scaleEffect(buttonScale)
                     .offset(y: buttonOffset)
@@ -198,14 +193,9 @@ struct HabitTrackingView: View {
                             }, label: {
                                 Image(systemName: "arrow.clockwise")
                                     .font(.system(size: 30))
-                                    .foregroundColor(.blackCopy)
+                                    .foregroundColor(.yellowButton)
                                     .frame(width: 80, height: 80)
-                                    .background(Circle().fill(Color.white))
-                                    .overlay(
-                                        Circle()
-                                            .stroke(Color.white.opacity(0.4), lineWidth: 10)
-                                            .frame(width: 80, height: 80)
-                                    )
+                                    .background(Circle().fill(Color.blackCopy))
                                     .padding(.horizontal, 5)
                             })
                             .transition(.move(edge: .bottom))
@@ -230,14 +220,9 @@ struct HabitTrackingView: View {
                             }, label: {
                                 Image(systemName: "stop")
                                     .font(.system(size: 30))
-                                    .foregroundColor(.blackCopy)
+                                    .foregroundColor(.yellowButton)
                                     .frame(width: 80, height: 80)
-                                    .background(Circle().fill(Color.white))
-                                    .overlay(
-                                        Circle()
-                                            .stroke(Color.white.opacity(0.4), lineWidth: 10)
-                                            .frame(width: 80, height: 80)
-                                    )
+                                    .background(Circle().fill(Color.blackCopy))
                                     .padding(.horizontal, 5)
                                 
                             })

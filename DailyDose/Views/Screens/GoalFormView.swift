@@ -32,14 +32,16 @@ struct GoalFormView: View {
     @State private var tappedFrequency: [Bool] = Array(repeating: true, count: 7)
     @State private var timeRecurrence: Frequency = .weekly
     
+    @State private var unitSelection: UnitName = .timer
+    
     @State private var showHabitSheet: Bool = false
     
     let onCreateHabit: (Habit) -> Void
     
     let selectedDefaultHabit: DefaultHabit?
-
-
-
+    
+    
+    
     
     var recurrence: String {
         
@@ -99,7 +101,7 @@ struct GoalFormView: View {
             .padding(.top, 50)
             .onChange(of: selectedUnit) {
                 let unit = selectedUnit.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
-
+                
                 if selectedUnit.lowercased() == "days" ||  selectedUnit.lowercased() == "months" || selectedUnit.lowercased() == "minutes" || selectedUnit.lowercased() == "hours" || selectedUnit.lowercased() == "times" || !unit.isEmpty {
                     tappedFrequency = Array(repeating: true, count: 7)
                 }
@@ -146,7 +148,7 @@ struct GoalFormView: View {
                             if showCustomGoalValidationButton {
                                 
                             } else {
-                                goalDescription
+                                //                                goalDescription
                             }
                         }
                         .tag(0)
@@ -163,7 +165,7 @@ struct GoalFormView: View {
                             if showCustomUnitSheet {
                                 
                             } else {
-                                UnitDescription
+                                //                                UnitDescription
                             }
                         }
                         .tag(1)
@@ -173,7 +175,7 @@ struct GoalFormView: View {
                             Spacer()
                             frequencySettings
                             Spacer()
-                            FrequencyDescription
+                            //                            FrequencyDescription
                         }
                         .tag(2)
                     }
@@ -253,7 +255,7 @@ struct GoalFormView: View {
                             .opacity(currentPage == 2 ? 1 : 0)
                             .animation(.easeInOut(duration: 0.4), value: currentPage)
                         }
-
+                        
                     } else {
                         Text("set your goal")
                             .font(.custom("Syne-SemiBold", size: 17))
@@ -267,7 +269,7 @@ struct GoalFormView: View {
         }
         .sheet(isPresented: $showHabitSheet) {
             HabitSummarySheet(
-                customHabitText: customHabitText, 
+                customHabitText: customHabitText,
                 selectedDefaultHabit: selectedDefaultHabit,
                 goalNumber: goalNumber,
                 selectedUnit: selectedUnit,
@@ -297,6 +299,7 @@ struct GoalFormView: View {
                         }
                         habitGoal = goalNumber
                     }
+                    .padding(.top, 110)
                 
                 VStack(alignment: .leading) {
                     Text(selectedUnit.isEmpty ? "unit" : goalNumber.pluralizedUnit(selectedUnit))
@@ -309,7 +312,7 @@ struct GoalFormView: View {
                         .font(.custom("Syne-Regular", size: 17))
                         .foregroundColor(.secondary)
                 }
-                .padding(.top, 20)
+                .padding(.top, 130)
             }
         }
     }
@@ -436,8 +439,10 @@ struct GoalFormView: View {
                 }
             }
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 10)
+        
     }
+    
     
     //MARK: Custom goal validation
     var customGoalValidationButton: some View {
@@ -464,96 +469,150 @@ struct GoalFormView: View {
     }
     
     //MARK: Goal description
-    var goalDescription: some View {
-        HStack {
-            Text("Decide how big your new streak should be.")
-                .frame(width: 250, height: 130)
-                .foregroundColor(.blackCopy)
-                .font(.custom("Syne-SemiBold", size: 30))
-                .padding(.leading, 20)
-                .baselineOffset(2)
-            Spacer()
-            
-        }
-    }
+    //    var goalDescription: some View {
+    //        HStack {
+    //            Text("Decide how big your new streak should be.")
+    //                .frame(width: 250, height: 130)
+    //                .foregroundColor(.blackCopy)
+    //                .font(.custom("Syne-SemiBold", size: 30))
+    //                .padding(.leading, 20)
+    //                .baselineOffset(2)
+    //            Spacer()
+    //
+    //        }
+    //    }
     
     
     
     //MARK: Define your unit
     var unitSettings: some View {
         VStack {
-            HStack {
-                UnitCell(
-                    title: "MINUTES",
-                    action: {
-                        selectedUnit = "minutes"
-                        isUnitKeyboardFocused = false
-                        tappedFrequency = Array(repeating: false, count: 7)
-                    },
-                    isUnitCellSelected: selectedUnit == "minutes"
-                )
-                
-                UnitCell(
-                    title: "HOURS",
-                    action: {
-                        selectedUnit = "hours"
-                        isUnitKeyboardFocused = false
-                        tappedFrequency = Array(repeating: false, count: 7)
-                    },
-                    isUnitCellSelected: selectedUnit == "hours"
-                )
-                
-                UnitCell(
-                    title: "DAYS",
-                    action: {
-                        selectedUnit = "days"
-                        isUnitKeyboardFocused = false
-                    },
-                    isUnitCellSelected: selectedUnit == "days"
-                )
-                
-            }
-            .padding(.bottom, 2)
+            UnitPicker(selectedUnit: $unitSelection)
             
-            HStack {
-                UnitCell(
-                    title: "MONTHS",
-                    action: {
-                        selectedUnit = "months"
-                        isUnitKeyboardFocused = false
-                    },
-                    isUnitCellSelected: selectedUnit == "months"
-                )
-                
-                UnitCell(
-                    title: "TIMES",
-                    action: {
-                        selectedUnit = "times"
-                        isUnitKeyboardFocused = false
-                        tappedFrequency = Array(repeating: false, count: 7)
-                    },
-                    isUnitCellSelected: selectedUnit == "times"
-                )
-                
-                UnitCell(
-                    title: "   ",
-                    action: {
-                        isUnitKeyboardFocused = true
-                        isUnitTextFocused = true
-                        showCustomUnitSheet = true
-                        customUnitText = selectedUnit
-                        tappedFrequency = Array(repeating: false, count: 7)
-                    },
-                    isUnitCellSelected: selectedUnit == "",
-                    backgroundColor: Color.blackCopy.opacity(0.1)
-                )
-                .overlay(
-                    Image(systemName: "plus")
-                        .font(.custom("Syne-Regular", size: 20))
-                        .foregroundColor(.blackCopy.opacity(0.5))
-                    
-                )
+            if unitSelection == .timer {
+                HStack {
+                    UnitCell(
+                        title: "MINUTES",
+                        action: {
+                            selectedUnit = "minutes"
+                            isUnitKeyboardFocused = false
+                            tappedFrequency = Array(repeating: false, count: 7)
+                        },
+                        isUnitCellSelected: selectedUnit == "minutes"
+                    )
+                    UnitCell(
+                        title: "HOURS",
+                        action: {
+                            selectedUnit = "hours"
+                            isUnitKeyboardFocused = false
+                            tappedFrequency = Array(repeating: false, count: 7)
+                        },
+                        isUnitCellSelected: selectedUnit == "hours"
+                    )
+                }
             }
+            
+            if unitSelection == .simple {
+                HStack {
+                    UnitCell(
+                        title: "DAYS",
+                        action: {
+                            selectedUnit = "days"
+                            isUnitKeyboardFocused = false
+                        },
+                        isUnitCellSelected: selectedUnit == "days"
+                    )
+                    
+                    UnitCell(
+                        title: "MONTHS",
+                        action: {
+                            selectedUnit = "months"
+                            isUnitKeyboardFocused = false
+                        },
+                        isUnitCellSelected: selectedUnit == "months"
+                    )
+                }
+            }
+            
+            if unitSelection == .multiSteps {
+                MultiStepsPicker(goalNumber: $goalNumber)
+            }
+            
+            
+            
+            
+            //            HStack {
+            //                UnitCell(
+            //                    title: "MINUTES",
+            //                    action: {
+            //                        selectedUnit = "minutes"
+            //                        isUnitKeyboardFocused = false
+            //                        tappedFrequency = Array(repeating: false, count: 7)
+            //                    },
+            //                    isUnitCellSelected: selectedUnit == "minutes"
+            //                )
+            //
+            //                UnitCell(
+            //                    title: "HOURS",
+            //                    action: {
+            //                        selectedUnit = "hours"
+            //                        isUnitKeyboardFocused = false
+            //                        tappedFrequency = Array(repeating: false, count: 7)
+            //                    },
+            //                    isUnitCellSelected: selectedUnit == "hours"
+            //                )
+            //
+            //                UnitCell(
+            //                    title: "DAYS",
+            //                    action: {
+            //                        selectedUnit = "days"
+            //                        isUnitKeyboardFocused = false
+            //                    },
+            //                    isUnitCellSelected: selectedUnit == "days"
+            //                )
+            //
+            //            }
+            //            .padding(.bottom, 2)
+            //
+            //            HStack {
+            //                UnitCell(
+            //                    title: "MONTHS",
+            //                    action: {
+            //                        selectedUnit = "months"
+            //                        isUnitKeyboardFocused = false
+            //                    },
+            //                    isUnitCellSelected: selectedUnit == "months"
+            //                )
+            //
+            //                UnitCell(
+            //                    title: "TIMES",
+            //                    action: {
+            //                        selectedUnit = "times"
+            //                        isUnitKeyboardFocused = false
+            //                        tappedFrequency = Array(repeating: false, count: 7)
+            //                    },
+            //                    isUnitCellSelected: selectedUnit == "times"
+            //                )
+            //
+            //                UnitCell(
+            //                    title: "   ",
+            //                    action: {
+            //                        isUnitKeyboardFocused = true
+            //                        isUnitTextFocused = true
+            //                        showCustomUnitSheet = true
+            //                        customUnitText = selectedUnit
+            //                        tappedFrequency = Array(repeating: false, count: 7)
+            //                    },
+            //                    isUnitCellSelected: selectedUnit == "",
+            //                    backgroundColor: Color.blackCopy.opacity(0.1)
+            //                )
+            //                .overlay(
+            //                    Image(systemName: "plus")
+            //                        .font(.custom("Syne-Regular", size: 20))
+            //                        .foregroundColor(.blackCopy.opacity(0.5))
+            //
+            //                )
+            //            }
         }
         //        .padding(.top, (isUnitKeyboardFocused ? 170 : 0))
         //        .frame(height: 250)
@@ -561,16 +620,16 @@ struct GoalFormView: View {
     }
     
     //MARK: Unit description
-    var UnitDescription: some View {
-        HStack {
-            Text("Choose how to track your streak.")
-                .frame(width: 250, height: 130)
-                .foregroundColor(.blackCopy)
-                .font(.custom("Syne-SemiBold", size: 30))
-                .padding(.leading, 10)
-            Spacer()
-        }
-    }
+    //    var UnitDescription: some View {
+    //        HStack {
+    //            Text("Choose how to track your streak.")
+    //                .frame(width: 250, height: 130)
+    //                .foregroundColor(.blackCopy)
+    //                .font(.custom("Syne-SemiBold", size: 30))
+    //                .padding(.leading, 10)
+    //            Spacer()
+    //        }
+    //    }
     
     
     //MARK: Custom Unit Sheet
@@ -655,7 +714,7 @@ struct GoalFormView: View {
                     .padding(.trailing, 20)
                     .padding(.bottom, 20)
                     
-                    CustomFrequencyPicker(selectedFrequency: $timeRecurrence)
+                    FrequencyPicker(selectedFrequency: $timeRecurrence)
                         .padding(.bottom, 130)
                 }
                 .pickerStyle(.segmented)
@@ -703,33 +762,33 @@ struct GoalFormView: View {
                         }
                     }
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 10)
                 .padding(.bottom, 80)
             }
         }
     }
     
     //MARK: Frequency description
-    var FrequencyDescription: some View {
-        HStack {
-            if selectedUnit == "times" {
-                Text("Set how often you’ll repeat this habit.")
-                    .frame(width: 250, height: 130)
-                    .foregroundColor(.blackCopy)
-                    .font(.custom("Syne-SemiBold", size: 30))
-                    .padding(.leading, 20)
-                Spacer()
-                
-            } else {
-                Text("Pick the days to commit to your streak.")
-                    .frame(width: 250, height: 130)
-                    .foregroundColor(.blackCopy)
-                    .font(.custom("Syne-SemiBold", size: 30))
-                    .padding(.leading, 20)
-                Spacer()
-            }
-        }
-    }
+    //    var FrequencyDescription: some View {
+    //        HStack {
+    //            if selectedUnit == "times" {
+    //                Text("Set how often you’ll repeat this habit.")
+    //                    .frame(width: 250, height: 130)
+    //                    .foregroundColor(.blackCopy)
+    //                    .font(.custom("Syne-SemiBold", size: 30))
+    //                    .padding(.leading, 20)
+    //                Spacer()
+    //
+    //            } else {
+    //                Text("Pick the days to commit to your streak.")
+    //                    .frame(width: 250, height: 130)
+    //                    .foregroundColor(.blackCopy)
+    //                    .font(.custom("Syne-SemiBold", size: 30))
+    //                    .padding(.leading, 20)
+    //                Spacer()
+    //            }
+    //        }
+    //    }
     
     private func dismissUnitTextSheet() {
         showCustomUnitSheet = false
