@@ -537,6 +537,8 @@ struct GoalFormView: View {
             if unitSelection == .multiSteps {
                 MultiStepsPicker(goalNumber: $goalNumber)
             }
+                
+            
             
             
             
@@ -613,6 +615,11 @@ struct GoalFormView: View {
             //
             //                )
             //            }
+        }
+        .onChange(of: unitSelection) {
+            if unitSelection == .multiSteps {
+                selectedUnit = "times"
+            }
         }
         //        .padding(.top, (isUnitKeyboardFocused ? 170 : 0))
         //        .frame(height: 250)
